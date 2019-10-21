@@ -84,7 +84,7 @@ function generateConfig(pkg, basedir, mount = []) {
                 resolve({ extensions }),
                 commonjs(),
                 string({
-                    include: "**/*.css",
+                    include: ["**/*.css", "**/*.html", "**/*.txt"],
                     exclude: ["**/css/*.css"]
                 }),
                 babel({
@@ -128,7 +128,7 @@ function generateConfig(pkg, basedir, mount = []) {
                 resolve({ extensions }),
                 commonjs(),
                 string({
-                    include: "**/*.css",
+                    include: ["**/*.css", "**/*.html", "**/*.txt"],
                     exclude: ["**/css/*.css"]
                 }),
                 babel({
@@ -172,7 +172,7 @@ function generateConfig(pkg, basedir, mount = []) {
                 resolve({ extensions }),
                 commonjs(),
                 string({
-                    include: "**/*.css",
+                    include: ["**/*.css", "**/*.html", "**/*.txt"],
                     exclude: ["**/css/*.css"]
                 }),
                 babel({
@@ -209,12 +209,13 @@ function generateConfig(pkg, basedir, mount = []) {
                 resolve({ extensions }),
                 commonjs(),
                 string({
-                    include: "**/*.css",
+                    include: ["**/*.css", "**/*.html", "**/*.txt"],
                     exclude: ["**/css/*.css"]
                 }),
                 typescript({
                     typescript: require('typescript'),
                     cacheRoot: path.resolve(__dirname, '.rts2_cache'),
+                    objectHashIgnoreUnknownHack: true,
                 }),
                 sourcemaps(),
             ],
