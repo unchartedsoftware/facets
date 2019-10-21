@@ -1,0 +1,116 @@
+.facet-container {
+    width: 300px;
+}
+
+.example-header {
+    background-color: #e5e5e5;
+    border: 5px solid white;
+    padding: 3px;
+    font-family: monospace;
+    font-size: 14px;
+    color: #454545;
+}
+
+.histogram-header {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 14px;
+    line-height: 16px;
+    margin: 5px;
+    padding: 5px;
+    color: #efefef;
+    background-color: #255DCC;
+}
+
+.gradient-scale {
+    height: 100%;
+    width: 7px;
+    background-image: linear-gradient(transparent, transparent 8px, red 8px, orange 23px, #ddff00, green 80px, transparent 80px);
+    transform: translate(16px, 0);
+}
+
+.axis-line {
+    height: calc(100% - 49px);
+    width: 7px;
+    margin-top: 8px;
+    border-left: solid 1px #454545;
+    background-image: repeating-linear-gradient(#454545, #454545 1px, transparent 1px, transparent 7px);
+    transform: translate(18px, 0);
+}
+
+.slot-header {
+    background-color: #ff0000;
+    padding: 5px;
+    font-family: monospace;
+    font-size: 13px;
+    color: white;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.slot-footer {
+    background-color: #00ff00;
+    padding: 5px;
+    font-family: monospace;
+    font-size: 13px;
+    color: gray;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.slot-left {
+    background-color: #0000ff;
+    padding: 0 5px;
+    font-family: monospace;
+    font-size: 13px;
+    color: white;
+    text-align: center;
+    border: 1px solid black;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    max-width: 44px;
+}
+
+.slot-right {
+    background-color: #ffff00;
+    padding: 0 5px;
+    font-family: monospace;
+    font-size: 13px;
+    color: gray;
+    text-align: center;
+    border: 1px solid black;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    max-width: 44px;
+}
+
+.big-value {
+    font-size: 16px;
+    line-height: 24px;
+    white-space: nowrap;
+}
+
+/* text styles */
+code {
+    padding: 1px;
+    background-color: #d5d5d5;
+    border: 1px solid #767676;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+.annotation {
+    color: #767676;
+    font-family: monospace;
+    font-size: 13px;
+    margin: 6px 0;
+}
+
+.code-block {
+    padding: 1px;
+    background-color: #d5d5d5;
+    border: 1px solid #767676;
+    font-family: monospace;
+    font-size: 13px;
+}

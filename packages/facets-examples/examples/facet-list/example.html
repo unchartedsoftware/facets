@@ -1,0 +1,405 @@
+<h1>facet-list</h1>
+<!-- default facet list -->
+<div class="facet-container">
+    <facet-list data='[
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 0.5,
+                "label": "Fifty",
+                "value": 50
+            }
+        },
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 0.7,
+                "label": "Seventy",
+                "value": 70
+            }
+        },
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 0.9,
+                "label": "Ninety",
+                "value": 90
+            }
+        },
+        {
+            "type": "facet-histogram",
+            "data": {
+                "values": [
+                    { "ratio": 0.1, "labels": { "left": 0, "right": 1 } },
+                    { "ratio": 0.2, "labels": { "left": 1, "right": 2 } },
+                    { "ratio": 0.3, "labels": { "left": 2, "right": 3 } },
+                    { "ratio": 0.4, "labels": { "left": 3, "right": 4 } },
+                    { "ratio": 0.5, "labels": { "left": 4, "right": 5 } },
+                    { "ratio": 0.6, "labels": { "left": 5, "right": 6 } },
+                    { "ratio": 0.7, "labels": { "left": 6, "right": 7 } },
+                    { "ratio": 0.8, "labels": { "left": 7, "right": 8 } },
+                    { "ratio": 0.9, "labels": { "left": 8, "right": 9 } },
+                    { "ratio": 1.0, "labels": { "left": 9, "right": 10 } }
+                ]
+            }
+        }
+    ]'>
+        <div slot="header" class="example-header">Standard Facet List + Header</div>
+    </facet-list>
+</div>
+
+<br />
+<!-- facet list of customized facets -->
+<div class="facet-container">
+    <facet-list data='[
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 0.11,
+                "label": "Phillip Laliberte",
+                "annotation": "(Scott Dafreed)",
+                "value": 11,
+                "metadata": "img/phillaliberte@2x.png"
+            }
+        },
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 0.12,
+                "label": "Chris Dickson",
+                "value": 12,
+                "metadata": "img/chrisdickson@2x.png"
+            }
+        },
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 0.13,
+                "label": "Sean McIntyre",
+                "value": 13,
+                "metadata": "img/seanmcintyre@2x.png"
+            }
+        },
+        {
+            "type": "facet-histogram",
+            "data": {
+                "values": [
+                    { "ratio": 0.1, "labels": { "left": 0, "right": 1 } },
+                    { "ratio": 0.2, "labels": { "left": 1, "right": 2 } },
+                    { "ratio": 0.3, "labels": { "left": 2, "right": 3 } },
+                    { "ratio": 0.4, "labels": { "left": 3, "right": 4 } },
+                    { "ratio": 0.5, "labels": { "left": 4, "right": 5 } },
+                    { "ratio": 0.6, "labels": { "left": 5, "right": 6 } },
+                    { "ratio": 0.7, "labels": { "left": 6, "right": 7 } },
+                    { "ratio": 0.8, "labels": { "left": 7, "right": 8 } },
+                    { "ratio": 0.9, "labels": { "left": 8, "right": 9 } },
+                    { "ratio": 1.0, "labels": { "left": 9, "right": 10 } }
+                ]
+            }
+        }
+    ]'>
+        <div slot="header" class="example-header">List of Customized Facets</div>
+        <facet-template target="facet-term">
+            <div slot="left" class="image-left" template-style="background-image:url('${metadata}')"></div>
+            <div slot="value" class="big-value">${value}</div>
+        </facet-template>
+        <facet-template target="facet-histogram">
+            <div slot="header" class="histogram-header">Customer Satisfaction</div>
+            <div slot="left" class="gradient-scale"></div>
+        </facet-template>
+    </facet-list>
+</div></div>
+
+<br />
+<!-- inspired facets 2.0 list -->
+<div class="inspired-container">
+    <facet-list data='[
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 0.1428571429,
+                "label": "Programs",
+                "value": 14.28
+            }
+        },
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 0.2857142857,
+                "label": "Favorites",
+                "value": 28.57
+            }
+        },
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 0.4285714286,
+                "label": "Documents",
+                "value": 42.85
+            }
+        },
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 0.5714285714,
+                "label": "Settings",
+                "value": 57.14
+            }
+        },
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 0.7142857143,
+                "label": "Find",
+                "value": 71.24
+            }
+        },
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 0.8571428571,
+                "label": "Help",
+                "value": 85.71
+            }
+        },
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 1.0,
+                "label": "Run!",
+                "value": "100.00"
+            }
+        },
+        {
+            "type": "facet-histogram",
+            "data": {
+                "values": [
+                    { "ratio": 0.1, "labels": { "left": 0, "right": 1 } },
+                    { "ratio": 0.2, "labels": { "left": 1, "right": 2 } },
+                    { "ratio": 0.3, "labels": { "left": 2, "right": 3 } },
+                    { "ratio": 0.4, "labels": { "left": 3, "right": 4 } },
+                    { "ratio": 0.5, "labels": { "left": 4, "right": 5 } },
+                    { "ratio": 0.6, "labels": { "left": 5, "right": 6 } },
+                    { "ratio": 0.7, "labels": { "left": 6, "right": 7 } },
+                    { "ratio": 0.8, "labels": { "left": 7, "right": 8 } },
+                    { "ratio": 0.9, "labels": { "left": 8, "right": 9 } },
+                    { "ratio": 1.0, "labels": { "left": 9, "right": 10 } }
+                ],
+                "metadata": "Shut Down..."
+            }
+        }
+    ]'>
+        <div slot="header" class="inspired-header">Facets Update</div>
+        <div slot="left" class="inspired-left">
+            <div class="inspired-left-text">
+                <span class="inspired-left-facets">Facets</span>
+                <span class="inspired-left-2">3.0</span>
+            </div>
+        </div>
+        <facet-template target="facet-histogram">
+            <div slot="header" class="histogram-header">${metadata}</div>
+        </facet-template>
+    </facet-list>
+</div>
+
+<h3>Definition</h3>
+<code>facet-list</code> is a standalone HTML component that renders a list of
+any facet instances, as described in its <code>data</code> attribute:<br />
+
+<br />
+<!-- simple facet list -->
+<div class="facet-container">
+    <facet-list data='[
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 0.5,
+                "label": "Fifty",
+                "value": 50
+            }
+        },
+        {
+            "type": "facet-histogram",
+            "data": {
+                "values": [
+                    { "ratio": 0.1, "labels": { "left": 0, "right": 1 } },
+                    { "ratio": 0.2, "labels": { "left": 1, "right": 2 } },
+                    { "ratio": 0.3, "labels": { "left": 2, "right": 3 } },
+                    { "ratio": 0.4, "labels": { "left": 3, "right": 4 } },
+                    { "ratio": 0.5, "labels": { "left": 4, "right": 5 } },
+                    { "ratio": 0.6, "labels": { "left": 5, "right": 6 } },
+                    { "ratio": 0.7, "labels": { "left": 6, "right": 7 } },
+                    { "ratio": 0.8, "labels": { "left": 7, "right": 8 } },
+                    { "ratio": 0.9, "labels": { "left": 8, "right": 9 } },
+                    { "ratio": 1.0, "labels": { "left": 9, "right": 10 } }
+                ]
+            }
+        }
+    ]'>
+    </facet-list>
+</div>
+
+<br />
+<code>facet-list</code> components behave as a <code>div</code> element, meaning
+that they use the full width of its parent element:<br />
+
+<br />
+<!-- facet list with variable width parent -->
+<div style="width:75%">
+    <facet-list data='[
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 0.5,
+                "label": "Fifty",
+                "value": 50
+            }
+        },
+        {
+            "type": "facet-histogram",
+            "data": {
+                "values": [
+                    { "ratio": 0.1, "labels": { "left": 0, "right": 1 } },
+                    { "ratio": 0.2, "labels": { "left": 1, "right": 2 } },
+                    { "ratio": 0.3, "labels": { "left": 2, "right": 3 } },
+                    { "ratio": 0.4, "labels": { "left": 3, "right": 4 } },
+                    { "ratio": 0.5, "labels": { "left": 4, "right": 5 } },
+                    { "ratio": 0.6, "labels": { "left": 5, "right": 6 } },
+                    { "ratio": 0.7, "labels": { "left": 6, "right": 7 } },
+                    { "ratio": 0.8, "labels": { "left": 7, "right": 8 } },
+                    { "ratio": 0.9, "labels": { "left": 8, "right": 9 } },
+                    { "ratio": 1.0, "labels": { "left": 9, "right": 10 } }
+                ]
+            }
+        }
+    ]'>
+    </facet-list>
+</div>
+<div class="annotation">In the example above, the parent container of the
+    <code>facet-list</code> element has a width of 80%, resize the window to see
+    how the <code>facet-list</code> reacts.
+</div>
+
+<br />
+The data schema for a <code>facet-list</code> is defined as:<br /><br />
+<div class="code-block"><pre>
+export interface FacetListDataElement {
+    type: string;
+    data: any;
+}
+
+export type FacetListData = FacetListDataElement[];
+</pre></div>
+<div class="annotation">
+    different ways of binding data to facets are explored in the
+    <a href="example.html?ex=working%20with%20js">working with js</a> example
+</div>
+
+<br />
+<code>type</code> is the tag name of the facet that will be instantiated i.e.
+<code>facet-term</code><br />
+<code>data</code> is the data that will be bound to the facet instance.<br />
+
+<h3>Customization</h3>
+As described in the <a href="example.html?ex=facet-template">facet-blueprint</a>
+example, <code>facet-list</code> instances support customization through the
+slots inherited from their parent <code>facet-blueprint</code> element:<br />
+
+<br />
+<!-- facet term slots inherited from facet-blueprint -->
+<div class="facet-container">
+    <facet-list data='[
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 0.5,
+                "label": "Fifty",
+                "value": 50
+            }
+        },
+        {
+            "type": "facet-histogram",
+            "data": {
+                "values": [
+                    { "ratio": 0.1, "labels": { "left": 0, "right": 1 } },
+                    { "ratio": 0.2, "labels": { "left": 1, "right": 2 } },
+                    { "ratio": 0.3, "labels": { "left": 2, "right": 3 } },
+                    { "ratio": 0.4, "labels": { "left": 3, "right": 4 } },
+                    { "ratio": 0.5, "labels": { "left": 4, "right": 5 } },
+                    { "ratio": 0.6, "labels": { "left": 5, "right": 6 } },
+                    { "ratio": 0.7, "labels": { "left": 6, "right": 7 } },
+                    { "ratio": 0.8, "labels": { "left": 7, "right": 8 } },
+                    { "ratio": 0.9, "labels": { "left": 8, "right": 9 } },
+                    { "ratio": 1.0, "labels": { "left": 9, "right": 10 } }
+                ]
+            }
+        }
+    ]'>
+        <div slot="header" class="slot-header">header</div>
+        <div slot="footer" class="slot-footer">footer</div>
+        <div slot="left" class="slot-left">left</div>
+        <div slot="right" class="slot-right">right</div>
+    </facet-list>
+</div>
+
+<br />
+each of the facets in a <code>facet-list</code> also exposes the slots inherited
+from their respective <code>facet-blueprint</code> parents:<br />
+
+<br />
+<!-- facet term slots inherited from facet-blueprint -->
+<div style="width: 400px">
+    <facet-list data='[
+        {
+            "type": "facet-term",
+            "data": {
+                "ratio": 0.5,
+                "label": "Fifty",
+                "value": 50
+            }
+        },
+        {
+            "type": "facet-histogram",
+            "data": {
+                "values": [
+                    { "ratio": 0.1, "labels": { "left": 0, "right": 1 } },
+                    { "ratio": 0.2, "labels": { "left": 1, "right": 2 } },
+                    { "ratio": 0.3, "labels": { "left": 2, "right": 3 } },
+                    { "ratio": 0.4, "labels": { "left": 3, "right": 4 } },
+                    { "ratio": 0.5, "labels": { "left": 4, "right": 5 } },
+                    { "ratio": 0.6, "labels": { "left": 5, "right": 6 } },
+                    { "ratio": 0.7, "labels": { "left": 6, "right": 7 } },
+                    { "ratio": 0.8, "labels": { "left": 7, "right": 8 } },
+                    { "ratio": 0.9, "labels": { "left": 8, "right": 9 } },
+                    { "ratio": 1.0, "labels": { "left": 9, "right": 10 } }
+                ]
+            }
+        }
+    ]'>
+        <div slot="header" class="slot-header">header</div>
+        <div slot="footer" class="slot-footer">footer</div>
+        <div slot="left" class="slot-left">left</div>
+        <div slot="right" class="slot-right">right</div>
+        <facet-template target="facet-term">
+            <div slot="header" class="slot-header">header</div>
+            <div slot="footer" class="slot-footer">footer</div>
+            <div slot="left" class="slot-left">left</div>
+            <div slot="right" class="slot-right">right</div>
+        </facet-template>
+        <facet-template target="facet-histogram">
+            <div slot="header" class="slot-header">header</div>
+            <div slot="footer" class="slot-footer">footer</div>
+            <div slot="left" class="slot-left">left</div>
+            <div slot="right" class="slot-right">right</div>
+        </facet-template>
+    </facet-list>
+</div>
+<div class="annotation">
+    The methods to access the slots exposed by the facets within a
+    <code>facet-list</code> are explored in the
+    <a href="example.html?ex=facet-template">facet-template</a> example.<br />
+</div>
+
+<br />
+<br />
+<br />

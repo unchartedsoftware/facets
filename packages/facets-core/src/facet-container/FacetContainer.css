@@ -1,0 +1,15 @@
+.facet-blueprint {
+    border-top: 1px solid #D9DADB;
+    background-color: #FFFFFF;
+}
+
+.facet-container-header {
+    height: 20px;
+    color: #1A1B1C;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 6px 12px 5px;
+}

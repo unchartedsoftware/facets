@@ -1,0 +1,23 @@
+.facet-button {
+    width: 25px;
+    height: 25px;
+    background: linear-gradient(180deg, #F2F3F3 0%, #EAEBEC 100%);
+    border: 1px solid #D9DADB;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.facet-button-single {
+    border-radius: 3px;
+}
+
+.facet-button-left {
+    border-radius: 3px 0 0 3px;
+}
+
+.facet-button-right {
+    border-radius: 0 3px 3px 0;
+}

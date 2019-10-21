@@ -1,0 +1,25 @@
+.facet-blueprint {
+    background-color: #FFFFFF;
+    transition: background-color 256ms;
+    position: relative;
+}
+
+.facet-hoverable-buttons {
+    position: absolute;
+    z-index: 1;
+    right: 8px;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    opacity: 0;
+    transition: opacity 100ms, visibility 100ms;
+    cursor: pointer;
+    visibility: hidden;
+    width: auto;
+}
+
+.facet-blueprint:hover .facet-hoverable-buttons {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0ms, visibility 0ms;
+}

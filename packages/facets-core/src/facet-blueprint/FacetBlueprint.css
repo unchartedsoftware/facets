@@ -1,0 +1,31 @@
+.facet-blueprint {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+}
+
+.facet-blueprint-header {
+}
+
+.facet-blueprint-footer {
+}
+
+.facet-blueprint-body {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    align-items: stretch;
+}
+
+.facet-blueprint-left {
+    width: auto;
+}
+
+.facet-blueprint-content {
+    flex-grow: 1;
+}
+
+.facet-blueprint-right {
+    width: auto;
+}

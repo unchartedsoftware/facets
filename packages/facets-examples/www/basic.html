@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Facets - Basic Example</title>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oswald">
+    <link rel="stylesheet" type="text/css" href="style/index.css">
+    <script type='text/javascript' src='dist/iife/index.js'></script>
+</head>
+<body>
+    <facet-list data='[
+        {
+            "type": "facet-term",
+            "data": {
+                "percentage": 75,
+                "label": "Facet Term",
+                "value": 123,
+                "metadata": {
+                    "buttons": 5
+                }
+            }
+        },
+        {
+            "type": "facet-histogram",
+            "data": {
+                "buckets": [
+                    { "percentage": 10, "values": [0] },
+                    { "percentage": 20, "values": [1] },
+                    { "percentage": 30, "values": [2] },
+                    { "percentage": 40, "values": [3] },
+                    { "percentage": 50, "values": [4] },
+                    { "percentage": 60, "values": [5] },
+                    { "percentage": 70, "values": [6] },
+                    { "percentage": 80, "values": [7] },
+                    { "percentage": 90, "values": [8] },
+                    { "percentage": 100, "values": [9] }
+                ],
+                "metadata": {
+                    "label": "Facet Histogram",
+                    "fontSize": "8px"
+                }
+            }
+        }
+    ]'>
+        <div slot="header" class="facet-generic-header">Facet List (facet-list)</div>
+        <facet-template target="facet-histogram">
+            <div slot="header" class="facet-generic-subheader" template-style="font-size: ${metadata.fontSize};">${metadata.label}</div>
+        </facet-template>
+        <facet-template target="facet-term" template-actionbuttons="${metadata.buttons}"></facet-template>
+    </facet-list>
+</body>
+</html>

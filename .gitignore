@@ -1,0 +1,6 @@
+node_modules
+.rts2_cache/
+.idea/
+packages/*/dist/
+*.log
+.DS_Store

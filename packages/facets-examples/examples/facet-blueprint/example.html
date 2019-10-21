@@ -1,0 +1,69 @@
+<h1>facet-blueprint</h1>
+The <code>facet-blueprint</code> element represents the building
+blocks of facets, it implements the basic layout for every facets and their
+content, each <code>facet-blueprint</code> includes the following
+5 slots:
+<br /><br />
+
+<!-- simple `facet-blueprint` to display its sections -->
+<div class="facet-container">
+    <facet-blueprint>
+        <div slot="header" class="slot-header">header</div>
+        <div slot="footer" class="slot-footer">footer</div>
+        <div slot="left" class="slot-left">left</div>
+        <div slot="right" class="slot-right">right</div>
+        <div slot="content" class="slot-content">content</div>
+    </facet-blueprint>
+</div>
+
+<br />
+<b>header, left, right and footer</b> are not used by facet implementations and
+are reserved to hold user customizations.<br />
+<b>content</b> is where facets will render their elements.<br />
+
+<br />
+<code>facet-blueprint</code> elements can be, and often are,
+nested:<br /><br />
+
+<!-- nested `facet-blueprint` -->
+<div class="facet-container">
+    <facet-blueprint>
+        <div slot="header" class="slot-header">outer header</div>
+        <div slot="footer" class="slot-footer">outer footer</div>
+        <div slot="left" class="slot-left">outer left</div>
+        <div slot="right" class="slot-right">outer right</div>
+        <div slot="content" class="slot-content">
+            <div>outer content</div><br />
+            <facet-blueprint>
+                <div slot="header" class="slot-header">inner header</div>
+                <div slot="footer" class="slot-footer">inner footer</div>
+                <div slot="left" class="slot-left">inner left</div>
+                <div slot="right" class="slot-right">inner right</div>
+                <div slot="content" class="slot-content">inner content</div>
+            </facet-blueprint>
+        </div>
+    </facet-blueprint>
+</div>
+
+<br />
+Since every facet is built on top of a <code>facet-blueprint</code>
+it is safe to assume that they expose the same 5 slots than a
+<code>facet-blueprint</code>.<br />
+
+<br />
+Access to each slot is provided through the <code>slot</code>
+property defined in the
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/slot">
+    shadow DOM API
+</a>.
+<br />
+
+<br />
+In JavaScript, developers can specify the default behaviour of each section by
+extending the <code>FacetBlueprint</code> class (or any other facet
+class) and overloading the methods:<br />
+<code>renderContent</code><br />
+<code>renderHeader</code><br />
+<code>renderFooter</code><br />
+<code>renderLeft</code><br />
+<code>renderRight</code><br />

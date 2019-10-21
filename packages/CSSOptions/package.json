@@ -1,0 +1,23 @@
+{
+    "name": "@uncharted.software/css-options",
+    "version": "0.0.1",
+    "license": "MIT",
+    "entry": "src/index.ts",
+    "main": "dist/es5/index.js",
+    "module": "dist/es6/index.js",
+    "iife": "dist/iife/index.js",
+    "jsnext:main": "dist/next/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "npm-run-all --parallel build:**",
+        "build:all": "rollup --config",
+        "build:types": "tsc --declaration --declarationMap --emitDeclarationOnly",
+        "start": "cross-env TARGET='debug' rollup --config --watch",
+        "watch": "rollup --config --watch",
+        "lint": "eslint . --ext .js,.ts,.jsx,.tsx --ignore-path ../../.eslintignore",
+        "prepack": "npm-run-all build"
+    }
+}

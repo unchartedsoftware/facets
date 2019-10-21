@@ -1,0 +1,110 @@
+.facet-blueprint-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.facet-term-container {
+    padding: 6px 8px 2px;
+    width: 100%;
+}
+
+.facet-term-bar {
+    height: 4px;
+    width: 100%;
+}
+
+.facet-term-bar-background {
+    position: relative;
+
+    height: 100%;
+    width: 100%;
+    background-color: #EAEBEC;
+}
+
+.facet-term-bar-ratio {
+    height: 100%;
+    background-color: #255DCC;
+
+    transition: width 200ms ease-out;
+}
+
+.facet-term-details {
+    min-height: 16px;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.facet-term-label {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.02em;
+    color: #1A1B1C;
+}
+
+.facet-term-annotation {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.02em;
+    color: #727375;
+
+    flex-grow: 1;
+    padding-left: 14px;
+}
+
+.facet-term-value {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.02em;
+    color: #1A1B1C;
+    margin-left: 14px;
+}
+
+.facet-term-text-out {
+    animation-name: facet-term-text-out-animation;
+    animation-timing-function: ease-out;
+    animation-duration: 200ms;
+    animation-fill-mode: forwards;
+}
+
+.facet-term-text-in {
+    animation-name: facet-term-text-in-animation;
+    animation-timing-function: ease-out;
+    animation-duration: 200ms;
+    animation-fill-mode: forwards;
+}
+
+@keyframes facet-term-text-out-animation {
+    0% {
+        opacity: 1;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(0, -100%);
+        clip-path: polygon(0 400%, 100% 100%, 100% 400%, 0 200%);
+    }
+}
+
+@keyframes facet-term-text-in-animation {
+    0% {
+        opacity: 0;
+        transform: translate(0, 100%);
+        clip-path: polygon(0 100%, 100% 500%, 100% 500%, 0 100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+
+
+

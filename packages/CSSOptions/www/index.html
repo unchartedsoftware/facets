@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSSOptions</title>
+    <script type='text/javascript' src='dist/iife/index.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const element = document.getElementById('test-element');
+            const options = new cssoptions.CSSOptions(element);
+            const mode = options.read('css-reader-mode', 'unknown');
+            element.innerText = 'CSS Reader Mode: ' + mode;
+        });
+    </script>
+</head>
+<body>
+<div style="-ie11-css-reader-mode: 'legacy'; --css-reader-mode: 'modern';">
+    <div id="test-element"></div>
+</div>
+</body>
+</html>

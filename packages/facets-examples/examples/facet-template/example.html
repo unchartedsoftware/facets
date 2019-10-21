@@ -1,0 +1,306 @@
+<h1>facet-template</h1>
+<!-- stacked term facets -->
+<div class="facet-container">
+    <facet-list data='[
+		{
+			"type": "facet-term#product",
+			"data": {
+				"ratio": 0.66,
+				"label": "Product Performance",
+				"annotation": "GeoTime",
+				"value": 66
+			}
+		},
+		{
+			"type": "facet-term#sentiment",
+			"data": {
+				"ratio": 0.82,
+				"label": "Product Feedback",
+				"annotation": "Positive",
+				"value": 82,
+				"metadata": "green"
+			}
+		},
+		{
+			"type": "facet-histogram",
+			"data": {
+				"values": [
+                    { "ratio": 0.1, "labels": { "left": 0, "right": 1 } },
+                    { "ratio": 0.2, "labels": { "left": 1, "right": 2 } },
+                    { "ratio": 0.3, "labels": { "left": 2, "right": 3 } },
+                    { "ratio": 0.4, "labels": { "left": 3, "right": 4 } },
+                    { "ratio": 0.5, "labels": { "left": 4, "right": 5 } },
+                    { "ratio": 0.6, "labels": { "left": 5, "right": 6 } },
+                    { "ratio": 0.7, "labels": { "left": 6, "right": 7 } },
+                    { "ratio": 0.8, "labels": { "left": 7, "right": 8 } },
+                    { "ratio": 0.9, "labels": { "left": 8, "right": 9 } },
+                    { "ratio": 1.0, "labels": { "left": 9, "right": 10 } }
+                ],
+				"metadata": "Adoption Rate"
+			}
+		},
+		{
+			"type": "facet-blueprint#map",
+			"data": {
+				"title": "Product Headquarters",
+				"url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.9015894001313!2d-79.36674028410965!3d43.650215779121446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cb3b866028bd%3A0x69cd93192feba9ab!2sUncharted%20Software!5e0!3m2!1sen!2sca!4v1569255437594!5m2!1sen!2sca"
+			}
+		},
+		{
+			"type": "facet-term#video",
+			"data": {
+				"ratio": 0.75,
+				"label": "Video Views",
+				"annotation": "(lifetime)",
+				"value": "1,414",
+				"metadata": "iFMq_PMB4fM"
+			}
+		},
+		{
+			"type": "facet-term",
+			"data": {
+				"ratio": 0.50,
+				"label": "Local Agencies",
+				"value": 447
+			}
+		},
+		{
+			"type": "facet-term",
+			"data": {
+				"ratio": 0.10,
+				"label": "Federal Agencies",
+				"value": 26
+			}
+		},
+		{
+			"type": "facet-term",
+			"data": {
+				"ratio": 0.06,
+				"label": "Global Agencies",
+				"annotation": "GeoTime",
+				"value": 4
+			}
+		},
+		{
+			"type": "facet-histogram",
+			"data": {
+				"values": [
+                    { "ratio": 0.1, "labels": { "left": 0, "right": 1 } },
+                    { "ratio": 0.2, "labels": { "left": 1, "right": 2 } },
+                    { "ratio": 0.3, "labels": { "left": 2, "right": 3 } },
+                    { "ratio": 0.4, "labels": { "left": 3, "right": 4 } },
+                    { "ratio": 0.5, "labels": { "left": 4, "right": 5 } },
+                    { "ratio": 0.6, "labels": { "left": 5, "right": 6 } },
+                    { "ratio": 0.7, "labels": { "left": 6, "right": 7 } },
+                    { "ratio": 0.8, "labels": { "left": 7, "right": 8 } },
+                    { "ratio": 0.9, "labels": { "left": 8, "right": 9 } },
+                    { "ratio": 1.0, "labels": { "left": 9, "right": 10 } }
+                ],
+				"metadata": "Crimes Solved"
+			}
+		}
+	]'>
+        <div slot="header" class="example-header">Product Facets</div>
+        <facet-template target="facet-term#product">
+            <div slot="header" class="geotime-header"></div>
+        </facet-template>
+        <facet-template target="facet-term#sentiment">
+            <div slot="right" class="color-right" template-style="background-color:${metadata};"></div>
+        </facet-template>
+        <facet-template target="facet-histogram">
+            <div slot="header" class="histogram-header">${metadata}</div>
+        </facet-template>
+        <facet-template target="facet-blueprint#map">
+            <div slot="header" class="histogram-header">${title}</div>
+            <div slot="content" class="media-content">
+                <iframe
+                    src="${url}"
+                    width="290"
+                    height="300"
+                    frameborder="0"
+                    style="border:0;"
+                    allowfullscreen="">
+                </iframe>
+            </div>
+        </facet-template>
+        <facet-template target="facet-term#video">
+            <div slot="header" class="video-content">
+                <iframe
+                    width="290"
+                    height="163"
+                    src="https://www.youtube.com/embed/${metadata}"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </facet-template>
+    </facet-list>
+</div>
+
+<br />
+<h3>Definition</h3>
+<code>facet-template</code> is a standalone HTML component meant to allow
+customization of facets inside facet containers, like <code>facet-list</code>,
+while providing access to the data set to each facet through the use of familiar
+ES6 template strings syntax:<br />
+
+<br />
+<div class="code-block"><pre>
+&lt;facet-template target="facet-term"&gt;
+	&lt;div slot="header"&gt;${metadata.title}&lt;/div&gt;
+&lt;/facet-template&gt;
+</pre></div>
+
+<br />
+<h3>Setup</h3>
+
+A <code>facet-template</code> instance creates a template for a single facet type
+as defined in its <code>target</code> attribute. Once a target has been defined
+the content of the <code>facet-template</code> instance acts as the template of
+for the facet type. At this point the slots defined for each facet are accessible
+directly from the <code>slot</code> attribute of the <code>facet-template</code>
+children.<br />
+
+<h3>Accessing data</h3>
+
+The data defined for each facet is accessible within a <code>facet-template</code>
+through the use of delimter characters, for example, if the data for a facet is:
+<br />
+
+<br />
+<div class="code-block"><pre>
+const facetData = {
+    ratio: 0.5,
+    label: 'a facet!',
+    annotation: 'annotation',
+    value: 123,
+    metadata: {
+        title: 'The Title',
+        footer: 'footsies',
+        left: 'sinister',
+        right: 'dexter',
+    },
+};
+</pre></div>
+<br />
+
+The data could be accessed as follows in the <code>facet-template</code> instance:
+<br />
+
+<br />
+<div class="code-block"><pre>
+&lt;facet-template target="facet-term"&gt;
+	&lt;div slot="header"&gt;${metadata.title} for ${label}&lt;/div&gt;
+    &lt;div slot="footer"&gt;${metadata.footer} of value: ${value}&lt;/div&gt;
+    &lt;div slot="left"&gt;${metadata.left}&lt;/div&gt;
+    &lt;div slot="right"&gt;${metadata.right}&lt;/div&gt;
+&lt;/facet-template&gt;
+</pre></div>
+<br />
+
+Which would render as follows:<br />
+
+<br />
+<div class="facet-container">
+    <facet-list data='[
+		{
+	    	"type": "facet-term",
+			"data": {
+              "ratio": 0.5,
+              "label": "a facet!",
+              "annotation": "annotation",
+              "value": 123,
+              "metadata": {
+                  "title": "The Title",
+                  "footer": "footsies",
+                  "left": "sinister",
+                  "right": "dexter"
+              }
+          }
+		}
+    ]'>
+        <facet-template target="facet-term">
+            <div slot="header">${metadata.title} for ${label}</div>
+            <div slot="footer">${metadata.footer} of value: ${value}</div>
+            <div slot="left">${metadata.left}</div>
+            <div slot="right">${metadata.right}</div>
+        </facet-template>
+    </facet-list>
+</div>
+
+<h3>Tagging</h3>
+
+Some times, several different templates are needed for the same facet type,
+tagging solves that problem by allowing developers to append an arbitrary tag to
+the facet type. To do so, simply append a <code>#</code> symbol followed by a tag
+to identify the template:<br />
+
+<br />
+<div class="code-block"><pre>
+&lt;facet-template target="facet-term#01"&gt;
+	&lt;div slot="header"&gt;${metadata.title}&lt;/div&gt;
+&lt;/facet-template&gt;
+</pre></div>
+
+<br />
+Then add the same tag to the <code>type</code>:<br />
+
+<br />
+<div class="code-block"><pre>
+const facetListData = [
+    {
+        type: 'facet-term#01',
+        data: {
+            ratio: 0.5,
+            label: 'a facet!',
+            annotation: 'annotation',
+            value: 123,
+            metadata: {
+                title: 'The Title',
+                footer: 'footsies',
+                left: 'sinister',
+                right: 'dexter',
+            },
+        },
+    },
+];
+</pre></div>
+<br />
+
+<h3>Attributes</h3>
+
+<code>facet-template</code> instances also allow developers to customize the
+attributes of their target facet type. To do so, simply add the attributes that
+need to be assigned to the <code>facet-template</code> instance itself:<br />
+
+<br />
+<div class="code-block"><pre>
+&lt;facet-template target="facet-term#01" actionbuttons="${metadata.actionButtons}"&gt;
+	&lt;div slot="header"&gt;${metadata.title}&lt;/div&gt;
+&lt;/facet-template&gt;
+</pre></div>
+<br />
+
+some attriutes can conflict with the <code>facet-template</code> attributes or,
+depending on the engine used, be sanitized at compile time by templating engines.
+To solve this issue, it is a good practice to prepend <code>template-</code> to
+any attribute that needs to be passed down to the facet type itself:<br />
+
+<br />
+<div class="code-block"><pre>
+&lt;facet-template target="facet-term#01" template-style:"background-color:${metadata.bg}"&gt;
+	&lt;div slot="header"&gt;${metadata.title}&lt;/div&gt;
+&lt;/facet-template&gt;
+</pre></div>
+<br />
+
+<!-- <h3>Styling</h3> -->
+
+<term-facet></term-facet>
+<facet-histogram></facet-histogram>
+<image-facet></image-facet>
+
+<br />
+<br />
+<br />

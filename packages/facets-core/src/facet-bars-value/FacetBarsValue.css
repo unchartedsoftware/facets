@@ -1,0 +1,40 @@
+:host {
+    flex-grow: 1;
+    margin: 0 0.5px;
+}
+
+.facet-blueprint {
+    height: 100%;
+}
+
+.facet-hoverable-buttons {
+    right: unset;
+    left: 0;
+    top: -29px;
+}
+
+.facet-bars-value-background {
+    transition: background-color 256ms, margin-left 200ms ease-out;
+    background-color: #EAEBEC;
+    display: flex;
+    align-items: flex-end;
+    cursor: pointer;
+    height: 100%;
+    z-index: -1;
+}
+
+.facet-bars-value-background:hover {
+    background-color: #EAEBEC;
+    transition: background-color 0ms;
+}
+
+.facet-bars-value-bar {
+    width: 100%;
+    background-color: #255DCC;
+    transition: height 200ms ease-out;
+}
+
+.facet-bars-value-background:hover .facet-bars-value-bar {
+    background-color: #255DCC;
+    transition: background-color 0ms;
+}

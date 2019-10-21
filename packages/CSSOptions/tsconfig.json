@@ -1,0 +1,16 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "strict": true,
+        "allowJs": false,
+        "allowSyntheticDefaultImports": true,
+        "downlevelIteration": true,
+        "removeComments": false,
+        "isolatedModules": false,
+        "noEmit": false
+    },
+    "include": [
+        "src/**/*"
+    ]
+}

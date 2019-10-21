@@ -1,0 +1,70 @@
+.facet-container {
+    width: 300px;
+}
+
+.slot-header {
+    background-color: #ff0000;
+    padding: 5px;
+    font-family: monospace;
+    font-size: 13px;
+    color: white;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.slot-footer {
+    background-color: #00ff00;
+    padding: 5px;
+    font-family: monospace;
+    font-size: 13px;
+    color: gray;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.slot-left {
+    background-color: #0000ff;
+    padding: 0 5px;
+    font-family: monospace;
+    font-size: 13px;
+    color: white;
+    text-align: center;
+    border: 1px solid black;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    max-width: 44px;
+}
+
+.slot-right {
+    background-color: #ffff00;
+    padding: 0 5px;
+    font-family: monospace;
+    font-size: 13px;
+    color: gray;
+    text-align: center;
+    border: 1px solid black;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    max-width: 44px;
+}
+
+.slot-content {
+    background-color: #ff00ff;
+    padding: 15px 5px;
+    font-family: monospace;
+    font-size: 13px;
+    color: white;
+    text-align: center;
+    border: 1px solid black;
+}
+
+/* text styles */
+code {
+    padding: 1px;
+    background-color: #d5d5d5;
+    border: 1px solid #767676;
+    font-family: monospace;
+    font-size: 13px;
+}

@@ -1,0 +1,221 @@
+.facet-blueprint {
+    background-color: #FFFFFF;
+    transition: background-color 256ms;
+}
+
+.facet-histogram-container {
+    padding: 8px 8px 4px;
+    position: relative;
+}
+
+.facet-blueprint:hover .facet-histogram-buckets .facet-histogram-bucket-background {
+    background-color: #EAEBEC;
+    transition: background-color 0ms;
+}
+
+.facet-blueprint:hover .facet-histogram-buckets > .facet-histogram-bucket-background:hover {
+    background-color: #D9DADB;
+}
+
+.facet-histogram-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.facet-histogram-buckets {
+    transition: background-color 256ms;
+    min-height: 72px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    padding-bottom: 10px;
+    margin: 0 16px;
+}
+
+.facet-histogram-buckets > * + * {
+    margin-left: 2px;
+}
+
+.facet-histogram-value {
+    flex-grow: 1;
+}
+
+.facet-histogram-bucket-background {
+    transition: background-color 256ms, margin-left 200ms ease-out;
+    background-color: #F7F7F7;
+    display: flex;
+    align-items: flex-end;
+    cursor: pointer;
+    flex-grow: 1;
+}
+
+.facet-histogram-bucket-expand {
+    animation-name: facet-histogram-bucket-expand-animation;
+    animation-timing-function: ease-out;
+    animation-duration: 200ms;
+    animation-fill-mode: forwards;
+}
+
+.facet-histogram-bucket-collapse {
+    animation-name: facet-histogram-bucket-collapse-animation;
+    animation-timing-function: ease-out;
+    animation-duration: 200ms;
+    animation-fill-mode: forwards;
+    margin-left: 0;
+}
+
+.facet-histogram-bucket-background:hover .facet-histogram-bucket-bar {
+    background-color: #A4C2FC;
+}
+
+.facet-histogram-bucket-bar {
+    width: 100%;
+    background-color: #255DCC;
+    transition: height 200ms ease-out;
+}
+
+.facet-histogram-range {
+    height: 10px;
+    position: relative;
+}
+
+.facet-histogram-range-bar-background {
+    height: 4px;
+    background-color: #D9DADB;
+    border-radius: 4px;
+    margin: 0 4px;
+}
+
+.facet-histogram-range-bar {
+    height: 100%;
+    background-color: #255DCC;
+    border-radius: 4px;
+}
+
+.facet-histogram-range-handle:before {
+    content: url(data:image/svg+xml,%3Csvg%20width=%2218%22%20height=%2218%22%20viewBox=%220%200%2018%2018%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath%20fill-rule=%22evenodd%22%20clip-rule=%22evenodd%22%20d=%22M16.6942%209.22954L10.8237%2014.9181C10.1064%2015.6132%209.16012%2016%208.17694%2016L2.93495%2016C1.86631%2016%201%2015.1046%201%2014L0.999999%203C0.999999%201.89543%201.86631%201%202.93495%201L8.17693%201C9.16012%201%2010.1064%201.3868%2010.8237%202.08185L16.6942%207.77046C17.084%208.14819%2017.1038%208.78103%2016.7383%209.18394C16.7241%209.19963%2016.7094%209.21483%2016.6942%209.22954Z%22%20fill=%22%23F9F9F9%22%20stroke=%22%23D9DADB%22%20stroke-width=%221px%22/%3E%3C/svg%3E);
+}
+
+.facet-histogram-range-handle {
+    cursor: pointer;
+}
+
+.facet-histogram-range-handle-right {
+    width: 15px;
+    height: 16px;
+
+    position: absolute;
+    top: 2px;
+    right: 0;
+
+    transform: translate(0, -50%) rotate(180deg);
+}
+
+.facet-histogram-range-handle-left {
+    width: 15px;
+    height: 16px;
+
+    position: absolute;
+    top: 2px;
+    left: 0;
+
+    transform: translate(0, -50%);
+}
+
+.facet-histogram-labels {
+    height: 16px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    display: flex;
+    flex-direction: row;
+    user-select: none;
+    overflow: hidden;
+}
+
+.facet-histogram-label-left {
+    text-align: left;
+    color: #727375;
+    flex-grow: 1;
+    display: inline-block;
+}
+
+.facet-histogram-label-right {
+    text-align: right;
+    color: #727375;
+    flex-grow: 1;
+    display: inline-block;
+}
+
+.facet-histogram-label-center {
+    text-align: center;
+    color: #1A1B1C;
+    flex-grow: 1;
+    display: inline-block;
+}
+
+.facet-histogram-text-out {
+    animation-name: facet-histogram-text-out-animation;
+    animation-timing-function: ease-out;
+    animation-duration: 200ms;
+    animation-fill-mode: forwards;
+}
+
+.facet-histogram-text-in {
+    animation-name: facet-histogram-text-in-animation;
+    animation-timing-function: ease-out;
+    animation-duration: 200ms;
+    animation-fill-mode: forwards;
+}
+
+@keyframes facet-histogram-text-out-animation {
+    0% {
+        opacity: 1;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(0, -100%);
+        clip-path: polygon(0 400%, 100% 100%, 100% 400%, 0 200%);
+    }
+}
+
+@keyframes facet-histogram-text-in-animation {
+    0% {
+        opacity: 0;
+        transform: translate(0, 100%);
+        clip-path: polygon(0 100%, 100% 500%, 100% 500%, 0 100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+@keyframes facet-histogram-bucket-expand-animation {
+    0% {
+        flex-grow: 0.0001;
+        opacity: 1; /* IE11 fix */
+    }
+
+    100% {
+        flex-grow: 1;
+        opacity: 1; /* IE11 fix */
+    }
+}
+
+@keyframes facet-histogram-bucket-collapse-animation {
+    0% {
+        flex-grow: 1;
+        opacity: 1; /* IE11 fix */
+    }
+
+    100% {
+        flex-grow: 0.0001;
+        opacity: 1; /* IE11 fix */
+    }
+}

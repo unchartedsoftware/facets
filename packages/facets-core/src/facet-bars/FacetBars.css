@@ -1,0 +1,69 @@
+.facet-bars-container {
+    padding: 4px 8px 4px;
+}
+
+.facet-bars-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.facet-bars-values {
+    transition: background-color 256ms;
+    min-height: 64px;
+    height: 100%;
+    flex-grow: 1;
+    padding-bottom: 10px;
+    margin: 0 16px;
+
+    display: flex;
+    align-items: stretch;
+}
+
+.facet-bars-values ::slotted(#facet-bars-values) {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.facet-bars-range {
+    height: 10px;
+    position: relative;
+}
+
+.facet-bars-range-bar-background {
+    height: 4px;
+    background-color: #D9DADB;
+    border-radius: 4px;
+    margin: 0 4px;
+}
+
+.facet-bars-range-bar {
+    height: 100%;
+    background-color: #727375;
+    border-radius: 4px;
+}
+
+.facet-bars-range-handle:before {
+    content: url(data:image/svg+xml,%3Csvg%20width=%2215%22%20height=%2215%22%20viewBox=%220%200%2018%2018%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath%20fill-rule=%22evenodd%22%20clip-rule=%22evenodd%22%20d=%22M16.6942%209.22954L10.8237%2014.9181C10.1064%2015.6132%209.16012%2016%208.17694%2016L2.93495%2016C1.86631%2016%201%2015.1046%201%2014L0.999999%203C0.999999%201.89543%201.86631%201%202.93495%201L8.17693%201C9.16012%201%2010.1064%201.3868%2010.8237%202.08185L16.6942%207.77046C17.084%208.14819%2017.1038%208.78103%2016.7383%209.18394C16.7241%209.19963%2016.7094%209.21483%2016.6942%209.22954Z%22%20fill=%22%23F9F9F9%22%20stroke=%22%23D9DADB%22%20stroke-width=%221px%22/%3E%3C/svg%3E);
+}
+
+.facet-bars-range-handle {
+    cursor: pointer;
+    width: 15px;
+    height: 14px;
+
+    position: absolute;
+    top: 2px;
+}
+
+.facet-bars-range-handle-right {
+    right: 0;
+    transform: translate(0, -50%) scale(-1, 1);
+}
+
+.facet-bars-range-handle-left {
+    left: 0;
+    transform: translate(0, -50%);
+}
+

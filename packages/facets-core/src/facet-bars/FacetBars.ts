@@ -1,0 +1,106 @@
+import {customElement, TemplateResult, html, CSSResult, css, unsafeCSS} from 'lit-element';
+import {FacetContainer} from '../facet-container/FacetContainer';
+import {FacetBarsValueData} from '../facet-bars-value/FacetBarsValue';
+import {preHTML} from '../tools/preHTML';
+
+// @ts-ignore
+import facetBarsStyle from './FacetBars.css';
+
+export interface FacetBarsValueDataTyped extends FacetBarsValueData {
+    type?: string;
+}
+
+export interface FacetBarsData {
+    values: FacetBarsValueDataTyped[];
+    label?: string;
+    metadata?: any;
+}
+
+const kDefaultData: FacetBarsData = { values: [] };
+
+@customElement('facet-bars')
+export class FacetBars extends FacetContainer {
+    public static get styles(): CSSResult[] {
+        const styles = super.styles;
+        styles.push(css`
+            ${unsafeCSS(facetBarsStyle)}
+        `);
+        return styles;
+    }
+
+    public static get properties(): any {
+        return {
+            data: { type: Object },
+            actionButtons: { type: Number, attribute: 'action-buttons' },
+        };
+    }
+
+    private _data: FacetBarsData = kDefaultData;
+    public get data(): FacetBarsData {
+        return this._data;
+    }
+    public set data(newData: FacetBarsData) {
+        const oldData = this._data;
+        this._data = newData;
+        this.requestUpdate('data', oldData);
+    }
+
+    private _actionButtons: number = 2;
+    public get actionButtons(): number {
+        return this._actionButtons;
+    }
+    public set actionButtons(value: number) {
+        const oldValue = this._actionButtons;
+        this._actionButtons = value;
+        this.requestUpdate('actionButtons', oldValue);
+    }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        const values = this.createSlottedElement('values');
+        if (values) {
+            values.setAttribute('id', 'facet-bars-values');
+        }
+    }
+
+    protected renderHeaderLabel(): TemplateResult | void {
+        return html`<span>${this._data.label}</span>`;
+    }
+
+    protected renderContent(): TemplateResult | void {
+        return html`
+        <div class="facet-bars-container">
+            <div class="facet-bars-content">
+                <div class="facet-bars-values"><slot name="values"></slot></div>
+                <div class="facet-bars-range">${this._renderRange()}</div>
+            </div>
+        </div>
+        `;
+    }
+
+    protected renderSlottedElements(): void {
+        super.renderSlottedElements();
+        const valuesSlot = this.slottedElements.get('values');
+        if (valuesSlot) {
+            const stringTemplate = html`${this.data.values.map((value: FacetBarsValueDataTyped): TemplateResult => {
+                const type = value.type || 'facet-bars-value';
+                const template = this.templates.get(type);
+                if (template) {
+                    return template.getHTML(value);
+                } else if (type !== 'facet-bars-value') {
+                    return preHTML`<${type} action-buttons="${this._actionButtons}" .data="${value}"></${type}>`;
+                }
+                return html`<facet-bars-value action-buttons="${this._actionButtons}" .data="${value}"></facet-bars-value>`;
+            })}`;
+            this.renderSlottedElement(stringTemplate, valuesSlot);
+        }
+    }
+
+    private _renderRange(): TemplateResult {
+        return html`
+            <div class="facet-bars-range-bar-background"><div class="facet-bars-range-bar"></div></div>
+            <div class="facet-bars-range-handle facet-bars-range-handle-left"></div>
+            <div class="facet-bars-range-handle facet-bars-range-handle-right"></div>
+        `;
+    }
+}
