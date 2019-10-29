@@ -18,6 +18,8 @@ export class FacetTemplate extends LitElement {
     private readonly slots: TemplateComponents[];
 
     private templateAttributes: Map<string, string | null>;
+    private customAttributesNames: Map<string, symbol>;
+    private customAttributesKeys: Map<symbol, string>;
     private tagComponents: TemplateComponents;
     private mutationObserver: MutationWrapper;
 
@@ -25,6 +27,8 @@ export class FacetTemplate extends LitElement {
         super();
         this.slots = [];
         this.templateAttributes = new Map<string, string | null>();
+        this.customAttributesNames = new Map<string, symbol>();
+        this.customAttributesKeys = new Map<symbol, string>();
         this.tagComponents = {
             strings: [],
             values: [],
@@ -33,8 +37,33 @@ export class FacetTemplate extends LitElement {
         this.mutationObserver.nodesAdded = this._processAddedNodes.bind(this);
     }
 
-    public getHTML(data: any): TemplateResult {
-        return this._getHTML(data, this.tagComponents);
+    public getHTML(data: any, customAttributes: {[key: string]: string} = {}): TemplateResult {
+        return this._getHTML(data, this.tagComponents, customAttributes);
+    }
+
+    public addCustomAttribute(name: string): void {
+        if (!this.customAttributesNames.has(name)) {
+            const key = Symbol(`FacetTemplate::CustomAttribute::${this.target}::${name}`);
+            this.customAttributesNames.set(name, key);
+            this.customAttributesKeys.set(key, name);
+            this.tagComponents = {
+                strings: [],
+                values: [],
+            };
+            this._initializeTemplateTag();
+        }
+    }
+
+    public deleteCustomAttribute(name: string): void {
+        if (this.customAttributesNames.has(name)) {
+            this.customAttributesKeys.delete(this.customAttributesNames.get(name) as symbol);
+            this.customAttributesNames.delete(name);
+            this.tagComponents = {
+                strings: [],
+                values: [],
+            };
+            this._initializeTemplateTag();
+        }
     }
 
     public connectedCallback(): void {
@@ -82,10 +111,15 @@ export class FacetTemplate extends LitElement {
         this._processHtmlParts(tagHTML, this.tagComponents);
 
         this.tagComponents.values.push(kDataKey);
-        this.tagComponents.values.push(kSlotsKey);
-
         this.tagComponents.strings[this.tagComponents.strings.length - 1] += ' .data="';
+
+        for (const entry of this.customAttributesNames) {
+            this.tagComponents.strings.push(`" ${entry[0]}="`);
+            this.tagComponents.values.push(entry[1]);
+        }
+
         this.tagComponents.strings.push('">');
+        this.tagComponents.values.push(kSlotsKey);
         this.tagComponents.strings.push(`</${type}>`);
     }
 
@@ -126,25 +160,39 @@ export class FacetTemplate extends LitElement {
         return components;
     }
 
-    private _getHTML(data: any, components: TemplateComponents): TemplateResult {
+    private _getHTML(data: any, components: TemplateComponents, customAttributes: {[key: string]: string}): TemplateResult {
         const values: any[] = [];
         for (let i = 0, n = components.values.length; i < n; ++i) {
-            values.push(this._readData(data, components.values[i]));
+            if (typeof components.values[i] === 'symbol') {
+                const key = components.values[i] as symbol;
+                if (key === kDataKey) {
+                    values.push(data);
+                } else if (key === kSlotsKey) {
+                    values.push(this._getSlotsHTML(data));
+                } else if (
+                    this.customAttributesKeys.has(key) &&
+                    customAttributes.hasOwnProperty(this.customAttributesKeys.get(key) as string)
+                ) {
+                    values.push(customAttributes[this.customAttributesKeys.get(key) as string]);
+                } else {
+                    values.push('');
+                }
+            } else {
+                values.push(this._readData(data, components.values[i]));
+            }
         }
         return html(components.strings as any, ...values);
     }
 
-    private _readData(data: any, key: string | symbol): any {
-        if (key === kDataKey) {
-            return data;
-        } else if (key === kSlotsKey) {
-            const slots: TemplateResult[] = [];
-            for (let i = 0, n = this.slots.length; i < n; ++i) {
-                slots.push(this._getHTML(data, this.slots[i]));
-            }
-            return slots;
+    private _getSlotsHTML(data: any): TemplateResult[] {
+        const slots: TemplateResult[] = [];
+        for (let i = 0, n = this.slots.length; i < n; ++i) {
+            slots.push(this._getHTML(data, this.slots[i], {}));
         }
+        return slots;
+    }
 
+    private _readData(data: any, key: string | symbol): any {
         const route = (key as string).split('.');
         let value = data;
         for (let i = 0, n = route.length; i < n; ++i) {

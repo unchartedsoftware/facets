@@ -1,6 +1,6 @@
 :host {
     flex-grow: 1;
-    margin: 0 0.5px;
+    margin: 0 1px;
 }
 
 .facet-blueprint {
@@ -14,8 +14,7 @@
 }
 
 .facet-bars-value-background {
-    transition: background-color 256ms, margin-left 200ms ease-out;
-    background-color: #EAEBEC;
+    transition: margin-left 200ms ease-out;
     display: flex;
     align-items: flex-end;
     cursor: pointer;
@@ -23,18 +22,79 @@
     z-index: -1;
 }
 
-.facet-bars-value-background:hover {
+:host([facet-value-state="normal"][facet-hovered="false"]) .facet-bars-value-background {
     background-color: #EAEBEC;
-    transition: background-color 0ms;
 }
+
+:host([facet-value-state="normal"][facet-hovered="true"]) .facet-bars-value-background {
+    background-color: #F7F7F7;
+}
+
+:host([facet-value-state="normal"][facet-hovered="true"]) .facet-blueprint:hover .facet-bars-value-background {
+    background-color: #EAEBEC;
+}
+
+:host([facet-value-state="highlighted"][facet-hovered="false"]) .facet-bars-value-background {
+    background-color: #EBF1FC;
+}
+
+:host([facet-value-state="highlighted"][facet-hovered="true"]) .facet-bars-value-background {
+    background-color: #EAEBEC;
+}
+
+:host([facet-value-state="highlighted"][facet-hovered="true"]) .facet-blueprint:hover .facet-bars-value-background {
+    background-color: #EAEBEC;
+}
+
+:host([facet-value-state="muted"][facet-hovered="false"]) .facet-bars-value-background {
+    background-color: #EAEBEC;
+}
+
+:host([facet-value-state="muted"][facet-hovered="true"]) .facet-bars-value-background {
+    background-color: #F7F7F7;
+}
+
+:host([facet-value-state="muted"][facet-hovered="true"]) .facet-blueprint:hover .facet-bars-value-background {
+    background-color: #EBF1FC;
+}
+
 
 .facet-bars-value-bar {
     width: 100%;
-    background-color: #255DCC;
-    transition: height 200ms ease-out;
 }
 
-.facet-bars-value-background:hover .facet-bars-value-bar {
+:host([facet-value-state="normal"][facet-hovered="false"]) .facet-bars-value-bar {
     background-color: #255DCC;
-    transition: background-color 0ms;
+}
+
+:host([facet-value-state="normal"][facet-hovered="true"]) .facet-bars-value-bar {
+    background-color: #A4C2FC;
+}
+
+:host([facet-value-state="normal"][facet-hovered="true"]) .facet-blueprint:hover .facet-bars-value-bar {
+    background-color: #255DCC;
+}
+
+:host([facet-value-state="highlighted"][facet-hovered="false"]) .facet-bars-value-bar {
+    background-color: #255DCC;
+}
+
+:host([facet-value-state="highlighted"][facet-hovered="true"]) .facet-bars-value-bar {
+    background-color: #A4C2FC;
+}
+
+:host([facet-value-state="highlighted"][facet-hovered="true"]) .facet-blueprint:hover .facet-bars-value-bar {
+    background-color: #255DCC;
+}
+
+:host([facet-value-state="muted"][facet-hovered="false"]) .facet-bars-value-bar {
+    background-color: #C2C3C4;
+}
+
+:host([facet-value-state="muted"][facet-hovered="true"]) .facet-bars-value-bar {
+    background-color: #D9DADB;
+}
+
+:host([facet-value-state="muted"][facet-hovered="true"]) .facet-blueprint:hover .facet-bars-value-bar {
+    background-color: #255DCC;
 }

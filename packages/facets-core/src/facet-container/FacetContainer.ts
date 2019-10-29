@@ -85,12 +85,20 @@ export class FacetContainer extends FacetBlueprint {
                 {scopeName: this.localName, eventContext: this});
     }
 
+    protected setTemplateForTarget(target: string, template: FacetTemplate): void {
+        this.templates.set(target, template);
+    }
+
+    protected deleteTemplateForTarget(target: string): void {
+        this.templates.delete(target);
+    }
+
     private _processAddedNodes(nodes: NodeList): void {
         for (let i = 0, n = nodes.length; i < n; ++i) {
             if (nodes[i] instanceof HTMLElement) {
                 const child = nodes[i] as HTMLElement;
                 if (child instanceof FacetTemplate) {
-                    this.templates.set(child.target, child);
+                    this.setTemplateForTarget(child.target, child);
                     this.requestUpdate();
                 } else if (child.hasAttribute('slot')) {
                     const slot = child.getAttribute('slot') as string;
@@ -109,7 +117,7 @@ export class FacetContainer extends FacetBlueprint {
             if (nodes[i] instanceof HTMLElement) {
                 const child = nodes[i] as HTMLElement;
                 if (child instanceof FacetTemplate && this.renderRoot.constructor.name === 'ShadowRoot') {
-                    this.templates.delete(child.target);
+                    this.deleteTemplateForTarget(child.target);
                     this.requestUpdate();
                 } else if (child.hasAttribute('slot')) {
                     const slot = child.getAttribute('slot') as string;

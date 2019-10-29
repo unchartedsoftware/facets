@@ -1,6 +1,7 @@
 import {customElement, TemplateResult, html, CSSResult, css, unsafeCSS} from 'lit-element';
 import {FacetContainer} from '../facet-container/FacetContainer';
 import {FacetBarsValueData} from '../facet-bars-value/FacetBarsValue';
+import {FacetTemplate} from '../facet-template/FacetTemplate';
 import {preHTML} from '../tools/preHTML';
 
 // @ts-ignore
@@ -32,8 +33,11 @@ export class FacetBars extends FacetContainer {
         return {
             data: { type: Object },
             actionButtons: { type: Number, attribute: 'action-buttons' },
+            highlight: { type: Array},
         };
     }
+
+    public highlight: number[] = [];
 
     private _data: FacetBarsData = kDefaultData;
     public get data(): FacetBarsData {
@@ -55,6 +59,8 @@ export class FacetBars extends FacetContainer {
         this.requestUpdate('actionButtons', oldValue);
     }
 
+    private facetValuesHover: boolean = false;
+
     public connectedCallback(): void {
         super.connectedCallback();
         const values = this.createSlottedElement('values');
@@ -71,7 +77,7 @@ export class FacetBars extends FacetContainer {
         return html`
         <div class="facet-bars-container">
             <div class="facet-bars-content">
-                <div class="facet-bars-values"><slot name="values"></slot></div>
+                <div class="facet-bars-values" @mouseenter="${this._facetValuesHoverHandler}" @mouseleave="${this._facetValuesHoverHandler}"><slot name="values"></slot></div>
                 <div class="facet-bars-range">${this._renderRange()}</div>
             </div>
         </div>
@@ -82,18 +88,31 @@ export class FacetBars extends FacetContainer {
         super.renderSlottedElements();
         const valuesSlot = this.slottedElements.get('values');
         if (valuesSlot) {
-            const stringTemplate = html`${this.data.values.map((value: FacetBarsValueDataTyped): TemplateResult => {
+            const hovered = this.facetValuesHover.toString();
+            const actionButtons = this._actionButtons.toString();
+            const hasHighlight = this.highlight.length;
+            const stringTemplate = html`${this.data.values.map((value: FacetBarsValueDataTyped, i: number): TemplateResult => {
+                const state = hasHighlight ? (this.highlight.indexOf(i) !== -1 ? 'highlighted' : 'muted') : 'normal';
                 const type = value.type || 'facet-bars-value';
                 const template = this.templates.get(type);
                 if (template) {
-                    return template.getHTML(value);
+                    return template.getHTML(value, {
+                        'facet-value-state': state,
+                        'facet-hovered': hovered,
+                    });
                 } else if (type !== 'facet-bars-value') {
-                    return preHTML`<${type} action-buttons="${this._actionButtons}" .data="${value}"></${type}>`;
+                    return preHTML`<${type} facet-value-state="${state}" facet-hovered="${hovered}" action-buttons="${actionButtons}" .data="${value}"></${type}>`;
                 }
-                return html`<facet-bars-value action-buttons="${this._actionButtons}" .data="${value}"></facet-bars-value>`;
+                return html`<facet-bars-value facet-value-state="${state}" facet-hovered="${hovered}" action-buttons="${actionButtons}" .data="${value}"></facet-bars-value>`;
             })}`;
             this.renderSlottedElement(stringTemplate, valuesSlot);
         }
+    }
+
+    protected setTemplateForTarget(target: string, template: FacetTemplate): void {
+        super.setTemplateForTarget(target, template);
+        template.addCustomAttribute('facet-value-state');
+        template.addCustomAttribute('facet-hovered');
     }
 
     private _renderRange(): TemplateResult {
@@ -103,4 +122,14 @@ export class FacetBars extends FacetContainer {
             <div class="facet-bars-range-handle facet-bars-range-handle-right"></div>
         `;
     }
+
+    private _facetValuesHoverHandler: (event: MouseEvent) => void = (event: MouseEvent): void => {
+        if (event.type === 'mouseenter' && !this.facetValuesHover) {
+            this.facetValuesHover = true;
+            this.requestUpdate();
+        } else if (event.type === 'mouseleave' && this.facetValuesHover) {
+            this.facetValuesHover = false;
+            this.requestUpdate();
+        }
+    };
 }
