@@ -75,9 +75,16 @@ export class FacetBars extends FacetContainer {
         return html`<span>${this._data.label}</span>`;
     }
 
+    protected renderLeft(): TemplateResult | void {
+        return html`
+        
+        `;
+    }
+
     protected renderContent(): TemplateResult | void {
         return html`
         <div class="facet-bars-container">
+            <div class="facet-bars-hover-tab"></div>
             <div class="facet-bars-content">
                 <div class="facet-bars-values" @mouseenter="${this._facetValuesHoverHandler}" @mouseleave="${this._facetValuesHoverHandler}"><slot name="values"></slot></div>
                 <div class="facet-bars-range">${this._renderRange()}</div>

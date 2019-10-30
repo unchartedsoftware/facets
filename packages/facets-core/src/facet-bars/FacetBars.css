@@ -1,8 +1,19 @@
+.facet-bars-hover-tab {
+    width: 4px;
+    margin-right: 4px;
+}
+
+.facet-blueprint-body:hover .facet-bars-hover-tab {
+    background-color: #255DCC;
+}
+
 .facet-bars-container {
-    padding: 4px 8px 4px;
+    padding: 4px 8px 4px 0;
+    display: flex;
 }
 
 .facet-bars-content {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
