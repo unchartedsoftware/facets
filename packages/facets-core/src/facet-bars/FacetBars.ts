@@ -34,10 +34,12 @@ export class FacetBars extends FacetContainer {
             data: { type: Object },
             actionButtons: { type: Number, attribute: 'action-buttons' },
             highlight: { type: Array},
+            subselection: { type: Array },
         };
     }
 
     public highlight: number[] = [];
+    public subselection: number[] = [];
 
     private _data: FacetBarsData = kDefaultData;
     public get data(): FacetBarsData {
@@ -91,19 +93,36 @@ export class FacetBars extends FacetContainer {
             const hovered = this.facetValuesHover.toString();
             const actionButtons = this._actionButtons.toString();
             const hasHighlight = this.highlight.length;
+            const hasSubselection = this.subselection.length;
             const stringTemplate = html`${this.data.values.map((value: FacetBarsValueDataTyped, i: number): TemplateResult => {
                 const state = hasHighlight ? (this.highlight.indexOf(i) !== -1 ? 'highlighted' : 'muted') : 'normal';
+                const subselection = hasSubselection ? `${this.subselection[i]}` : 'false';
                 const type = value.type || 'facet-bars-value';
                 const template = this.templates.get(type);
                 if (template) {
                     return template.getHTML(value, {
                         'facet-value-state': state,
                         'facet-hovered': hovered,
+                        subselection,
                     });
                 } else if (type !== 'facet-bars-value') {
-                    return preHTML`<${type} facet-value-state="${state}" facet-hovered="${hovered}" action-buttons="${actionButtons}" .data="${value}"></${type}>`;
+                    return preHTML`
+                    <${type} 
+                        facet-value-state="${state}" 
+                        facet-hovered="${hovered}" 
+                        action-buttons="${actionButtons}" 
+                        subselection="${subselection}"
+                        .data="${value}">
+                    </${type}>`;
                 }
-                return html`<facet-bars-value facet-value-state="${state}" facet-hovered="${hovered}" action-buttons="${actionButtons}" .data="${value}"></facet-bars-value>`;
+                return html`
+                <facet-bars-value
+                    facet-value-state="${state}"
+                    facet-hovered="${hovered}" 
+                    action-buttons="${actionButtons}"
+                    subselection="${subselection}"
+                    .data="${value}">
+                </facet-bars-value>`;
             })}`;
             this.renderSlottedElement(stringTemplate, valuesSlot);
         }
@@ -113,6 +132,7 @@ export class FacetBars extends FacetContainer {
         super.setTemplateForTarget(target, template);
         template.addCustomAttribute('facet-value-state');
         template.addCustomAttribute('facet-hovered');
+        template.addCustomAttribute('subselection');
     }
 
     private _renderRange(): TemplateResult {

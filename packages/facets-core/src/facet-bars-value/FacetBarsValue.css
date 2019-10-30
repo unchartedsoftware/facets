@@ -15,11 +15,9 @@
 
 .facet-bars-value-background {
     transition: margin-left 200ms ease-out;
-    display: flex;
-    align-items: flex-end;
+    position: relative;
     cursor: pointer;
     height: 100%;
-    z-index: -1;
 }
 
 :host([facet-value-state="normal"][facet-hovered="false"]) .facet-bars-value-background {
@@ -58,9 +56,32 @@
     background-color: #EBF1FC;
 }
 
+.facet-bars-value-bar-total {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transition: height 200ms ease-out;
+}
+
+:host([facet-hovered="false"]) .facet-bars-value-bar-total {
+    background-color: #C2C3C4;
+}
+
+:host([facet-hovered="true"]) .facet-bars-value-bar-total {
+    background-color: #D9DADB;
+}
+
+:host([facet-hovered="true"]) .facet-blueprint:hover .facet-bars-value-bar-total {
+    background-color: #C2C3C4;
+}
 
 .facet-bars-value-bar {
     width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transition: height 200ms ease-out;
 }
 
 :host([facet-value-state="normal"][facet-hovered="false"]) .facet-bars-value-bar {

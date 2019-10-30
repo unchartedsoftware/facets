@@ -28,6 +28,20 @@ export class FacetBarsValue extends FacetHoverable {
     public static get properties(): any {
         return {
             data: { type: Object },
+            subselection: {
+                type: Number,
+                converter: {
+                    fromAttribute: (value: string): number => {
+                        if (!value) {
+                            return NaN;
+                        }
+                        return parseFloat(value);
+                    },
+                    toAttribute: (value: number): string => {
+                        return value.toString();
+                    },
+                },
+            },
         };
     }
 
@@ -41,11 +55,15 @@ export class FacetBarsValue extends FacetHoverable {
         return this._data;
     }
 
+    public subselection: number = NaN;
+
     protected renderContent(): TemplateResult | void {
-        const height = Math.round(Math.max(Math.min(this._data.ratio, 1), 0) * 100);
+        const totalHeight = Math.round(Math.max(Math.min(this._data.ratio, 1), 0) * 100);
+        const selectionHeight = isNaN(this.subselection) ? totalHeight : Math.round(Math.max(Math.min(this.subselection, 1), 0) * 100);
         return html`
         <div class="facet-bars-value-background">
-            <div class="facet-bars-value-bar" style="height: ${height}%"></div>
+            <div class="facet-bars-value-bar-total" style="height: ${totalHeight}%"></div>
+            <div class="facet-bars-value-bar" style="height: ${selectionHeight}%"></div>
         </div>
         `;
     }
