@@ -75,21 +75,22 @@ export class FacetBars extends FacetContainer {
         return html`<span>${this._data.label}</span>`;
     }
 
-    protected renderLeft(): TemplateResult | void {
-        return html`
-        
-        `;
-    }
-
     protected renderContent(): TemplateResult | void {
         return html`
         <div class="facet-bars-container">
             <div class="facet-bars-hover-tab"></div>
             <div class="facet-bars-content">
                 <div class="facet-bars-values" @mouseenter="${this._facetValuesHoverHandler}" @mouseleave="${this._facetValuesHoverHandler}"><slot name="values"></slot></div>
-                <div class="facet-bars-range">${this._renderRange()}</div>
+                <div class="facet-bars-range">${this.renderRange()}</div>
+                <div class="facet-bars-range-input">${this.renderRangeInput()}</div>
             </div>
         </div>
+        `;
+    }
+
+    protected renderFooter(): TemplateResult | void {
+        return html`
+        <div style="height: 16px"></div>
         `;
     }
 
@@ -142,7 +143,18 @@ export class FacetBars extends FacetContainer {
         template.addCustomAttribute('subselection');
     }
 
-    private _renderRange(): TemplateResult {
+    protected renderRangeInput(): TemplateResult {
+        return html`
+        <div class="facet-bars-range-input-left">
+            <input type="text" class="facet-bars-range-input-box" value="0">
+        </div>
+        <div class="facet-bars-range-input-right">
+            <input type="text" class="facet-bars-range-input-box" value="200">
+        </div>
+        `;
+    }
+
+    protected renderRange(): TemplateResult {
         return html`
             <div class="facet-bars-range-bar-background"><div class="facet-bars-range-bar"></div></div>
             <div class="facet-bars-range-handle facet-bars-range-handle-left"></div>
