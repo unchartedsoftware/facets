@@ -135,6 +135,14 @@
 }
 
 .facet-bars-range-input-box {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+.facet-bars-range-input-box {
     min-width: 48px;
     max-width: 50%;
     height: 24px;

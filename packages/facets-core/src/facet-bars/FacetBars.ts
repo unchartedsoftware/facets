@@ -310,16 +310,17 @@ export class FacetBars extends FacetContainer {
     };
 
     private _rangeMouseHandler(event: MouseEvent): void {
-        event.preventDefault();
         switch (event.type) {
             case 'mousedown':
             case 'touchstart': {
                 this.rangeHandleEventDispatched = false;
                 const element = event.currentTarget as Element;
                 if (element.className.indexOf('facet-bars-range-handle-left') !== -1) {
+                    event.preventDefault();
                     this.rangeHandleLeftMouseX = event.pageX;
                     this.rangeHandleRightMouseX = null;
                 } else if (element.className.indexOf('facet-bars-range-handle-right') !== -1) {
+                    event.preventDefault();
                     this.rangeHandleRightMouseX = event.pageX;
                     this.rangeHandleLeftMouseX = null;
                 }
