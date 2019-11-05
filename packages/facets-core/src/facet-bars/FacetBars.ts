@@ -18,6 +18,8 @@ export interface FacetBarsData {
 }
 
 const kDefaultData: FacetBarsData = { values: [] };
+const kRangeHandleLeft = 0;
+const kRangeHandleRight = 1;
 
 @customElement('facet-bars')
 export class FacetBars extends FacetContainer {
@@ -35,6 +37,7 @@ export class FacetBars extends FacetContainer {
             actionButtons: { type: Number, attribute: 'action-buttons' },
             highlight: { type: Array},
             subselection: { type: Array },
+            range: { type: Array },
         };
     }
 
@@ -48,6 +51,7 @@ export class FacetBars extends FacetContainer {
     public set data(newData: FacetBarsData) {
         const oldData = this._data;
         this._data = newData;
+        this.range = this.range;
         this.requestUpdate('data', oldData);
     }
 
@@ -61,7 +65,31 @@ export class FacetBars extends FacetContainer {
         this.requestUpdate('actionButtons', oldValue);
     }
 
+    private _range: number[] = [];
+    public get range(): number[] {
+        return [...this._range];
+    }
+
+    public set range(value: number[]) {
+        const newRange = [
+            value.length ? Math.max(value[0], 0) : 0,
+            value.length >= 2 ? Math.min(value[1], this._data.values.length) : this._data.values.length,
+        ];
+
+        newRange[0] = Math.max(Math.min(newRange[0], newRange[1]), 0);
+        newRange[1] = Math.min(Math.max(newRange[1], newRange[0]), this._data.values.length);
+
+        const oldValue = this._range;
+        if (newRange[0] !== this._range[0] || newRange[1] !== this._range[1]) {
+            this._range = newRange;
+        }
+        this.requestUpdate('range', oldValue);
+    }
+
     private facetValuesHover: boolean = false;
+    private rangeHandleLeftMouseX: number|null = null;
+    private rangeHandleRightMouseX: number|null = null;
+    private rangeHandleEventDispatched: boolean = false;
 
     public connectedCallback(): void {
         super.connectedCallback();
@@ -77,12 +105,31 @@ export class FacetBars extends FacetContainer {
 
     protected renderContent(): TemplateResult | void {
         return html`
-        <div class="facet-bars-container">
+        <div 
+            class="facet-bars-container"
+            @mouseup="${this._rangeMouseHandler}"
+            @touchend="${this._rangeMouseHandler}"
+            @mousemove="${this._rangeMouseHandler}"
+            @touchmove="${this._rangeMouseHandler}"
+            @mouseleave="${this._rangeMouseHandler}"
+         >
             <div class="facet-bars-hover-tab"></div>
             <div class="facet-bars-content">
-                <div class="facet-bars-values" @mouseenter="${this._facetValuesHoverHandler}" @mouseleave="${this._facetValuesHoverHandler}"><slot name="values"></slot></div>
-                <div class="facet-bars-range">${this.renderRange()}</div>
-                <div class="facet-bars-range-input">${this.renderRangeInput()}</div>
+                <div 
+                    class="facet-bars-values" 
+                    @mouseenter="${this._facetValuesHoverHandler}" 
+                    @mouseleave="${this._facetValuesHoverHandler}"
+                 >
+                    <slot name="values"></slot>
+                </div>
+                <div class="facet-bars-range">
+                    ${this.renderRange()}
+                </div>
+                <div class="facet-bars-range-input-fix">
+                    <div class="facet-bars-range-input">
+                        ${this.renderRangeInput()}
+                    </div>
+                </div>
             </div>
         </div>
         `;
@@ -144,21 +191,111 @@ export class FacetBars extends FacetContainer {
     }
 
     protected renderRangeInput(): TemplateResult {
+        const leftData = this._data.values[Math.min(this._range[0], this._data.values.length - 1)];
+        const left = (
+            leftData && leftData.range ?
+                (this._range[0] < this._data.values.length ? leftData.range.min : leftData.range.max)
+                : this._range[0]
+        ).toString();
+        const rightData = this._data.values[Math.max(this._range[1] - 1, 0)];
+        const right = (
+            rightData && rightData.range ?
+                (this._range[1] > 0 ? rightData.range.max : rightData.range.min)
+                : this._range[1]
+        ).toString();
+
+        let leftTemplate: TemplateResult;
+        if (this._range[0] === 0) {
+            leftTemplate = html`
+            <input 
+                type="text" 
+                class="facet-bars-range-input-box facet-bars-range-input-box-solo" 
+                value="${left}" 
+                size="${left.length}"
+            >
+            `;
+        } else {
+            const leftMinData = this._data.values[0];
+            const leftMin = (leftMinData && leftMinData.range ? leftMinData.range.min : 0).toString();
+            leftTemplate = html`
+            <input 
+                type="text" 
+                class="facet-bars-range-input-box facet-bars-range-input-box-left" 
+                value="${leftMin}" 
+                size="${leftMin.length}" 
+                disabled
+            >
+            <input
+                type="text" 
+                class="facet-bars-range-input-box facet-bars-range-input-box-right" 
+                value="${left}" 
+                size="${left.length}" 
+            >
+            `;
+        }
+
+        let rightTemplate: TemplateResult;
+        if (this._range[1] === this._data.values.length) {
+            rightTemplate = html`
+            <input 
+                type="text" 
+                class="facet-bars-range-input-box facet-bars-range-input-box-solo" 
+                value="${right}" 
+                size="${right.length}"
+            >
+            `;
+        } else {
+            const rightMinData = this._data.values[this._data.values.length - 1];
+            const rightMin = (rightMinData && rightMinData.range ? rightMinData.range.max : this._data.values.length).toString();
+            rightTemplate = html`
+            <input 
+                type="text" 
+                class="facet-bars-range-input-box facet-bars-range-input-box-left" 
+                value="${right}" 
+                size="${right.length}"
+            >
+            <input 
+                type="text" 
+                class="facet-bars-range-input-box facet-bars-range-input-box-right" 
+                value="${rightMin}" 
+                size="${rightMin.length}" 
+                disabled
+            >
+            `;
+        }
+
         return html`
-        <div class="facet-bars-range-input-left">
-            <input type="text" class="facet-bars-range-input-box" value="0">
-        </div>
-        <div class="facet-bars-range-input-right">
-            <input type="text" class="facet-bars-range-input-box" value="200">
-        </div>
+        <div class="facet-bars-range-input-left">${leftTemplate}</div>
+        <div class="facet-bars-range-input-right">${rightTemplate}</div>
         `;
     }
 
     protected renderRange(): TemplateResult {
+        const rangeStep = 100 / this.data.values.length;
+        const left = (this._range[kRangeHandleLeft] * rangeStep).toFixed(2);
+        const right = ((this.data.values.length - this._range[kRangeHandleRight]) * rangeStep).toFixed(2);
         return html`
-            <div class="facet-bars-range-bar-background"><div class="facet-bars-range-bar"></div></div>
-            <div class="facet-bars-range-handle facet-bars-range-handle-left"></div>
-            <div class="facet-bars-range-handle facet-bars-range-handle-right"></div>
+            <div class="facet-bars-range-bar-background">
+                <div 
+                    class="facet-bars-range-bar" 
+                    style="margin-left:calc(${left}% - 12px);margin-right:calc(${right}% - 12px);"
+                >                
+                </div>
+            </div>
+            <div class="facet-bars-range-handle-container">
+                <div class="facet-bars-range-handle facet-bars-range-handle-left" 
+                     style="left:${left}%"
+                     @mousedown="${this._rangeMouseHandler}"
+                     @touchstart="${this._rangeMouseHandler}"
+                 >
+                </div>
+                <div class="facet-bars-range-handle facet-bars-range-handle-right"
+                     style="right:${right}%"
+                     @mousedown="${this._rangeMouseHandler}"
+                     @touchstart="${this._rangeMouseHandler}"
+                 >
+                </div>
+            </div>
         `;
     }
 
@@ -171,4 +308,91 @@ export class FacetBars extends FacetContainer {
             this.requestUpdate();
         }
     };
+
+    private _rangeMouseHandler(event: MouseEvent) {
+        event.preventDefault();
+        switch (event.type) {
+            case 'mousedown':
+            case 'touchstart': {
+                this.rangeHandleEventDispatched = false;
+                const element = event.currentTarget as Element;
+                if (element.className.indexOf('facet-bars-range-handle-left') !== -1) {
+                    this.rangeHandleLeftMouseX = event.pageX;
+                    this.rangeHandleRightMouseX = null;
+                } else if (element.className.indexOf('facet-bars-range-handle-right') !== -1) {
+                    this.rangeHandleRightMouseX = event.pageX;
+                    this.rangeHandleLeftMouseX = null;
+                }
+            }
+                break;
+
+            case 'mouseup':
+            case 'touchend':
+            case 'mouseleave':
+                if (this.rangeHandleEventDispatched) {
+                    this.rangeHandleEventDispatched = false;
+                    this.dispatchEvent(new CustomEvent('rangeManipulationEnd', {
+                        detail: {
+                            range: this.range,
+                        },
+                    }));
+                }
+                this.rangeHandleLeftMouseX = null;
+                this.rangeHandleRightMouseX = null;
+                break;
+
+            case 'mousemove':
+            case 'touchmove': {
+                const barsElement = this.renderRoot.querySelector('.facet-bars-values');
+                if (barsElement) {
+                    const rangeStep = barsElement.scrollWidth / (this.data.values.length + 1);
+                    if (this.rangeHandleLeftMouseX !== null) {
+                        event.preventDefault();
+                        const distance = Math.round((event.pageX - this.rangeHandleLeftMouseX) / rangeStep);
+                        const index = Math.min(Math.max(this._range[kRangeHandleLeft] + distance, 0), this._range[kRangeHandleRight]);
+                        if (index !== this._range[kRangeHandleLeft]) {
+                            this.range = [
+                                index,
+                                this._range[1],
+                            ];
+                            this.rangeHandleLeftMouseX += distance * rangeStep;
+                            this._dispatchRangeChangedEvent();
+                        }
+                    } else if (this.rangeHandleRightMouseX !== null) {
+                        event.preventDefault();
+                        const distance = Math.round((event.pageX - this.rangeHandleRightMouseX) / rangeStep);
+                        const index = Math.min(Math.max(this._range[kRangeHandleRight] + distance, this._range[kRangeHandleLeft]), this.data.values.length);
+                        if (index !== this._range[kRangeHandleRight]) {
+                            this.range = [
+                                this._range[0],
+                                index,
+                            ];
+                            this.rangeHandleRightMouseX += distance * rangeStep;
+                            this._dispatchRangeChangedEvent();
+                        }
+                    }
+                }
+            }
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private _dispatchRangeChangedEvent() {
+        if (!this.rangeHandleEventDispatched) {
+            this.rangeHandleEventDispatched = true;
+            this.dispatchEvent(new CustomEvent('rangeManipulationStart', {
+                detail: {
+                    range: this.range,
+                },
+            }));
+        }
+        this.dispatchEvent(new CustomEvent('rangeChanged', {
+            detail: {
+                range: this.range,
+            },
+        }));
+    }
 }
