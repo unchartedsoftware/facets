@@ -1,4 +1,4 @@
-import {customElement, property, TemplateResult, html, LitElement} from 'lit-element';
+import {customElement, TemplateResult, html, LitElement} from 'lit-element';
 import {preHTML} from '../tools/preHTML';
 import {MutationWrapper} from '../tools/MutationWrapper';
 import {FacetBlueprint} from '../facet-blueprint/FacetBlueprint';

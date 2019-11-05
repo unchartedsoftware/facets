@@ -53,12 +53,8 @@ export class FacetHistogramValue extends FacetHoverable {
     protected firstUpdated(_changedProperties: Map<PropertyKey, unknown>): void {
         super.firstUpdated(_changedProperties);
         let node: HTMLElement | null = this.renderRoot.querySelector('.facet-histogram-value-bar');
-        console.log(`===== START =====`);
-        while(node) {
-            console.log(`${node.tagName}: ${node.className}`);
+        while (node) {
             node = node.parentElement || (node as any).__shady_native_parentElement;
         }
-        console.log(`====== END ======`);
-        console.log(document.styleSheets);
     }
 }

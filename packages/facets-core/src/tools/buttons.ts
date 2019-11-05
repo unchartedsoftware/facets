@@ -22,7 +22,7 @@ export function renderButtons(facet: FacetBlueprint): TemplateResult | void {
     if (actionButtons > 0) {
         const template = [];
         if (actionButtons === 1) {
-            template.push(_generateButton(anyFacet,'facet-button-single', 0, 1));
+            template.push(_generateButton(anyFacet, 'facet-button-single', 0, 1));
         } else {
             let className = '';
             for (let i = 0, n = actionButtons; i < n; ++i) {

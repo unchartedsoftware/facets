@@ -37,9 +37,7 @@ export class FacetBarsValue extends FacetHoverable {
                         }
                         return parseFloat(value);
                     },
-                    toAttribute: (value: number): string => {
-                        return value.toString();
-                    },
+                    toAttribute: (value: number): string => value.toString(),
                 },
             },
         };

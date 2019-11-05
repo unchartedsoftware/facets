@@ -150,7 +150,7 @@ export class FacetBars extends FacetContainer {
             const hasHighlight = this.highlight.length;
             const hasSubselection = this.subselection.length;
             const stringTemplate = html`${this.data.values.map((value: FacetBarsValueDataTyped, i: number): TemplateResult => {
-                const state = hasHighlight ? (this.highlight.indexOf(i) !== -1 ? 'highlighted' : 'muted') : 'normal';
+                const state = hasHighlight ? (this.highlight.indexOf(i) !== -1 ? 'highlighted' : 'muted') : 'normal'; // eslint-disable-line no-nested-ternary
                 const subselection = hasSubselection ? `${this.subselection[i]}` : 'false';
                 const type = value.type || 'facet-bars-value';
                 const template = this.templates.get(type);
@@ -193,13 +193,13 @@ export class FacetBars extends FacetContainer {
     protected renderRangeInput(): TemplateResult {
         const leftData = this._data.values[Math.min(this._range[0], this._data.values.length - 1)];
         const left = (
-            leftData && leftData.range ?
+            leftData && leftData.range ? // eslint-disable-line no-nested-ternary
                 (this._range[0] < this._data.values.length ? leftData.range.min : leftData.range.max)
                 : this._range[0]
         ).toString();
         const rightData = this._data.values[Math.max(this._range[1] - 1, 0)];
         const right = (
-            rightData && rightData.range ?
+            rightData && rightData.range ? // eslint-disable-line no-nested-ternary
                 (this._range[1] > 0 ? rightData.range.max : rightData.range.min)
                 : this._range[1]
         ).toString();
@@ -309,7 +309,7 @@ export class FacetBars extends FacetContainer {
         }
     };
 
-    private _rangeMouseHandler(event: MouseEvent) {
+    private _rangeMouseHandler(event: MouseEvent): void {
         event.preventDefault();
         switch (event.type) {
             case 'mousedown':
@@ -380,7 +380,7 @@ export class FacetBars extends FacetContainer {
         }
     }
 
-    private _dispatchRangeChangedEvent() {
+    private _dispatchRangeChangedEvent(): void {
         if (!this.rangeHandleEventDispatched) {
             this.rangeHandleEventDispatched = true;
             this.dispatchEvent(new CustomEvent('rangeManipulationStart', {

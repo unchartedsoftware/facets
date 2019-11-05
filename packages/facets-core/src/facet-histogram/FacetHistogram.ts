@@ -53,7 +53,7 @@ export class FacetHistogram extends FacetContainer {
             buckets[last].labels ?
                 // @ts-ignore
                 buckets[last].labels.right : (last).toString();
-        const rangeLabel = `${leftLabel} - ${rightLabel}`; // TODO: Calculate properly.
+        const rangeLabel = `${leftLabel} - ${rightLabel}`;
 
         if (oldData !== kDefaultData) {
             let delay = 0;

@@ -77,6 +77,4 @@ export class FacetBlueprint extends FacetElement {
     protected renderLayoutAdditions(): TemplateResult | void {
         return undefined;
     }
-
-
 }
