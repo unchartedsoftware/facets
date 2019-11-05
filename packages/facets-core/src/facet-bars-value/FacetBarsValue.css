@@ -1,6 +1,6 @@
 :host {
     flex-grow: 1;
-    margin: 0 1px;
+    margin-right: 1px;
 }
 
 .facet-blueprint {
@@ -14,7 +14,7 @@
 }
 
 .facet-bars-value-background {
-    transition: margin-left 200ms ease-out;
+    transition: margin-left 200ms ease-out, background-color 128ms ease-out;
     position: relative;
     cursor: pointer;
     height: 100%;
@@ -61,7 +61,7 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    transition: height 200ms ease-out;
+    transition: height 200ms ease-out, background-color 128ms ease-out;
 }
 
 :host([facet-hovered="false"]) .facet-bars-value-bar-total {
@@ -81,7 +81,7 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    transition: height 200ms ease-out;
+    transition: height 200ms ease-out, background-color 128ms ease-out;
 }
 
 :host([facet-value-state="normal"][facet-hovered="false"]) .facet-bars-value-bar {

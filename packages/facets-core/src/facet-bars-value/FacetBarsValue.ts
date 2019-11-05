@@ -7,8 +7,8 @@ import facetBarsValueStyle from './FacetBarsValue.css';
 export interface FacetBarsValueData {
     ratio: number;
     range?: {
-        min: number;
-        max: number;
+        min: number|string;
+        max: number|string;
     };
     metadata?: any;
 }
