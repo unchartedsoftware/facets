@@ -110,13 +110,24 @@ export class FacetTemplate extends LitElement {
 
         this._processHtmlParts(tagHTML, this.tagComponents);
 
-        this.tagComponents.values.push(kDataKey);
-        this.tagComponents.strings[this.tagComponents.strings.length - 1] += ' .data="';
-
+        /* the data should always be appended at the end of the attributes :/ */
+        let appended = false;
         for (const entry of this.customAttributesNames) {
-            this.tagComponents.strings.push(`" ${entry[0]}="`);
+            if (!appended) {
+                appended = true;
+                this.tagComponents.strings[this.tagComponents.strings.length - 1] += ` ${entry[0]}="`;
+            } else {
+                this.tagComponents.strings.push(`" ${entry[0]}="`);
+            }
             this.tagComponents.values.push(entry[1]);
         }
+
+        if (!appended) {
+            this.tagComponents.strings[this.tagComponents.strings.length - 1] += ' .data="';
+        } else {
+            this.tagComponents.strings.push('" .data="');
+        }
+        this.tagComponents.values.push(kDataKey);
 
         this.tagComponents.strings.push('">');
         this.tagComponents.values.push(kSlotsKey);
