@@ -34,6 +34,7 @@ export class FacetBars extends FacetContainer {
     public static get properties(): any {
         return {
             data: { type: Object },
+            updateMethod: { type: String, attribute: 'update-method' },
             actionButtons: { type: Number, attribute: 'action-buttons' },
             highlight: { type: Array},
             subselection: { type: Array },
@@ -41,6 +42,7 @@ export class FacetBars extends FacetContainer {
         };
     }
 
+    public updateMethod: string = 'none';
     public highlight: number[] = [];
     public subselection: number[] = [];
 
@@ -51,6 +53,11 @@ export class FacetBars extends FacetContainer {
     public set data(newData: FacetBarsData) {
         const oldData = this._data;
         this._data = newData;
+
+        console.log(oldData === newData);
+        this.oldValues = this.values;
+        this.values = this._data.values;
+
         this.range = this.range;
         this.requestUpdate('data', oldData);
     }
@@ -90,6 +97,8 @@ export class FacetBars extends FacetContainer {
     private rangeHandleLeftMouseX: number|null = null;
     private rangeHandleRightMouseX: number|null = null;
     private rangeHandleEventDispatched: boolean = false;
+    private values: FacetBarsValueDataTyped[] = kDefaultData.values;
+    private oldValues: FacetBarsValueDataTyped[] = kDefaultData.values;
 
     public connectedCallback(): void {
         super.connectedCallback();
@@ -145,42 +154,260 @@ export class FacetBars extends FacetContainer {
         super.renderSlottedElements();
         const valuesSlot = this.slottedElements.get('values');
         if (valuesSlot) {
-            const hovered = this.facetValuesHover.toString();
-            const actionButtons = this._actionButtons.toString();
-            const hasHighlight = this.highlight.length;
-            const hasSubselection = this.subselection.length;
-            const stringTemplate = html`${this.data.values.map((value: FacetBarsValueDataTyped, i: number): TemplateResult => {
-                const state = hasHighlight ? (this.highlight.indexOf(i) !== -1 ? 'highlighted' : 'muted') : 'normal'; // eslint-disable-line no-nested-ternary
-                const subselection = hasSubselection ? `${this.subselection[i]}` : 'false';
-                const type = value.type || 'facet-bars-value';
-                const template = this.templates.get(type);
-                if (template) {
-                    return template.getHTML(value, {
-                        'facet-value-state': state,
-                        'facet-hovered': hovered,
-                        subselection,
-                    });
-                } else if (type !== 'facet-bars-value') {
-                    return preHTML`
-                    <${type} 
-                        facet-value-state="${state}" 
-                        facet-hovered="${hovered}" 
-                        action-buttons="${actionButtons}" 
-                        subselection="${subselection}"
-                        .data="${value}">
-                    </${type}>`;
+            this.renderValuesSlot(valuesSlot);
+        }
+    }
+
+    protected renderValuesSlot(slot: HTMLDivElement): void {
+        const hovered = this.facetValuesHover.toString();
+        const actionButtons = this._actionButtons.toString();
+        const hasHighlight = this.highlight.length;
+        const hasSubselection = this.subselection.length;
+
+        const htmlTemplate: TemplateResult[] = [];
+        const updateMethod = this.oldValues === kDefaultData.values || this.oldValues === this.values ? 'replace' : this.updateMethod;
+        switch (updateMethod) {
+            case 'zoom-simple':
+                if (this.oldValues.length > this.values.length) {
+                    const diff = this.oldValues.length - this.values.length;
+                    // first half of extra old values: shrink
+                    htmlTemplate.push(...this.getValuesHTML(
+                        this.oldValues.slice(0, Math.ceil(diff * 0.5)),
+                        hovered,
+                        actionButtons,
+                        0,
+                        0,
+                        'shrink'
+                    ));
+                    // new values: default
+                    htmlTemplate.push(...this.getValuesHTML(
+                        this.values,
+                        hovered,
+                        actionButtons,
+                        hasHighlight,
+                        hasSubselection
+                    ));
+                    // second half of extra old values: shrink
+                    htmlTemplate.push(...this.getValuesHTML(
+                        this.oldValues.slice(Math.ceil(diff * 0.5) + this.values.length),
+                        hovered,
+                        actionButtons,
+                        0,
+                        0,
+                        'shrink'
+                    ));
+                } else if (this.oldValues.length < this.values.length) {
+                    const diff = this.values.length - this.oldValues.length;
+                    // first half of extra new values: grow
+                    htmlTemplate.push(...this.getValuesHTML(
+                        this.values.slice(0, Math.ceil(diff * 0.5)),
+                        hovered,
+                        actionButtons,
+                        hasHighlight,
+                        hasSubselection,
+                        'grow'
+                    ));
+                    // new values within old range: default
+                    htmlTemplate.push(...this.getValuesHTML(
+                        this.values.slice(Math.ceil(diff * 0.5), Math.ceil(diff * 0.5) + this.oldValues.length),
+                        hovered,
+                        actionButtons,
+                        hasHighlight,
+                        hasSubselection
+                    ));
+                    // second half of extra new values: grow
+                    htmlTemplate.push(...this.getValuesHTML(
+                        this.values.slice(Math.ceil(diff * 0.5) + this.oldValues.length),
+                        hovered,
+                        actionButtons,
+                        hasHighlight,
+                        hasSubselection,
+                        'grow'
+                    ));
+                } else {
+                    // just update the values using the default transition
+                    htmlTemplate.push(...this.getValuesHTML(
+                        this.values,
+                        hovered,
+                        actionButtons,
+                        hasHighlight,
+                        hasSubselection
+                    ));
                 }
-                return html`
+                break;
+
+            case 'zoom-in-replace':
+                // first half of old data: shrink
+                htmlTemplate.push(...this.getValuesHTML(
+                    this.oldValues.slice(0, Math.ceil(this.oldValues.length * 0.5)),
+                    hovered,
+                    actionButtons,
+                    0,
+                    0,
+                    'shrink'
+                ));
+                // new data: grow
+                htmlTemplate.push(...this.getValuesHTML(
+                    this.values,
+                    hovered,
+                    actionButtons,
+                    hasHighlight,
+                    hasSubselection,
+                    'grow'
+                ));
+                // second half of old data: shrink
+                htmlTemplate.push(...this.getValuesHTML(
+                    this.oldValues.slice(Math.ceil(this.oldValues.length * 0.5)),
+                    hovered,
+                    actionButtons,
+                    0,
+                    0,
+                    'shrink'
+                ));
+                break;
+
+            case 'zoom-out-replace':
+                // first half of new data: grow
+                htmlTemplate.push(...this.getValuesHTML(
+                    this.values.slice(0, Math.ceil(this.values.length * 0.5)),
+                    hovered,
+                    actionButtons,
+                    0,
+                    0,
+                    'grow'
+                ));
+                // old data: shrink
+                htmlTemplate.push(...this.getValuesHTML(
+                    this.oldValues,
+                    hovered,
+                    actionButtons,
+                    hasHighlight,
+                    hasSubselection,
+                    'shrink'
+                ));
+                // second half of new data: shrink
+                htmlTemplate.push(...this.getValuesHTML(
+                    this.values.slice(Math.ceil(this.values.length * 0.5)),
+                    hovered,
+                    actionButtons,
+                    0,
+                    0,
+                    'grow'
+                ));
+                break;
+
+            case 'replace':
+                // new data: none
+                htmlTemplate.push(...this.getValuesHTML(
+                    this.values,
+                    hovered,
+                    actionButtons,
+                    hasHighlight,
+                    hasSubselection,
+                    'none'
+                ));
+                break;
+
+            default:
+                if (this.values.length > this.oldValues.length) {
+                    // values within the current range: default
+                    htmlTemplate.push(...this.getValuesHTML(
+                        this.values.slice(0, this.oldValues.length),
+                        hovered,
+                        actionButtons,
+                        hasHighlight,
+                        hasSubselection
+                    ));
+                    // values higher than the existing range: grow
+                    htmlTemplate.push(...this.getValuesHTML(
+                        this.values.slice(this.oldValues.length),
+                        hovered,
+                        actionButtons,
+                        hasHighlight,
+                        hasSubselection,
+                        'grow'
+                    ));
+                } else if (this.values.length < this.oldValues.length) {
+                    // new data: default
+                    htmlTemplate.push(...this.getValuesHTML(
+                        this.values,
+                        hovered,
+                        actionButtons,
+                        hasHighlight,
+                        hasSubselection
+                    ));
+                    // old values outside of the new range: shrink
+                    htmlTemplate.push(...this.getValuesHTML(
+                        this.oldValues.slice(this.values.length),
+                        hovered,
+                        actionButtons,
+                        0,
+                        0,
+                        'shrink'
+                    ));
+                } else {
+                    // update the new data with default transition
+                    htmlTemplate.push(...this.getValuesHTML(
+                        this.values,
+                        hovered,
+                        actionButtons,
+                        hasHighlight,
+                        hasSubselection
+                    ));
+                }
+                break;
+        }
+
+        this.renderSlottedElement(html`${htmlTemplate}`, slot);
+        this.oldValues = this.values;
+    }
+
+    protected getValuesHTML(
+        values: FacetBarsValueDataTyped[],
+        hovered: string,
+        actionButtons: string,
+        hasHighlight: number,
+        hasSubselection: number,
+        transition: string = 'default'
+    ): TemplateResult[] {
+        const result: TemplateResult[] = [];
+
+        for (let i = 0, n = values.length; i < n; ++i) {
+            const state = hasHighlight ? (this.highlight.indexOf(i) !== -1 ? 'highlighted' : 'muted') : 'normal'; // eslint-disable-line no-nested-ternary
+            const subselection = hasSubselection ? `${this.subselection[i]}` : 'false';
+            const type = values[i].type || 'facet-bars-value';
+            const template = this.templates.get(type);
+
+            if (template) {
+                result.push(template.getHTML(values[i], {
+                    'facet-value-state': state,
+                    'facet-hovered': hovered,
+                    subselection,
+                    transition,
+                }));
+            } else if (type !== 'facet-bars-value') {
+                result.push(preHTML`
+                <${type} 
+                    facet-value-state="${state}" 
+                    facet-hovered="${hovered}" 
+                    action-buttons="${actionButtons}" 
+                    subselection="${subselection}"
+                    transition="${transition}"
+                    .data="${values[i]}">
+                </${type}>`);
+            } else {
+                result.push(html`
                 <facet-bars-value
                     facet-value-state="${state}"
-                    facet-hovered="${hovered}" 
+                    facet-hovered="${hovered}"
                     action-buttons="${actionButtons}"
                     subselection="${subselection}"
-                    .data="${value}">
-                </facet-bars-value>`;
-            })}`;
-            this.renderSlottedElement(stringTemplate, valuesSlot);
+                    transition="${transition}"
+                    .data="${values[i]}">
+                </facet-bars-value>`);
+            }
         }
+        return result;
     }
 
     protected setTemplateForTarget(target: string, template: FacetTemplate): void {
@@ -188,36 +415,33 @@ export class FacetBars extends FacetContainer {
         template.addCustomAttribute('facet-value-state');
         template.addCustomAttribute('facet-hovered');
         template.addCustomAttribute('subselection');
+        template.addCustomAttribute('transition');
     }
 
     protected renderRangeInput(): TemplateResult {
         const leftData = this._data.values[Math.min(this._range[0], this._data.values.length - 1)];
-        const left = (
-            leftData && leftData.range ? // eslint-disable-line no-nested-ternary
-                (this._range[0] < this._data.values.length ? leftData.range.min : leftData.range.max)
-                : this._range[0]
-        ).toString();
-        const rightData = this._data.values[Math.max(this._range[1] - 1, 0)];
-        const right = (
-            rightData && rightData.range ? // eslint-disable-line no-nested-ternary
-                (this._range[1] > 0 ? rightData.range.max : rightData.range.min)
-                : this._range[1]
-        ).toString();
+        const leftRangeMin = leftData && leftData.range ? leftData.range.min : this._range[0];
+        const leftRangeMax = leftData && leftData.range ? leftData.range.max : this._range[0];
+        const left = (this._range[0] < this._data.values.length ? leftRangeMin : leftRangeMax).toString();
+        const leftMinData = this._data.values[0];
+        const leftMinValue = (leftMinData && leftMinData.range ? leftMinData.range.min : 0).toString();
+        const leftMin = this._range[0] === 0 ? null : leftMinValue;
 
-        let leftTemplate: TemplateResult;
-        if (this._range[0] === 0) {
-            leftTemplate = html`
-            <input 
-                type="text" 
-                class="facet-bars-range-input-box facet-bars-range-input-box-solo" 
-                value="${left}" 
-                size="${left.length}"
-            >
-            `;
-        } else {
-            const leftMinData = this._data.values[0];
-            const leftMin = (leftMinData && leftMinData.range ? leftMinData.range.min : 0).toString();
-            leftTemplate = html`
+        const rightData = this._data.values[Math.max(this._range[1] - 1, 0)];
+        const rightRangeMin = rightData && rightData.range ? rightData.range.min : this._range[1];
+        const rightRangeMax = rightData && rightData.range ? rightData.range.max : this._range[1];
+        const right = (this._range[1] > 0 ? rightRangeMax : rightRangeMin).toString();
+        const rightMaxData = this._data.values[this._data.values.length - 1];
+        const rightMaxValue = (rightMaxData && rightMaxData.range ? rightMaxData.range.max : this._data.values.length).toString();
+        const rightMax = this._range[1] === this._data.values.length ? null : rightMaxValue;
+
+        return this.getRangeInputHTML(leftMin, left, right, rightMax);
+    }
+
+    protected getRangeInputHTML(leftMin: string | null, left: string, right: string, rightMax: string | null): TemplateResult {
+        return html`
+        <div class="facet-bars-range-input-left">
+            ${leftMin === null ? undefined : html`
             <input 
                 type="text" 
                 class="facet-bars-range-input-box facet-bars-range-input-box-left" 
@@ -225,48 +449,31 @@ export class FacetBars extends FacetContainer {
                 size="${leftMin.length}" 
                 disabled
             >
+            `}
             <input
-                type="text" 
-                class="facet-bars-range-input-box facet-bars-range-input-box-right" 
-                value="${left}" 
-                size="${left.length}" 
+                type="text"
+                class="facet-bars-range-input-box ${leftMin === null ? 'facet-bars-range-input-box-solo' : 'facet-bars-range-input-box-right'}"
+                value="${left}"
+                size="${left.length}"
             >
-            `;
-        }
-
-        let rightTemplate: TemplateResult;
-        if (this._range[1] === this._data.values.length) {
-            rightTemplate = html`
-            <input 
-                type="text" 
-                class="facet-bars-range-input-box facet-bars-range-input-box-solo" 
-                value="${right}" 
+        </div>
+        <div class="facet-bars-range-input-right">
+            <input
+                type="text"
+                class="facet-bars-range-input-box ${rightMax === null ? 'facet-bars-range-input-box-solo' : 'facet-bars-range-input-box-solo'}"
+                value="${right}"
                 size="${right.length}"
             >
-            `;
-        } else {
-            const rightMinData = this._data.values[this._data.values.length - 1];
-            const rightMin = (rightMinData && rightMinData.range ? rightMinData.range.max : this._data.values.length).toString();
-            rightTemplate = html`
-            <input 
-                type="text" 
-                class="facet-bars-range-input-box facet-bars-range-input-box-left" 
-                value="${right}" 
-                size="${right.length}"
-            >
+            ${rightMax === null ? undefined : html`
             <input 
                 type="text" 
                 class="facet-bars-range-input-box facet-bars-range-input-box-right" 
-                value="${rightMin}" 
-                size="${rightMin.length}" 
+                value="${rightMax}" 
+                size="${rightMax.length}" 
                 disabled
             >
-            `;
-        }
-
-        return html`
-        <div class="facet-bars-range-input-left">${leftTemplate}</div>
-        <div class="facet-bars-range-input-right">${rightTemplate}</div>
+            `}
+        </div>
         `;
     }
 
@@ -276,14 +483,14 @@ export class FacetBars extends FacetContainer {
         const right = ((this.data.values.length - this._range[kRangeHandleRight]) * rangeStep).toFixed(2);
         return html`
             <div class="facet-bars-range-bar-background">
-                <div 
-                    class="facet-bars-range-bar" 
+                <div
+                    class="facet-bars-range-bar"
                     style="margin-left:calc(${left}% - 12px);margin-right:calc(${right}% - 12px);"
-                >                
+                >
                 </div>
             </div>
             <div class="facet-bars-range-handle-container">
-                <div class="facet-bars-range-handle facet-bars-range-handle-left" 
+                <div class="facet-bars-range-handle facet-bars-range-handle-left"
                      style="left:${left}%"
                      @mousedown="${this._rangeMouseHandler}"
                      @touchstart="${this._rangeMouseHandler}"
