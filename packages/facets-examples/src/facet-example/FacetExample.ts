@@ -12,7 +12,7 @@ import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/mode/css/css';
 
 import {customElement, LitElement, property, TemplateResult, html, CSSResult, css, unsafeCSS} from 'lit-element';
-import {examples} from '../../examples';
+import {examples} from '../examples';
 
 // @ts-ignore
 @customElement('facet-example')
