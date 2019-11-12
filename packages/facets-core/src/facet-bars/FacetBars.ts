@@ -54,7 +54,6 @@ export class FacetBars extends FacetContainer {
         const oldData = this._data;
         this._data = newData;
 
-        console.log(oldData === newData);
         this.oldValues = this.values;
         this.values = this._data.values;
 
