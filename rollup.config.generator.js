@@ -13,213 +13,186 @@ const sourcemaps = require('rollup-plugin-sourcemaps');
 const extensions = [
     '.js', '.jsx', '.ts', '.tsx',
 ];
+
+function generateSingleConfig(target, input, output, dependencies = null, moduleName = null, sourcemap = true, addLiveServer = false, mount = []) {
+    let format;
+    let babelTargets = null;
+    let includePolyfill = false;
+    let includeNodeModules = false;
+    switch (target) {
+        case 'iife':
+            format = 'iife';
+            babelTargets = { ie: '11' };
+            includePolyfill = true;
+            includeNodeModules = true;
+            break;
+
+        case 'es5':
+            format = 'cjs';
+            // babelTargets = { ie: '11' };
+            break;
+
+        case 'es6':
+            format = 'esm';
+            // babelTargets = { chrome: '51' };
+            break;
+
+        case 'next':
+        default:
+            format = 'esm';
+            break;
+    }
+
+    const config = {
+        input: input,
+        output: {
+            dir: output,
+            format: format,
+            sourcemap: sourcemap,
+        },
+        plugins: [],
+        treeshake: {
+            moduleSideEffects: false,
+        },
+        watch: {
+            clearScreen: false
+        },
+    };
+
+    if (dependencies) {
+        const keys = Object.keys(dependencies);
+        config.external = id => {
+            if (id.startsWith('lit-element')) {
+                return true;
+            }
+            for (let key of keys) {
+                if (id.startsWith(key)) {
+                    return true;
+                }
+            }
+            return false;
+        };
+    }
+
+    if (moduleName) {
+        config.output.name = moduleName;
+    }
+
+    if (includeNodeModules) {
+        config.plugins.push(resolve({ extensions }));
+        config.plugins.push(commonjs());
+    }
+
+    config.plugins.push(string({
+        include: ["**/*.css", "**/*.html", "**/*.txt"],
+        exclude: ["**/css/*.css"]
+    }));
+
+    if (babelTargets) {
+        config.plugins.push(babel({
+            extensions,
+            exclude: [/node_modules\/(?!(lit-html|lit-element)\/).*/],
+            rootMode: "upward",
+            presets: [
+                [
+                    '@babel/env',
+                    {
+                        targets: babelTargets,
+                        useBuiltIns: 'entry',
+                        corejs: { version: 3, proposals: true },
+                    },
+                ],
+                '@babel/typescript',
+            ],
+        }));
+    } else {
+        config.plugins.push(typescript({
+            typescript: require('typescript'),
+            cacheRoot: path.resolve(__dirname, '.rts2_cache'),
+            objectHashIgnoreUnknownHack: true,
+            tsconfigOverride: {
+                compilerOptions: {
+                    target: target === 'next' ? 'esnext' : target === 'iife' ? 'es5' : target,
+                }
+            }
+        }));
+    }
+
+    if (includePolyfill) {
+        config.plugins.push(polyfill([
+            'core-js',
+            'regenerator-runtime/runtime',
+            '@webcomponents/webcomponentsjs/webcomponents-bundle'
+        ], {
+            method: 'import'
+        }));
+    }
+
+    if (addLiveServer) {
+        config.plugins.push(liveServer({
+            port: 8090,
+            host: '0.0.0.0',
+            root: 'www',
+            file: 'index.html',
+            mount: [['/dist/iife', './dist/iife'], ...mount],
+            open: false,
+            wait: 500,
+        }));
+    }
+
+    config.plugins.push(sourcemaps());
+
+    return config;
+}
+
 function generateConfig(pkg, basedir, mount = []) {
     const moduleName = pkg.name.split('/').pop().replace('-', '');
     const config = [];
 
     if (process.env.TARGET === 'debug') {
-        config.push({
-            input: [path.resolve(basedir, pkg.entry)],
-            output: {
-                file: path.resolve(basedir, pkg.iife),
-                format: 'iife',
-                name: moduleName,
-                sourcemap: 'inline',
-            },
-            plugins: [
-                resolve({ extensions }),
-                commonjs(),
-                string({
-                    include: ["**/*.css", "**/*.html", "**/*.txt"],
-                    exclude: ["**/css/*.css"]
-                }),
-                babel({
-                    extensions,
-                    exclude: [/node_modules\/(?!(lit-html|lit-element)\/).*/],
-                    rootMode: "upward",
-                    presets: [
-                        [
-                            '@babel/env',
-                            {
-                                targets: {
-                                    ie: '11',
-                                },
-                                useBuiltIns: 'entry',
-                                corejs: { version: 3, proposals: true },
-                            },
-                        ],
-                        '@babel/typescript',
-                    ],
-                }),
-                polyfill([
-                    'core-js',
-                    'regenerator-runtime/runtime',
-                    '@webcomponents/webcomponentsjs/webcomponents-bundle'
-                ], {
-                    method: 'import'
-                }),
-                liveServer({
-                    port: 8090,
-                    host: '0.0.0.0',
-                    root: 'www',
-                    file: 'index.html',
-                    mount: [['/dist/iife', './dist/iife'], ...mount],
-                    open: false,
-                    wait: 500,
-                }),
-                sourcemaps(),
-            ],
-        });
-    } else {
+        config.push(generateSingleConfig(
+            'iife',
+            [path.resolve(basedir, pkg.entry)],
+            path.resolve(basedir, pkg.iife),
+            null,
+            moduleName,
+            'inline',
+            true,
+            mount
+        ));
+    } else if (process.env.TARGET === 'iife') {
         /* iife */
-        config.push({
-            input: [path.resolve(basedir, pkg.entry)],
-            output: {
-                file: path.resolve(basedir, pkg.iife),
-                format: 'iife',
-                name: moduleName,
-                sourcemap: true,
-            },
-            plugins: [
-                resolve({ extensions }),
-                commonjs(),
-                string({
-                    include: ["**/*.css", "**/*.html", "**/*.txt"],
-                    exclude: ["**/css/*.css"]
-                }),
-                babel({
-                    extensions,
-                    exclude: [/node_modules\/(?!(lit-html|lit-element)\/).*/],
-                    rootMode: "upward",
-                    presets: [
-                        [
-                            '@babel/env',
-                            {
-                                targets: {
-                                    ie: '11',
-                                },
-                                useBuiltIns: 'entry',
-                                corejs: { version: 3, proposals: true },
-                            },
-                        ],
-                        '@babel/typescript',
-                    ],
-                }),
-                polyfill([
-                    'core-js',
-                    'regenerator-runtime/runtime',
-                    '@webcomponents/webcomponentsjs/webcomponents-bundle'
-                ], {
-                    method: 'import'
-                }),
-                sourcemaps(),
-            ],
-        });
-
+        config.push(generateSingleConfig(
+            'iife',
+            [path.resolve(basedir, pkg.entry)],
+            path.resolve(basedir, pkg.iife),
+            null,
+            moduleName
+        ));
+    } else if (process.env.TARGET === 'es5') {
         /* ES5 */
-        config.push({
-            input: [path.resolve(basedir, pkg.entry)],
-            output: {
-                file: path.resolve(basedir, pkg.main),
-                format: 'cjs',
-                sourcemap: true,
-            },
-            plugins: [
-                resolve({ extensions }),
-                commonjs(),
-                string({
-                    include: ["**/*.css", "**/*.html", "**/*.txt"],
-                    exclude: ["**/css/*.css"]
-                }),
-                babel({
-                    extensions,
-                    include: ['src/**/*'],
-                    rootMode: "upward",
-                    presets: [
-                        [
-                            '@babel/env',
-                            {
-                                targets: {
-                                    ie: '11',
-                                },
-                                useBuiltIns: 'entry',
-                                corejs: { version: 3, proposals: true },
-                            },
-                        ],
-                        '@babel/typescript',
-                    ],
-                }),
-                polyfill([
-                    'core-js',
-                    'regenerator-runtime/runtime',
-                    '@webcomponents/webcomponentsjs/webcomponents-bundle'
-                ], {
-                    method: 'import'
-                }),
-                sourcemaps(),
-            ],
-        });
-
+        config.push(generateSingleConfig(
+            'es5',
+            [path.resolve(basedir, pkg.entry)],
+            path.resolve(basedir, pkg.main),
+            pkg.dependencies
+        ));
+    } else if (process.env.TARGET === 'es6') {
         /* ES6 */
-        config.push({
-            input: [path.resolve(basedir, pkg.entry)],
-            output: {
-                file: path.resolve(basedir, pkg.module),
-                format: 'esm',
-                sourcemap: true,
-            },
-            plugins: [
-                resolve({ extensions }),
-                commonjs(),
-                string({
-                    include: ["**/*.css", "**/*.html", "**/*.txt"],
-                    exclude: ["**/css/*.css"]
-                }),
-                babel({
-                    extensions,
-                    include: ['src/**/*'],
-                    rootMode: "upward",
-                    presets: [
-                        [
-                            '@babel/env',
-                            {
-                                targets: {
-                                    chrome: '51',
-                                },
-                                useBuiltIns: 'usage',
-                                corejs: { version: 3, proposals: true },
-                            },
-                        ],
-                        '@babel/typescript',
-                    ],
-                }),
-                sourcemaps(),
-            ],
-        });
-
+        config.push(generateSingleConfig(
+            'es6',
+            [path.resolve(basedir, pkg.entry)],
+            path.resolve(basedir, pkg.module),
+            pkg.dependencies
+        ));
+    } else if (process.env.TARGET === 'next') {
         /* ESNext */
-        config.push({
-            input: [path.resolve(basedir, pkg.entry)],
-            output: {
-                file: path.resolve(basedir, pkg['jsnext:main']),
-                format: 'esm',
-                sourcemap: true,
-            },
-            plugins: [
-                resolve({ extensions }),
-                commonjs(),
-                string({
-                    include: ["**/*.css", "**/*.html", "**/*.txt"],
-                    exclude: ["**/css/*.css"]
-                }),
-                typescript({
-                    typescript: require('typescript'),
-                    cacheRoot: path.resolve(__dirname, '.rts2_cache'),
-                    objectHashIgnoreUnknownHack: true,
-                }),
-                sourcemaps(),
-            ],
-        });
+        config.push(generateSingleConfig(
+            'next',
+            [path.resolve(basedir, pkg.entry)],
+            path.resolve(basedir, pkg['jsnext:main']),
+            pkg.dependencies
+        ));
     }
 
     return config;

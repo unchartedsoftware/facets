@@ -5,6 +5,8 @@
         "moduleResolution": "node",
         "module": "esnext",
         "target": "esnext",
-        "lib": ["esnext", "dom"]
+        "lib": ["esnext", "dom"],
+        "declaration": true,
+        "declarationMap": true
     }
 }
