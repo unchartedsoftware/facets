@@ -9,6 +9,7 @@ const typescript = require('rollup-plugin-typescript2');
 const polyfill = require('rollup-plugin-polyfill');
 const string = require('rollup-plugin-string').string;
 const sourcemaps = require('rollup-plugin-sourcemaps');
+const globby = require('globby');
 
 const extensions = [
     '.js', '.jsx', '.ts', '.tsx',
@@ -160,7 +161,9 @@ function generateConfig(pkg, basedir, mount = []) {
             true,
             mount
         ));
-    } else if (process.env.TARGET === 'iife') {
+    }
+
+    if (process.env.TARGET === 'iife' || process.env.TARGET === 'all') {
         /* iife */
         config.push(generateSingleConfig(
             'iife',
@@ -169,27 +172,41 @@ function generateConfig(pkg, basedir, mount = []) {
             null,
             moduleName
         ));
-    } else if (process.env.TARGET === 'es5') {
+    }
+
+    /* all input files */
+    const input = {};
+    globby.sync(['src/**/*.ts']).forEach(file => {
+        const parsed = path.parse(file);
+        input[path.join(parsed.dir.substr('src/'.length), parsed.name)] = file;
+    });
+
+    if (process.env.TARGET === 'es5' || process.env.TARGET === 'all') {
         /* ES5 */
         config.push(generateSingleConfig(
             'es5',
-            [path.resolve(basedir, pkg.entry)],
+            input,
             path.resolve(basedir, pkg.main),
             pkg.dependencies
         ));
-    } else if (process.env.TARGET === 'es6') {
+    }
+
+    if (process.env.TARGET === 'es6' || process.env.TARGET === 'all') {
         /* ES6 */
         config.push(generateSingleConfig(
             'es6',
-            [path.resolve(basedir, pkg.entry)],
+            input,
             path.resolve(basedir, pkg.module),
             pkg.dependencies
         ));
-    } else if (process.env.TARGET === 'next') {
+
+    }
+
+    if (process.env.TARGET === 'next' || process.env.TARGET === 'all') {
         /* ESNext */
         config.push(generateSingleConfig(
             'next',
-            [path.resolve(basedir, pkg.entry)],
+            input,
             path.resolve(basedir, pkg['jsnext:main']),
             pkg.dependencies
         ));
