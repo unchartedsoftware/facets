@@ -24,7 +24,7 @@ const kRangeHandleRight = 1;
 @customElement('facet-bars')
 export class FacetBars extends FacetContainer {
     public static get styles(): CSSResult[] {
-        const styles = super.styles;
+        const styles = this.getSuperStyles();
         styles.push(css`
             ${unsafeCSS(facetBarsStyle)}
         `);

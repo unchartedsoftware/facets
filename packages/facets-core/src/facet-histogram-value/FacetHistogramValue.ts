@@ -18,7 +18,7 @@ const kDefaultData: FacetHistogramValueData = { ratio: 0 };
 @customElement('facet-histogram-value')
 export class FacetHistogramValue extends FacetHoverable {
     public static get styles(): CSSResult[] {
-        const styles = super.styles;
+        const styles = this.getSuperStyles();
         styles.push(css`
             ${unsafeCSS(facetHistogramValueStyle)}
         `);

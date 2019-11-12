@@ -17,7 +17,7 @@ const kDefaultData: FacetTermData = { ratio: 0 };
 @customElement('facet-term')
 export class FacetTerm extends FacetHoverable {
     public static get styles(): CSSResult[] {
-        const styles = super.styles;
+        const styles = this.getSuperStyles();
         styles.push(css`
             ${unsafeCSS(facetTermStyle)}
         `);

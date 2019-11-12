@@ -13,7 +13,7 @@ export class FacetContainer extends FacetBlueprint {
     protected slottedElements: Map<string, HTMLDivElement> = new Map();
 
     public static get styles(): CSSResult[] {
-        const styles = super.styles;
+        const styles = this.getSuperStyles();
         styles.push(css`
             ${unsafeCSS(facetContainerStyle)}
         `);

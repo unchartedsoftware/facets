@@ -19,7 +19,7 @@ const kDefaultData: FacetHistogramData = { values: [] };
 @customElement('facet-histogram')
 export class FacetHistogram extends FacetContainer {
     public static get styles(): CSSResult[] {
-        const styles = super.styles;
+        const styles = this.getSuperStyles();
         styles.push(css`
             ${unsafeCSS(facetHistogramStyle)}
         `);

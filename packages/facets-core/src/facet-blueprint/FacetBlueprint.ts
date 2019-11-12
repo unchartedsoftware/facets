@@ -8,7 +8,7 @@ export type FacetBlueprintRenderer = (blueprint?: FacetBlueprint) => TemplateRes
 @customElement('facet-blueprint')
 export class FacetBlueprint extends FacetElement {
     public static get styles(): CSSResult[] {
-        const styles = super.styles;
+        const styles = this.getSuperStyles();
         styles.push(css`${unsafeCSS(FacetBlueprintStyle)}`);
         return styles;
     }

@@ -18,7 +18,7 @@ const kDefaultData: FacetBarsValueData = { ratio: 0 };
 @customElement('facet-bars-value')
 export class FacetBarsValue extends FacetHoverable {
     public static get styles(): CSSResult[] {
-        const styles = super.styles;
+        const styles = this.getSuperStyles();
         styles.push(css`
             ${unsafeCSS(facetBarsValueStyle)}
         `);

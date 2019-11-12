@@ -10,7 +10,7 @@ import facetHoverableStyle from './FacetHoverable.css';
 @customElement('facet-hoverable')
 export class FacetHoverable extends FacetBlueprint {
     public static get styles(): CSSResult[] {
-        const styles = super.styles;
+        const styles = this.getSuperStyles();
         styles.push(css`
             ${unsafeCSS(buttonsStyle)}
             ${unsafeCSS(facetHoverableStyle)}
