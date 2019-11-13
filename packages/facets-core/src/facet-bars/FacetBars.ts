@@ -529,7 +529,7 @@ export class FacetBars extends FacetContainer {
             this.facetValuesHover = false;
             this.requestUpdate();
         }
-    };
+    }
 
     private _barMouseHandler(event: MouseEvent): void {
         if (event.currentTarget instanceof FacetBarsValue) {

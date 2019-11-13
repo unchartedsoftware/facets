@@ -27,7 +27,7 @@ export class FacetPlugin extends FacetElement {
         this.host = null;
     }
 
-    protected hostChanged(host: HTMLElement|null): void {
+    protected hostChanged(host: HTMLElement|null): void { // eslint-disable-line
         // OVERRIDE
     }
 }
