@@ -1,6 +1,6 @@
 import {customElement, TemplateResult, html, CSSResult, css, unsafeCSS} from 'lit-element';
 import {FacetContainer} from '../facet-container/FacetContainer';
-import {FacetBarsValueData} from '../facet-bars-value/FacetBarsValue';
+import {FacetBarsValue, FacetBarsValueData} from '../facet-bars-value/FacetBarsValue';
 import {FacetTemplate} from '../facet-template/FacetTemplate';
 import {preHTML} from '../tools/preHTML';
 
@@ -112,35 +112,38 @@ export class FacetBars extends FacetContainer {
     }
 
     protected renderContent(): TemplateResult | void {
-        return html`
-        <div 
-            class="facet-bars-container"
-            @mouseup="${this._rangeMouseHandler}"
-            @touchend="${this._rangeMouseHandler}"
-            @mousemove="${this._rangeMouseHandler}"
-            @touchmove="${this._rangeMouseHandler}"
-            @mouseleave="${this._rangeMouseHandler}"
-         >
-            <div class="facet-bars-hover-tab"></div>
-            <div class="facet-bars-content">
-                <div 
-                    class="facet-bars-values" 
-                    @mouseenter="${this._facetValuesHoverHandler}" 
-                    @mouseleave="${this._facetValuesHoverHandler}"
-                 >
-                    <slot name="values"></slot>
-                </div>
-                <div class="facet-bars-range">
-                    ${this.renderRange()}
-                </div>
-                <div class="facet-bars-range-input-fix">
-                    <div class="facet-bars-range-input">
-                        ${this.renderRangeInput()}
+        if (this._data.values.length) {
+            return html`
+            <div 
+                class="facet-bars-container"
+                @mouseup="${this._rangeMouseHandler}"
+                @touchend="${this._rangeMouseHandler}"
+                @mousemove="${this._rangeMouseHandler}"
+                @touchmove="${this._rangeMouseHandler}"
+                @mouseleave="${this._rangeMouseHandler}"
+             >
+                <div class="facet-bars-hover-tab"></div>
+                <div class="facet-bars-content">
+                    <div 
+                        class="facet-bars-values" 
+                        @mouseenter="${this._facetValuesHoverHandler}" 
+                        @mouseleave="${this._facetValuesHoverHandler}"
+                     >
+                        <slot name="values"></slot>
+                    </div>
+                    <div class="facet-bars-range">
+                        ${this.renderRange()}
+                    </div>
+                    <div class="facet-bars-range-input-fix">
+                        <div class="facet-bars-range-input">
+                            ${this.renderRangeInput()}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        `;
+            `;
+        }
+        return undefined;
     }
 
     protected renderFooter(): TemplateResult | void {
@@ -160,8 +163,8 @@ export class FacetBars extends FacetContainer {
     protected renderValuesSlot(slot: HTMLDivElement): void {
         const hovered = this.facetValuesHover.toString();
         const actionButtons = this._actionButtons.toString();
-        const hasHighlight = this.highlight.length;
-        const hasSubselection = this.subselection.length;
+        const hasHighlight = Boolean(this.highlight.length);
+        const hasSubselection = Boolean(this.subselection.length);
 
         const htmlTemplate: TemplateResult[] = [];
         const updateMethod = this.oldValues === kDefaultData.values || this.oldValues === this.values ? 'replace' : this.updateMethod;
@@ -174,26 +177,29 @@ export class FacetBars extends FacetContainer {
                         this.oldValues.slice(0, Math.ceil(diff * 0.5)),
                         hovered,
                         actionButtons,
-                        0,
-                        0,
-                        'shrink'
+                        null,
+                        null,
+                        'shrink',
+                        hasHighlight ? 'muted' : null
                     ));
                     // new values: default
                     htmlTemplate.push(...this.getValuesHTML(
                         this.values,
                         hovered,
                         actionButtons,
-                        hasHighlight,
-                        hasSubselection
+                        hasHighlight ? 0 : null,
+                        hasSubselection ? 0 : null,
+                        'none'
                     ));
                     // second half of extra old values: shrink
                     htmlTemplate.push(...this.getValuesHTML(
                         this.oldValues.slice(Math.ceil(diff * 0.5) + this.values.length),
                         hovered,
                         actionButtons,
-                        0,
-                        0,
-                        'shrink'
+                        null,
+                        null,
+                        'shrink',
+                        hasHighlight ? 'muted' : null
                     ));
                 } else if (this.oldValues.length < this.values.length) {
                     const diff = this.values.length - this.oldValues.length;
@@ -202,8 +208,8 @@ export class FacetBars extends FacetContainer {
                         this.values.slice(0, Math.ceil(diff * 0.5)),
                         hovered,
                         actionButtons,
-                        hasHighlight,
-                        hasSubselection,
+                        hasHighlight ? 0 : null,
+                        hasSubselection ? 0 : null,
                         'grow'
                     ));
                     // new values within old range: default
@@ -211,16 +217,17 @@ export class FacetBars extends FacetContainer {
                         this.values.slice(Math.ceil(diff * 0.5), Math.ceil(diff * 0.5) + this.oldValues.length),
                         hovered,
                         actionButtons,
-                        hasHighlight,
-                        hasSubselection
+                        hasHighlight ? Math.ceil(diff * 0.5) : null,
+                        hasSubselection ? Math.ceil(diff * 0.5) : null,
+                        'none'
                     ));
                     // second half of extra new values: grow
                     htmlTemplate.push(...this.getValuesHTML(
                         this.values.slice(Math.ceil(diff * 0.5) + this.oldValues.length),
                         hovered,
                         actionButtons,
-                        hasHighlight,
-                        hasSubselection,
+                        hasHighlight ? Math.ceil(diff * 0.5) + this.oldValues.length : null,
+                        hasSubselection ? Math.ceil(diff * 0.5) + this.oldValues.length : null,
                         'grow'
                     ));
                 } else {
@@ -229,8 +236,8 @@ export class FacetBars extends FacetContainer {
                         this.values,
                         hovered,
                         actionButtons,
-                        hasHighlight,
-                        hasSubselection
+                        hasHighlight ? 0 : null,
+                        hasSubselection ? 0 : null
                     ));
                 }
                 break;
@@ -241,17 +248,18 @@ export class FacetBars extends FacetContainer {
                     this.oldValues.slice(0, Math.ceil(this.oldValues.length * 0.5)),
                     hovered,
                     actionButtons,
-                    0,
-                    0,
-                    'shrink'
+                    null,
+                    null,
+                    'shrink',
+                    hasHighlight ? 'muted' : null
                 ));
                 // new data: grow
                 htmlTemplate.push(...this.getValuesHTML(
                     this.values,
                     hovered,
                     actionButtons,
-                    hasHighlight,
-                    hasSubselection,
+                    hasHighlight ? 0 : null,
+                    hasSubselection ? 0 : null,
                     'grow'
                 ));
                 // second half of old data: shrink
@@ -259,9 +267,10 @@ export class FacetBars extends FacetContainer {
                     this.oldValues.slice(Math.ceil(this.oldValues.length * 0.5)),
                     hovered,
                     actionButtons,
-                    0,
-                    0,
-                    'shrink'
+                    null,
+                    null,
+                    'shrink',
+                    hasHighlight ? 'muted' : null
                 ));
                 break;
 
@@ -271,8 +280,8 @@ export class FacetBars extends FacetContainer {
                     this.values.slice(0, Math.ceil(this.values.length * 0.5)),
                     hovered,
                     actionButtons,
-                    0,
-                    0,
+                    hasHighlight ? 0 : null,
+                    hasSubselection ? 0 : null,
                     'grow'
                 ));
                 // old data: shrink
@@ -280,17 +289,18 @@ export class FacetBars extends FacetContainer {
                     this.oldValues,
                     hovered,
                     actionButtons,
-                    hasHighlight,
-                    hasSubselection,
-                    'shrink'
+                    null,
+                    null,
+                    'shrink',
+                    hasHighlight ? 'muted' : null
                 ));
                 // second half of new data: shrink
                 htmlTemplate.push(...this.getValuesHTML(
                     this.values.slice(Math.ceil(this.values.length * 0.5)),
                     hovered,
                     actionButtons,
-                    0,
-                    0,
+                    hasHighlight ? Math.ceil(this.values.length * 0.5) : null,
+                    hasSubselection ? Math.ceil(this.values.length * 0.5) : null,
                     'grow'
                 ));
                 break;
@@ -301,8 +311,8 @@ export class FacetBars extends FacetContainer {
                     this.values,
                     hovered,
                     actionButtons,
-                    hasHighlight,
-                    hasSubselection,
+                    hasHighlight ? 0 : null,
+                    hasSubselection ? 0 : null,
                     'none'
                 ));
                 break;
@@ -314,16 +324,16 @@ export class FacetBars extends FacetContainer {
                         this.values.slice(0, this.oldValues.length),
                         hovered,
                         actionButtons,
-                        hasHighlight,
-                        hasSubselection
+                        hasHighlight ? 0 : null,
+                        hasSubselection ? 0 : null
                     ));
                     // values higher than the existing range: grow
                     htmlTemplate.push(...this.getValuesHTML(
                         this.values.slice(this.oldValues.length),
                         hovered,
                         actionButtons,
-                        hasHighlight,
-                        hasSubselection,
+                        hasHighlight ? this.oldValues.length : null,
+                        hasSubselection ? this.oldValues.length : null,
                         'grow'
                     ));
                 } else if (this.values.length < this.oldValues.length) {
@@ -332,17 +342,18 @@ export class FacetBars extends FacetContainer {
                         this.values,
                         hovered,
                         actionButtons,
-                        hasHighlight,
-                        hasSubselection
+                        hasHighlight ? 0 : null,
+                        hasSubselection ? 0 : null
                     ));
                     // old values outside of the new range: shrink
                     htmlTemplate.push(...this.getValuesHTML(
                         this.oldValues.slice(this.values.length),
                         hovered,
                         actionButtons,
-                        0,
-                        0,
-                        'shrink'
+                        null,
+                        null,
+                        'shrink',
+                        hasHighlight ? 'muted' : null
                     ));
                 } else {
                     // update the new data with default transition
@@ -350,8 +361,8 @@ export class FacetBars extends FacetContainer {
                         this.values,
                         hovered,
                         actionButtons,
-                        hasHighlight,
-                        hasSubselection
+                        hasHighlight ? 0 : null,
+                        hasSubselection ? 0 : null
                     ));
                 }
                 break;
@@ -365,43 +376,47 @@ export class FacetBars extends FacetContainer {
         values: FacetBarsValueDataTyped[],
         hovered: string,
         actionButtons: string,
-        hasHighlight: number,
-        hasSubselection: number,
-        transition: string = 'default'
+        highlightOffset: number|null,
+        subselectionOffset: number|null,
+        transition: string = 'default',
+        overrideState: string|null = null
     ): TemplateResult[] {
         const result: TemplateResult[] = [];
 
         for (let i = 0, n = values.length; i < n; ++i) {
-            const state = hasHighlight ? (this.highlight.indexOf(i) !== -1 ? 'highlighted' : 'muted') : 'normal'; // eslint-disable-line no-nested-ternary
-            const subselection = hasSubselection ? `${this.subselection[i]}` : 'false';
+            const state = highlightOffset !== null ? (this.highlight.indexOf(i + highlightOffset) !== -1 ? 'highlighted' : 'muted') : 'normal'; // eslint-disable-line no-nested-ternary
+            const subselection = subselectionOffset !== null ? `${this.subselection[i + subselectionOffset]}` : 'false';
             const type = values[i].type || 'facet-bars-value';
             const template = this.templates.get(type);
 
             if (template) {
                 result.push(template.getHTML(values[i], {
-                    'facet-value-state': state,
+                    'facet-value-state': overrideState !== null ? overrideState : state,
                     'facet-hovered': hovered,
                     subselection,
                     transition,
+                    '@click': this._barMouseHandler,
                 }));
             } else if (type !== 'facet-bars-value') {
                 result.push(preHTML`
                 <${type} 
-                    facet-value-state="${state}" 
+                    facet-value-state="${overrideState !== null ? overrideState : state}" 
                     facet-hovered="${hovered}" 
                     action-buttons="${actionButtons}" 
                     subselection="${subselection}"
                     transition="${transition}"
+                    @click="${this._barMouseHandler}"
                     .data="${values[i]}">
                 </${type}>`);
             } else {
                 result.push(html`
                 <facet-bars-value
-                    facet-value-state="${state}"
+                    facet-value-state="${overrideState !== null ? overrideState : state}"
                     facet-hovered="${hovered}"
                     action-buttons="${actionButtons}"
                     subselection="${subselection}"
                     transition="${transition}"
+                    @click="${this._barMouseHandler}"
                     .data="${values[i]}">
                 </facet-bars-value>`);
             }
@@ -415,6 +430,7 @@ export class FacetBars extends FacetContainer {
         template.addCustomAttribute('facet-hovered');
         template.addCustomAttribute('subselection');
         template.addCustomAttribute('transition');
+        template.addCustomAttribute('@click');
     }
 
     protected renderRangeInput(): TemplateResult {
@@ -505,7 +521,7 @@ export class FacetBars extends FacetContainer {
         `;
     }
 
-    private _facetValuesHoverHandler: (event: MouseEvent) => void = (event: MouseEvent): void => {
+    private _facetValuesHoverHandler(event: MouseEvent): void {
         if (event.type === 'mouseenter' && !this.facetValuesHover) {
             this.facetValuesHover = true;
             this.requestUpdate();
@@ -514,6 +530,27 @@ export class FacetBars extends FacetContainer {
             this.requestUpdate();
         }
     };
+
+    private _barMouseHandler(event: MouseEvent): void {
+        if (event.currentTarget instanceof FacetBarsValue) {
+            event.preventDefault();
+            const value = event.currentTarget.data;
+            const index = this.values.indexOf(value);
+            switch (event.type) {
+                case 'click':
+                    this.dispatchEvent(new CustomEvent('valueClicked', {
+                        detail: {
+                            value,
+                            index,
+                        },
+                    }));
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
 
     private _rangeMouseHandler(event: MouseEvent): void {
         switch (event.type) {
