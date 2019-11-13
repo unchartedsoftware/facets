@@ -3,10 +3,10 @@
     "version": "0.0.1",
     "license": "MIT",
     "entry": "src/index.ts",
-    "main": "dist/es5/",
-    "module": "dist/es6/",
-    "iife": "dist/iife/",
-    "jsnext:main": "dist/next/",
+    "main": "dist/es5/index.js",
+    "module": "dist/es6/index.js",
+    "iife": "dist/iife/index.js",
+    "jsnext:main": "dist/next/index.js",
     "types": "dist/types/index.d.ts",
     "files": [
         "dist"

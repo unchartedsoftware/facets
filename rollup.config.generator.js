@@ -52,9 +52,7 @@ function generateSingleConfig(target, input, output, dependencies = null, module
             sourcemap: sourcemap,
         },
         plugins: [],
-        treeshake: {
-            moduleSideEffects: false,
-        },
+        treeshake: true,
         watch: {
             clearScreen: false
         },
@@ -154,7 +152,7 @@ function generateConfig(pkg, basedir, mount = []) {
         config.push(generateSingleConfig(
             'iife',
             [path.resolve(basedir, pkg.entry)],
-            path.resolve(basedir, pkg.iife),
+            path.resolve(basedir, path.dirname(pkg.iife)),
             null,
             moduleName,
             'inline',
@@ -168,7 +166,7 @@ function generateConfig(pkg, basedir, mount = []) {
         config.push(generateSingleConfig(
             'iife',
             [path.resolve(basedir, pkg.entry)],
-            path.resolve(basedir, pkg.iife),
+            path.resolve(basedir, path.dirname(pkg.iife)),
             null,
             moduleName
         ));
@@ -186,7 +184,7 @@ function generateConfig(pkg, basedir, mount = []) {
         config.push(generateSingleConfig(
             'es5',
             input,
-            path.resolve(basedir, pkg.main),
+            path.resolve(basedir, path.dirname(pkg.main)),
             pkg.dependencies
         ));
     }
@@ -196,7 +194,7 @@ function generateConfig(pkg, basedir, mount = []) {
         config.push(generateSingleConfig(
             'es6',
             input,
-            path.resolve(basedir, pkg.module),
+            path.resolve(basedir, path.dirname(pkg.module)),
             pkg.dependencies
         ));
 
@@ -207,7 +205,7 @@ function generateConfig(pkg, basedir, mount = []) {
         config.push(generateSingleConfig(
             'next',
             input,
-            path.resolve(basedir, pkg['jsnext:main']),
+            path.resolve(basedir, path.dirname(pkg['jsnext:main'])),
             pkg.dependencies
         ));
     }
