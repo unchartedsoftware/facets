@@ -117,6 +117,12 @@ export class FacetBarsValue extends FacetHoverable {
             requestAnimationFrame((): void => {
                 this.performTransition(window.performance.now() - time);
             });
+        } else {
+            this.dispatchEvent(new CustomEvent('transitionEnded', {
+                detail: {
+                    type: this.transition,
+                },
+            }));
         }
     }
 }
