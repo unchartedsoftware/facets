@@ -11,3 +11,5 @@ export {FacetList} from './facet-list/FacetList';
 
 export {FacetBars} from './facet-bars/FacetBars';
 export {FacetBarsValue} from './facet-bars-value/FacetBarsValue';
+
+export {FacetPlugin} from './facet-plugin/FacetPlugin';
