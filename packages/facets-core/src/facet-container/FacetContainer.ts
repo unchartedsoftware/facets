@@ -5,7 +5,6 @@ import {MutationWrapper} from '../tools/MutationWrapper';
 
 // @ts-ignore
 import facetContainerStyle from './FacetContainer.css';
-
 @customElement('facet-container')
 export class FacetContainer extends FacetBlueprint {
     private mutationObserver: MutationWrapper;
@@ -100,7 +99,9 @@ export class FacetContainer extends FacetBlueprint {
                 if (child instanceof FacetTemplate) {
                     this.setTemplateForTarget(child.target, child);
                     this.requestUpdate();
-                } else if (child.hasAttribute('slot')) {
+                }
+
+                if (child.hasAttribute('slot')) {
                     const slot = child.getAttribute('slot') as string;
                     const slotted = this.slottedElements.get(slot);
                     if (slotted && child !== slotted && slotted.parentElement === this) {
@@ -119,7 +120,9 @@ export class FacetContainer extends FacetBlueprint {
                 if (child instanceof FacetTemplate && this.renderRoot.constructor.name === 'ShadowRoot') {
                     this.deleteTemplateForTarget(child.target);
                     this.requestUpdate();
-                } else if (child.hasAttribute('slot')) {
+                }
+
+                if (child.hasAttribute('slot')) {
                     const slot = child.getAttribute('slot') as string;
                     if (child === this.slottedElements.get(slot)) {
                         this.slottedElements.delete(slot);
