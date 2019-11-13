@@ -37,7 +37,7 @@ export class FacetTemplate extends LitElement {
         this.mutationObserver.nodesAdded = this._processAddedNodes.bind(this);
     }
 
-    public getHTML(data: any, customAttributes: {[key: string]: string} = {}): TemplateResult {
+    public getHTML(data: any, customAttributes: {[key: string]: any} = {}): TemplateResult {
         return this._getHTML(data, this.tagComponents, customAttributes);
     }
 
@@ -138,22 +138,20 @@ export class FacetTemplate extends LitElement {
         for (let i = 0, n = nodes.length; i < n; ++i) {
             if (nodes[i] instanceof HTMLElement) {
                 const child = nodes[i] as HTMLElement;
-                if (child.hasAttribute('slot')) {
-                    const slotComponents: TemplateComponents = {
-                        strings: [],
-                        values: [],
-                    };
+                const slotComponents: TemplateComponents = {
+                    strings: [],
+                    values: [],
+                };
 
-                    const slotHTML = child.outerHTML.replace(
-                        /template-(.*?):/gm,
-                        (match: string, inner: string): string => `${inner}:`
-                    );
-                    this._processHtmlParts(slotHTML, slotComponents);
-                    this.slots.push(slotComponents);
+                const slotHTML = child.outerHTML.replace(
+                    /template-(.*?):/gm,
+                    (match: string, inner: string): string => `${inner}:`
+                );
+                this._processHtmlParts(slotHTML, slotComponents);
+                this.slots.push(slotComponents);
 
-                    if (this.parentNode instanceof FacetBlueprint) {
-                        this.parentNode.requestUpdate();
-                    }
+                if (this.parentNode instanceof FacetBlueprint) {
+                    this.parentNode.requestUpdate();
                 }
             }
         }
@@ -171,7 +169,7 @@ export class FacetTemplate extends LitElement {
         return components;
     }
 
-    private _getHTML(data: any, components: TemplateComponents, customAttributes: {[key: string]: string}): TemplateResult {
+    private _getHTML(data: any, components: TemplateComponents, customAttributes: {[key: string]: any}): TemplateResult {
         const values: any[] = [];
         for (let i = 0, n = components.values.length; i < n; ++i) {
             if (typeof components.values[i] === 'symbol') {
