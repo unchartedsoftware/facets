@@ -1,0 +1,27 @@
+.transition-demo-container {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    margin: 2px 12px;
+    user-select: none;
+}
+
+.transition-demo-row {
+    display: flex;
+    margin: 2px 20px;
+}
+
+.transition-demo-label {
+    width: 50%;
+}
+
+.transition-demo-button {
+    width: 16px;
+    height: 16px;
+    color: white;
+    background-color: #255DCC;
+    border-radius: 50%;
+    text-align: center;
+    margin: 0 2px;
+    cursor: pointer;
+}
