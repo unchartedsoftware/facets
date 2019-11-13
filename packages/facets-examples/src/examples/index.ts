@@ -13,6 +13,13 @@ import termCSS from './facet-term/style.css';
 import termJS from './facet-term/source.js.txt';
 
 // @ts-ignore
+import barsHTML from './facet-bars/example.html';
+// @ts-ignore
+import barsCSS from './facet-bars/style.css';
+// @ts-ignore
+import barsJS from './facet-bars/source.js.txt';
+
+// @ts-ignore
 import histogramHTML from './facet-histogram/example.html';
 // @ts-ignore
 import histogramCSS from './facet-histogram/style.css';
@@ -50,6 +57,11 @@ export const examples = {
         html: termHTML,
         css: termCSS,
         js: termJS,
+    },
+    'facet-bars': {
+        html: barsHTML,
+        css: barsCSS,
+        js: barsJS,
     },
     'facet-histogram': {
         html: histogramHTML,
