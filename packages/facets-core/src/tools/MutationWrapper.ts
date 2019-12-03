@@ -4,7 +4,6 @@ export type AttributeChangeHandler = ((attribute: string) => void) | void | null
 export class MutationWrapper {
     public nodesAdded: ChildrenChangeHandler | void | null = null;
     public nodesRemoved: ChildrenChangeHandler | void | null = null;
-    public attributeChange: AttributeChangeHandler | void | null = null;
 
     private readonly _target: Element;
     private readonly _observer: MutationObserver;
@@ -20,14 +19,12 @@ export class MutationWrapper {
                     if (this.nodesRemoved) {
                         this.nodesRemoved(records[i].removedNodes);
                     }
-                } else if (records[i].type === 'attributes' && this.attributeChange) {
-                    this.attributeChange(records[i].attributeName as string);
                 }
             }
         });
 
         this._target = target;
-        this._config = { attributes: true, childList: true, subtree: false };
+        this._config = { attributes: false, childList: true, subtree: true };
 
         if (autoStart) {
             this._observer.observe(this._target, this._config);
