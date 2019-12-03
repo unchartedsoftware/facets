@@ -5,11 +5,12 @@ import {MutationWrapper} from '../tools/MutationWrapper';
 
 // @ts-ignore
 import facetContainerStyle from './FacetContainer.css';
+
 @customElement('facet-container')
 export class FacetContainer extends FacetBlueprint {
-    private mutationObserver: MutationWrapper;
     protected templates: Map<string, FacetTemplate> = new Map();
-    protected slottedElements: Map<string, HTMLDivElement> = new Map();
+    protected slottedElements: Map<string, HTMLElement> = new Map();
+    private mutationObserver: MutationWrapper;
 
     public static get styles(): CSSResult[] {
         const styles = this.getSuperStyles();
@@ -57,12 +58,12 @@ export class FacetContainer extends FacetBlueprint {
         return undefined;
     }
 
-    protected createSlottedElement(slot: string): HTMLDivElement|void {
+    protected createSlottedElement(slot: string, type: string = 'div'): HTMLElement|void {
         if (this.slottedElements.has(slot)) {
             return this.slottedElements.get(slot);
         }
 
-        const element: HTMLDivElement = document.createElement('div');
+        const element: HTMLElement = document.createElement(type);
         element.setAttribute('slot', slot);
         this.appendChild(element);
 
