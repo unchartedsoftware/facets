@@ -1,11 +1,1 @@
-/* make the second facet highlight whatever is in range */
-var e2 = document.querySelector('#facet02');
-e2.addEventListener('rangeChanged', function(e) {
-  var highlight = [];
-  if (e.detail.range[0] > 0 || e.detail.range[1] < e2.data.values.length) {
-    for (var i = e.detail.range[0]; i < e.detail.range[1]; ++i) {
-      highlight.push(i);
-    }
-  }
-  e2.highlight = highlight;
-});
+/* */
