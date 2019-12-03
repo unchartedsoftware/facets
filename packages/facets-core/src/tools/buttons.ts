@@ -6,23 +6,22 @@ import {faEye} from '@fortawesome/free-solid-svg-icons/faEye';
 import {faBan} from '@fortawesome/free-solid-svg-icons/faBan';
 import {faQuestionCircle} from '@fortawesome/free-regular-svg-icons/faQuestionCircle';
 
-function _generateButton(anyFacet: any, className: string, index: number, total: number): TemplateResult {
+function _generateButton(facet: any, className: string, index: number, total: number): TemplateResult {
     return html`
             <div class="facet-button ${className}">
                 <slot name="button_${index}">
-                    ${anyFacet.hasOwnProperty('buttonIconRenderer') ? anyFacet.buttonIconRenderer(anyFacet, index, total) : ''}
+                    ${facet.hasOwnProperty('buttonIconRenderer') ? facet.buttonIconRenderer(facet, index, total) : ''}
                 </slot>
             </div>
         `;
 }
 
-export function renderButtons(facet: FacetBlueprint): TemplateResult | void {
-    const anyFacet: any = facet as any;
-    const actionButtons: number = !isNaN(anyFacet.actionButtons) ? anyFacet.actionButtons : 2;
+export function renderButtons(facet: any): TemplateResult | void {
+    const actionButtons: number = !isNaN(facet.actionButtons) ? facet.actionButtons : 2;
     if (actionButtons > 0) {
         const template = [];
         if (actionButtons === 1) {
-            template.push(_generateButton(anyFacet, 'facet-button-single', 0, 1));
+            template.push(_generateButton(facet, 'facet-button-single', 0, 1));
         } else {
             let className = '';
             for (let i = 0, n = actionButtons; i < n; ++i) {
@@ -33,7 +32,7 @@ export function renderButtons(facet: FacetBlueprint): TemplateResult | void {
                 } else {
                     className = '';
                 }
-                template.push(_generateButton(anyFacet, className, i, n));
+                template.push(_generateButton(facet, className, i, n));
             }
         }
 
