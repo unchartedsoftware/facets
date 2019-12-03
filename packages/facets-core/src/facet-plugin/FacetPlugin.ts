@@ -1,33 +1,69 @@
-import {customElement} from 'lit-element';
-import {FacetElement} from '../facet-element/FacetElement';
-import {FacetContainer} from '../facet-container/FacetContainer';
+import {customElement, LitElement} from 'lit-element';
 
 @customElement('facet-plugin')
-export class FacetPlugin extends FacetElement {
-    private _host: HTMLElement|null = null;
-    public get host(): HTMLElement|null {
+export class FacetPlugin extends LitElement {
+    public static connectedEvent = 'facet-plugin-connected';
+    public static disconnectedEvent = 'facet-plugin-disconnected';
+
+    private _boundUpdateHandler: EventHandlerNonNull = this._updateHandler.bind(this);
+
+    private _host: LitElement|null = null;
+    public get host(): LitElement|null {
         return this._host;
     }
-    public set host(value: HTMLElement|null) {
+    public set host(value: LitElement|null) {
         if (value !== this._host) {
+            if (this._host) {
+                this._host.removeEventListener('facet-element-updated', this._boundUpdateHandler);
+            }
+
             this._host = value;
+
+            if (this._host) {
+                this._host.addEventListener('facet-element-updated', this._boundUpdateHandler);
+            }
+
             this.hostChanged(this._host);
+            this.requestUpdate();
         }
     }
 
     public connectedCallback(): void {
         super.connectedCallback();
-        if (this.parentElement instanceof FacetContainer) {
-            this.host = this.parentElement;
-        }
+        // stupid IE11...
+        requestAnimationFrame((): void => {
+            this.dispatchEvent(new CustomEvent(FacetPlugin.connectedEvent, {
+                bubbles: true,
+                detail: {
+                    plugin: this,
+                },
+            }));
+        });
     }
 
     public disconnectedCallback(): void {
         super.disconnectedCallback();
-        this.host = null;
+        if (this.host) {
+            this.host.dispatchEvent(new CustomEvent(FacetPlugin.disconnectedEvent, {
+                bubbles: true,
+                detail: {
+                    plugin: this,
+                },
+            }));
+        }
+    }
+
+    protected hostUpdated(changedProperties: Map<PropertyKey, unknown>): void { // eslint-disable-line
+        // OVERRIDE
     }
 
     protected hostChanged(host: HTMLElement|null): void { // eslint-disable-line
         // OVERRIDE
+    }
+
+    private _updateHandler(event: Event): void {
+        if (event.target === this._host && event instanceof CustomEvent) {
+            this.hostUpdated(event.detail.changedProperties);
+        }
     }
 }
