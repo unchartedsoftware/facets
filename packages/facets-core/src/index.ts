@@ -10,6 +10,8 @@ export {FacetHistogramValue} from './facet-histogram-value/FacetHistogramValue';
 export {FacetList} from './facet-list/FacetList';
 
 export {FacetBars} from './facet-bars/FacetBars';
-export {FacetBarsValue} from './facet-bars-value/FacetBarsValue';
+export {FacetBarsValues} from './facet-bars/facet-bars-values/FacetBarsValues';
+export {FacetBarsValue} from './facet-bars/facet-bars-values/facet-bar-value/FacetBarsValue';
+export {FacetBarsLabels} from './facet-bars/facet-bars-labels/FacetBarsLabels';
 
 export {FacetPlugin} from './facet-plugin/FacetPlugin';
