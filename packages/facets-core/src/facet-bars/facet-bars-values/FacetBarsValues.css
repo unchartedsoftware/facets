@@ -1,0 +1,14 @@
+.facet-blueprint {
+    height: 100%;
+}
+
+.facet-bars-values-container {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    min-height: 64px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    margin-left: 1px;
+}

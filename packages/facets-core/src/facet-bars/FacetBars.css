@@ -12,6 +12,13 @@
     display: flex;
 }
 
+.facet-bars-header-label {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .facet-bars-content {
     flex-grow: 1;
     display: flex;
@@ -19,176 +26,19 @@
 }
 
 .facet-bars-values {
-    transition: background-color 256ms;
     min-height: 64px;
-    height: 100%;
     flex-grow: 1;
-    padding-bottom: 10px;
     margin: 0 16px;
 
     display: flex;
     align-items: stretch;
 }
 
-.facet-bars-values ::slotted(#facet-bars-values) {
+.facet-bars-values > facet-bars-values {
     flex-grow: 1;
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    margin-left: 1px;
 }
 
-.facet-bars-range {
-    height: 4px;
-    position: relative;
-}
-
-.facet-bars-range-bar-background {
-    height: 4px;
-    background-color: #D9DADB;
-    border-radius: 4px;
-    margin: 0 4px;
-    padding: 0 12px;
-    top: 0;
-    left: 0;
-}
-
-.facet-bars-range-bar {
-    height: 100%;
-    background-color: #727375;
-    border-radius: 4px;
-
-    transition: margin 128ms ease-out;
-}
-
-.facet-bars-range-handle:before {
-    content: url(data:image/svg+xml,%3Csvg%20width=%2215%22%20height=%2215%22%20viewBox=%220%200%2018%2018%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath%20fill-rule=%22evenodd%22%20clip-rule=%22evenodd%22%20d=%22M16.6942%209.22954L10.8237%2014.9181C10.1064%2015.6132%209.16012%2016%208.17694%2016L2.93495%2016C1.86631%2016%201%2015.1046%201%2014L0.999999%203C0.999999%201.89543%201.86631%201%202.93495%201L8.17693%201C9.16012%201%2010.1064%201.3868%2010.8237%202.08185L16.6942%207.77046C17.084%208.14819%2017.1038%208.78103%2016.7383%209.18394C16.7241%209.19963%2016.7094%209.21483%2016.6942%209.22954Z%22%20fill=%22%23FFFFFF%22%20stroke=%22%23D9DADB%22%20stroke-width=%221px%22/%3E%3C/svg%3E);
-}
-
-.facet-bars-range-handle-container {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+.facet-bars-labels {
     margin: 0 16px;
-}
-
-.facet-bars-range-handle {
-    cursor: pointer;
-    width: 15px;
-    height: 14px;
-
-    position: absolute;
-    top: 0;
-
-    transition: left 128ms ease-out, right 128ms ease-out;
-}
-
-.facet-bars-range-handle:after {
-    content:'';
-    position:absolute;
-    top:-10px; bottom:-10px;
-    left:-10px; right:0;
-}
-
-.facet-bars-range-handle-right {
-    right: 0;
-    transform: translate(14px, -5px) scale(-1, 1);
-}
-
-.facet-bars-range-handle-left {
-    left: 0;
-    transform: translate(-14px, -5px);
-}
-
-.facet-bars-range-input-fix {
-    margin-top: 10px;
-    width: 0;
-    height: 0;
-    padding-left: 100%;
-    padding-top: 24px;
-    position: relative;
-}
-
-.facet-bars-range-input {
-    display: flex;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-.facet-bars-range-input-left {
-    flex-grow: 1;
-    min-width: 0;
-    display: flex;
-    justify-content: flex-start;
-}
-
-.facet-bars-range-input-right {
-    flex-grow: 1;
-    min-width: 0;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.facet-bars-range-input-box {
-    -webkit-user-select: text;
-    -khtml-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
-}
-
-.facet-bars-range-input-box {
-    min-width: 48px;
-    max-width: 50%;
-    height: 24px;
-    padding: 0 2px;
-    margin: 0;
-
-    box-sizing: border-box;
-    box-shadow: inset -1px -1px 1px rgba(114, 115, 117, 0.05), inset 1px 1px 1px rgba(114, 115, 117, 0.05), inset 0 1px 2px rgba(114, 115, 117, 0.05);
-
-    text-align: center;
-    font-size: 12px;
-    line-height: 16px;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.facet-bars-range-input-box:focus {
-    border: 2px solid #255DCC;
-    box-shadow: -3px -3px 0 #CBDCFD, 3px 3px 0 #CBDCFD, -3px 3px 0 #CBDCFD, 3px -3px 0 #CBDCFD;
-    outline: none;
-    z-index: 1;
-}
-
-.facet-bars-range-input-box:disabled {
-    box-shadow: none;
-    background-color: #EAEBEC;
-    color: #727375;
-}
-
-.facet-bars-range-input-box-solo {
-    border: 1px solid #D9DADB;
-    border-radius: 3px;
-}
-
-.facet-bars-range-input-box-left {
-    border-left: 1px solid #D9DADB;
-    border-right: 0;
-    border-top: 1px solid #D9DADB;
-    border-bottom: 1px solid #D9DADB;
-    border-radius: 3px 0 0 3px;
-}
-
-.facet-bars-range-input-box-right {
-    border: 1px solid #D9DADB;
-    border-radius: 0 3px 3px 0;
 }
 

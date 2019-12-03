@@ -1,0 +1,16 @@
+.facet-bars-values-selection-user {
+    position: absolute;
+    border: 1px dashed black;
+    pointer-events: none;
+    user-select: none;
+}
+
+.facet-bars-values-selection-computed {
+    position: absolute;
+    background-color: rgba(0, 0, 255, 0.15);
+    border: 1px solid #0000ff;
+    pointer-events: none;
+    user-select: none;
+    top: 0;
+    bottom: 0;
+}
