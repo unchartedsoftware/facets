@@ -29,9 +29,7 @@ const kBooleanConverter = {
             return Boolean(value);
         }
     },
-    toAttribute: (value: boolean): string => {
-        return JSON.stringify(Boolean(value));
-    },
+    toAttribute: (value: boolean): string => JSON.stringify(Boolean(value)),
 };
 
 @customElement('facet-bars-labels')
@@ -245,11 +243,10 @@ export class FacetBarsLabels extends FacetPlugin {
 
     private _addMarker(section: LabelSection, barStepPercentage: number, ticks: TemplateResult[]): void {
         ticks.push(html`
-        <div class="facet-bars-labels-marker" style="left:${
-            Math.max(section.min * barStepPercentage + barStepPercentage * 0.5, 0).toFixed(2)
-        }%;right:${
-            Math.max(100 - section.max * barStepPercentage + barStepPercentage * 0.5, 0).toFixed(2)
-        }%"></div>
+        <div class="facet-bars-labels-marker" style="left:
+        ${Math.max(section.min * barStepPercentage + barStepPercentage * 0.5, 0).toFixed(2)}%;
+        right:${Math.max(100 - section.max * barStepPercentage + barStepPercentage * 0.5, 0).toFixed(2)}%"
+        ></div>
         `);
     }
 }

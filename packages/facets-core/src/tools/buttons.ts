@@ -1,5 +1,4 @@
 import {html, TemplateResult} from 'lit-element';
-import {FacetBlueprint} from '../facet-blueprint/FacetBlueprint';
 
 import {makeIconSVG} from './faIcons';
 import {faEye} from '@fortawesome/free-solid-svg-icons/faEye';

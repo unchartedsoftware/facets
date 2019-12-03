@@ -63,13 +63,14 @@ export class FacetExample extends LitElement {
                         <option>empty</option>
                     </select>
                 </div>
-                <iframe id="preview-iframe" class="facet-example-preview-iframe"></iframe>            
+                <iframe id="preview-iframe" class="facet-example-preview-iframe"></iframe>
             </div>
         </div>
         `;
     }
 
     protected firstUpdated(_changedProperties: Map<PropertyKey, unknown>): void {
+        super.firstUpdated(_changedProperties);
         window.addEventListener('keydown', (event): void => {
             if ((event.ctrlKey || event.metaKey) && event.key === 's') {
                 event.preventDefault();
@@ -79,6 +80,7 @@ export class FacetExample extends LitElement {
     }
 
     protected updated(_changedProperties: Map<PropertyKey, unknown>): void {
+        super.update(_changedProperties);
         const example = (examples as any)[this.example];
         if (!this.editorHTML) {
             const editorElement = this.renderRoot.querySelector('#editorHTML');
@@ -146,14 +148,14 @@ if (!window.facetsexamples) {
     const script = document.createElement('script');
     script.setAttribute('type', 'text/javascript');
     script.setAttribute('src', 'dist/iife/index.js');
-    
+
     document.body.style.visibility = 'hidden';
     script.addEventListener('load', function() {
         setTimeout(function() {
             document.body.style.visibility = 'visible';
         }, 50);
     });
-    
+
     document.head.appendChild(script);
 }
 </script>
