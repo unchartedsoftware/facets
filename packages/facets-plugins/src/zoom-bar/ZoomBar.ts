@@ -24,6 +24,10 @@ export class ZoomBar extends FacetPlugin {
             this.facet.removeEventListener('mousemove', this.boundMouseHandler);
             this.facet.removeEventListener('mouseleave', this.boundMouseHandler);
             this.facet.removeEventListener('mouseup', this.boundMouseHandler);
+            this.facet.removeEventListener('touchstart', this.boundMouseHandler);
+            this.facet.removeEventListener('touchend', this.boundMouseHandler);
+            this.facet.removeEventListener('touchcancel', this.boundMouseHandler);
+            this.facet.removeEventListener('touchmove', this.boundMouseHandler);
         }
 
         if (host instanceof FacetBars || host instanceof FacetBarsValues) {
@@ -31,6 +35,10 @@ export class ZoomBar extends FacetPlugin {
             this.facet.addEventListener('mousemove', this.boundMouseHandler);
             this.facet.addEventListener('mouseleave', this.boundMouseHandler);
             this.facet.addEventListener('mouseup', this.boundMouseHandler);
+            this.facet.addEventListener('touchstart', this.boundMouseHandler);
+            this.facet.addEventListener('touchend', this.boundMouseHandler);
+            this.facet.addEventListener('touchcancel', this.boundMouseHandler);
+            this.facet.addEventListener('touchmove', this.boundMouseHandler);
         } else {
             this.facet = null;
         }
@@ -59,8 +67,8 @@ export class ZoomBar extends FacetPlugin {
                     <div class="zoom-bar-area">
                         <div class="zoom-bar-selection" style="left:${selectionLeft}%;right:${selectionRight}%;"></div>
                         <div class="zoom-bar-thumb" @mousedown="${this.handleMouseEvent}" style="left:${thumbLeft}%;right:${thumbRight}%;">
-                            <div class="zoom-bar-left-handle" @mousedown="${this.handleMouseEvent}"></div>
-                            <div class="zoom-bar-right-handle" @mousedown="${this.handleMouseEvent}"></div>
+                            <div class="zoom-bar-handle zoom-bar-handle-left" @mousedown="${this.handleMouseEvent}"></div>
+                            <div class="zoom-bar-handle zoom-bar-handle-right" @mousedown="${this.handleMouseEvent}"></div>
                         </div>
                     </div>
                 </div>
@@ -77,15 +85,16 @@ export class ZoomBar extends FacetPlugin {
             const domainLength = domain[1] - domain[0];
             switch (mouseEvent.type) {
                 case 'mousedown':
+                case 'touchstart':
                     if (mouseEvent.currentTarget instanceof Element) {
                         if (mouseEvent.currentTarget.className.indexOf('zoom-bar-thumb') !== -1) {
                             this.mouseTarget = 'thumb';
                             event.preventDefault();
-                        } else if (mouseEvent.currentTarget.className.indexOf('zoom-bar-left-handle') !== -1) {
+                        } else if (mouseEvent.currentTarget.className.indexOf('zoom-bar-handle-left') !== -1) {
                             this.mouseTarget = 'left-handle';
                             event.stopPropagation();
                             event.preventDefault();
-                        } else if (mouseEvent.currentTarget.className.indexOf('zoom-bar-right-handle') !== -1) {
+                        } else if (mouseEvent.currentTarget.className.indexOf('zoom-bar-handle-right') !== -1) {
                             this.mouseTarget = 'right-handle';
                             event.stopPropagation();
                             event.preventDefault();
@@ -98,9 +107,12 @@ export class ZoomBar extends FacetPlugin {
 
                 case 'mouseup':
                 case 'mouseleave':
+                case 'touchcancel':
+                case 'touchend':
                     this.mouseTarget = null;
                     break;
 
+                case 'touchmove':
                 case 'mousemove':
                     if (this.mouseTarget) {
                         const zoomBarArea = this.renderRoot.querySelector('.zoom-bar-area');
