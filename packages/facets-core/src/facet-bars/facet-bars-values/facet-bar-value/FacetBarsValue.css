@@ -2,7 +2,7 @@ facet-bars-value {
     height: inherit;
     position: relative;
     flex-grow: 1;
-    margin-right: 1px;
+    padding: 0 1px;
 }
 
 .facet-hoverable-buttons {
@@ -33,7 +33,6 @@ facet-bars-value:hover .facet-hoverable-buttons {
 
 .facet-bars-value-background {
     position: relative;
-    cursor: pointer;
     height: 100%;
     transition: margin-left 200ms ease-out, background-color 128ms ease-out;
 }
