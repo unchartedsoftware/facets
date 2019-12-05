@@ -83,7 +83,7 @@ function generateSingleConfig(target, input, output, dependencies = null, module
     }
 
     config.plugins.push(string({
-        include: ["**/*.css", "**/*.html", "**/*.txt"],
+        include: ["**/*.css", "**/*.html", "**/*.example.js"],
         exclude: ["**/css/*.css"]
     }));
 
