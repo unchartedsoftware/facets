@@ -39,13 +39,13 @@ export class FacetElement extends LitElement {
     }
 
     protected updated(_changedProperties: Map<PropertyKey, unknown>): void {
+        super.updated(_changedProperties);
         this.dispatchEvent(new CustomEvent('facet-element-updated', {
             bubbles: false,
             detail: {
                 changedProperties: _changedProperties,
             },
         }));
-        super.updated(_changedProperties);
     }
 
     protected connectPlugin(plugin: FacetPlugin): void {
