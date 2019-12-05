@@ -4,7 +4,6 @@
 
 .facet-bars-values-container {
     position: relative;
-    overflow: hidden;
     height: 100%;
     min-height: 64px;
     display: flex;
