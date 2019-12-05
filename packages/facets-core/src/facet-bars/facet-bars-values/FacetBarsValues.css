@@ -1,5 +1,5 @@
-.facet-blueprint {
-    height: 100%;
+:host {
+    display: flex;
 }
 
 .facet-bars-values-container {

@@ -1,3 +1,7 @@
+.facet-blueprint-content {
+    display: flex;
+}
+
 .facet-bars-hover-tab {
     width: 4px;
     margin-right: 4px;
@@ -8,6 +12,7 @@
 }
 
 .facet-bars-container {
+    flex-grow: 1;
     padding: 4px 8px 4px 0;
     display: flex;
 }
