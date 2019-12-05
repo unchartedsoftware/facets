@@ -67,7 +67,7 @@ export class ZoomBar extends FacetPlugin {
             </div>
             `;
         }
-        return undefined;
+        return html`${undefined}`;
     }
 
     private handleMouseEvent(event: Event): void {

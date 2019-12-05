@@ -113,7 +113,7 @@ export class FacetBarsLabels extends FacetPlugin {
 
             return html`${result}`;
         }
-        return undefined;
+        return html`${undefined}`;
     }
 
     private _processValue(value: FacetBarsValueData|null, rows: LabelRow[], drawIndexLabels: boolean, valueIndex: number, barIndex: number, barStepPercentage: number): void {
