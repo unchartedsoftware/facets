@@ -14,6 +14,25 @@ export class ZoomBar extends FacetPlugin {
         ];
     }
 
+    public static get properties(): any {
+        return {
+            enabled: { type: Object },
+        };
+    }
+
+    private _enabled: boolean = true;
+    public get enabled(): boolean {
+        return true;
+    }
+    public set enabled(value: boolean) {
+        const oldValue = this._enabled;
+        this._enabled = value;
+        if (!this._enabled) {
+            this.mouseTarget = null;
+        }
+        this.requestUpdate('enabled', oldValue);
+    }
+
     private facet: FacetBars | FacetBarsValues | null = null;
     private mouseTarget: string | null = null;
     private mouseX: number | null = null;
@@ -66,7 +85,7 @@ export class ZoomBar extends FacetPlugin {
                 <div class="zoom-bar-background">
                     <div class="zoom-bar-area">
                         <div class="zoom-bar-selection" style="left:${selectionLeft}%;right:${selectionRight}%;"></div>
-                        <div class="zoom-bar-thumb" @mousedown="${this.handleMouseEvent}" style="left:${thumbLeft}%;right:${thumbRight}%;">
+                        <div class="zoom-bar-thumb" @mousedown="${this.handleMouseEvent}" style="left:${thumbLeft}%;right:${thumbRight}%;display:${this._enabled ? 'block' : 'none'}">
                             <div class="zoom-bar-handle zoom-bar-handle-left" @mousedown="${this.handleMouseEvent}"></div>
                             <div class="zoom-bar-handle zoom-bar-handle-right" @mousedown="${this.handleMouseEvent}"></div>
                         </div>
