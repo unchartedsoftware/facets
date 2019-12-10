@@ -3,7 +3,7 @@ import {FacetElement} from '../../../facet-element/FacetElement';
 import {renderButtonIcon, renderButtons} from '../../../tools/buttons';
 
 export interface FacetBarsValueData {
-    ratio: number;
+    ratio: number | null;
     labels?: string[];
     metadata?: any;
 }
@@ -52,7 +52,7 @@ export class FacetBarsValue extends FacetElement {
     }
 
     protected render(): TemplateResult | void {
-        const totalHeight = Math.round(Math.max(Math.min(this._data.ratio, 1), 0) * 100);
+        const totalHeight = Math.round(Math.max(Math.min(this._data.ratio ? this._data.ratio : 0, 1), 0) * 100);
         const selectionHeight = isNaN(this.subselection) ? totalHeight : Math.round(Math.max(Math.min(this.subselection, 1), 0) * 100);
         return html`
         <div class="facet-bars-value-background">

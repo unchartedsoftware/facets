@@ -161,7 +161,7 @@ export class FacetBarsValues extends FacetBlueprint {
         return repeat(values, (): number => (id++) + offset, (value, i): TemplateResult => {
             const computedState = this.selection ? ((i + offset) >= this.selection[0] && (i + offset) < this.selection[1] ? 'highlighted' : 'muted') : 'normal'; // eslint-disable-line no-nested-ternary
             const subselection = this.subselection ? `${this.subselection[i + offset]}` : 'false';
-            const overrideState = value === null ? 'loading' : null;
+            const overrideState = value === null || value.ratio === null ? 'loading' : null;
 
             return html`
             <facet-bars-value

@@ -40,7 +40,20 @@ export class FacetBars extends FacetContainer {
         };
     }
 
-    public data: FacetBarsData = kDefaultData;
+    private _data: FacetBarsData = kDefaultData;
+    public get data(): FacetBarsData {
+        return this._data;
+    }
+    // @ts-ignore
+    public set data(value: FacetBarsData | null) {
+        const oldValue = this._data;
+        if (!value || value === kDefaultData) {
+            this._data = kDefaultData;
+        } else {
+            this._data = value;
+        }
+        this.requestUpdate('data', oldValue);
+    }
 
     public get domain(): [number, number] {
         return this._forwardGetProperty('#facet-bars-values-imp', 'domain');
