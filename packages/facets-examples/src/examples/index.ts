@@ -6,11 +6,11 @@ import blueprintCSS from './facet-blueprint/style.css';
 import blueprintJS from './facet-blueprint/source.example';
 
 // @ts-ignore
-import termHTML from './facet-term/example.html';
+import termHTML from './facet-terms/example.html';
 // @ts-ignore
-import termCSS from './facet-term/style.css';
+import termCSS from './facet-terms/style.css';
 // @ts-ignore
-import termJS from './facet-term/source.example';
+import termJS from './facet-terms/source.example';
 
 // @ts-ignore
 import barsHTML from './facet-bars/example.html';
@@ -18,13 +18,6 @@ import barsHTML from './facet-bars/example.html';
 import barsCSS from './facet-bars/style.css';
 // @ts-ignore
 import barsJS from './facet-bars/source.example';
-
-// @ts-ignore
-import histogramHTML from './facet-histogram/example.html';
-// @ts-ignore
-import histogramCSS from './facet-histogram/style.css';
-// @ts-ignore
-import histogramJS from './facet-histogram/source.example';
 
 // @ts-ignore
 import listHTML from './facet-list/example.html';
@@ -53,7 +46,7 @@ export const examples = {
         css: blueprintCSS,
         js: blueprintJS,
     },
-    'facet-term': {
+    'facet-terms': {
         html: termHTML,
         css: termCSS,
         js: termJS,
@@ -62,11 +55,6 @@ export const examples = {
         html: barsHTML,
         css: barsCSS,
         js: barsJS,
-    },
-    'facet-histogram': {
-        html: histogramHTML,
-        css: histogramCSS,
-        js: histogramJS,
     },
     'facet-list': {
         html: listHTML,

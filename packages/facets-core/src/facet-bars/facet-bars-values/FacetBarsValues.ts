@@ -48,7 +48,7 @@ export class FacetBarsValues extends FacetBlueprint {
     }
 
     public selection: [number, number] | null = null;
-    public subselection: FacetBarsValuesSubselection|null = null;
+    public subselection: FacetBarsValuesSubselection | null = null;
     public actionButtons: number = 2;
 
     public get barAreaElement(): HTMLElement | null {
