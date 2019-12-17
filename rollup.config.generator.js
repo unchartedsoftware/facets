@@ -28,6 +28,7 @@ function generateSingleConfig(target, input, output, dependencies = null, module
             includeNodeModules = true;
             break;
 
+        case 'server':
         case 'es5':
             format = 'cjs';
             // babelTargets = { ie: '11' };
@@ -111,7 +112,7 @@ function generateSingleConfig(target, input, output, dependencies = null, module
             objectHashIgnoreUnknownHack: true,
             tsconfigOverride: {
                 compilerOptions: {
-                    target: target === 'next' ? 'esnext' : target === 'iife' ? 'es5' : target,
+                    target: target === 'next' || target === 'server' ? 'esnext' : target === 'iife' ? 'es5' : target,
                 }
             }
         }));
@@ -207,6 +208,21 @@ function generateConfig(pkg, basedir, mount = []) {
             input,
             path.resolve(basedir, path.dirname(pkg['jsnext:main'])),
             pkg.dependencies
+        ));
+    }
+
+    if (pkg.hasOwnProperty('entry:server') && process.env.TARGET === 'server') {
+        config.push(generateSingleConfig(
+            'server',
+            [path.resolve(basedir, pkg['entry:server'])],
+            path.resolve(basedir, path.dirname(pkg.server)),
+            pkg.dependencies
+        ));
+
+        config.push(generateSingleConfig(
+            'next',
+            [path.resolve(basedir, pkg.entry)],
+            path.resolve(basedir, path.dirname(pkg.client))
         ));
     }
 
