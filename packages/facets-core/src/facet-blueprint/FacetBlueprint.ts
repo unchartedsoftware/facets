@@ -13,25 +13,18 @@ export class FacetBlueprint extends FacetElement {
         return styles;
     }
 
-    public contentRenderer: FacetBlueprintRenderer = this.renderContent;
-    public headerRenderer: FacetBlueprintRenderer = this.renderHeader;
-    public footerRenderer: FacetBlueprintRenderer = this.renderFooter;
-    public leftRenderer: FacetBlueprintRenderer = this.renderLeft;
-    public rightRenderer: FacetBlueprintRenderer = this.renderRight;
-    public layoutAdditionsRenderer: FacetBlueprintRenderer = this.renderLayoutAdditions;
-
     protected render(): TemplateResult | void {
         return html`
             ${this.computeStyle()}
             <div class="facet-blueprint">
-                <div class="facet-blueprint-header"><slot name="header">${this.headerRenderer(this)}</slot></div>
+                <div class="facet-blueprint-header"><slot name="header">${this.renderHeader()}</slot></div>
                 <div class="facet-blueprint-body">
-                    <div class="facet-blueprint-left"><slot name="left">${this.leftRenderer(this)}</slot></div>
-                    <div class="facet-blueprint-content"><slot name="content">${this.contentRenderer(this)}</slot></div>
-                    <div class="facet-blueprint-right"><slot name="right">${this.rightRenderer(this)}</slot></div>
+                    <div class="facet-blueprint-left"><slot name="left">${this.renderLeft()}</slot></div>
+                    <div class="facet-blueprint-content"><slot name="content">${this.renderContent()}</slot></div>
+                    <div class="facet-blueprint-right"><slot name="right">${this.renderRight()}</slot></div>
                 </div>
-                <div class="facet-blueprint-footer"><slot name="footer">${this.footerRenderer(this)}</slot></div>
-                ${this.layoutAdditionsRenderer(this)}
+                <div class="facet-blueprint-footer"><slot name="footer">${this.renderFooter()}</slot></div>
+                ${this.renderLayoutAdditions()}
             </div>
         `;
     }
