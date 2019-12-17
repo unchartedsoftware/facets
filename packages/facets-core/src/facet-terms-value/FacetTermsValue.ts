@@ -2,7 +2,7 @@ import {css, CSSResult, customElement, unsafeCSS, html, TemplateResult} from 'li
 import {FacetHoverable} from '../facet-hoverable/FacetHoverable';
 
 // @ts-ignore
-import facetTermStyle from './FacetTerm.css';
+import facetTermValueStyle from './FacetTermValue.css';
 
 export interface FacetTermData {
     ratio: number;
@@ -14,12 +14,12 @@ export interface FacetTermData {
 
 const kDefaultData: FacetTermData = { ratio: 0 };
 
-@customElement('facet-term')
-export class FacetTerm extends FacetHoverable {
+@customElement('facet-term-value')
+export class FacetTermValue extends FacetHoverable {
     public static get styles(): CSSResult[] {
         const styles = this.getSuperStyles();
         styles.push(css`
-            ${unsafeCSS(facetTermStyle)}
+            ${unsafeCSS(facetTermValueStyle)}
         `);
         return styles;
     }
@@ -30,10 +30,10 @@ export class FacetTerm extends FacetHoverable {
         };
     }
 
-    public barRenderer: (value: FacetTerm) => TemplateResult | void = this.renderBar;
-    public labelRenderer: (value: FacetTerm) => TemplateResult | void = this.renderLabel;
-    public annotationRenderer: (value: FacetTerm) => TemplateResult | void = this.renderAnnotation;
-    public valueRenderer: (value: FacetTerm) => TemplateResult | void = this.renderValue;
+    public barRenderer: (value: FacetTermValue) => TemplateResult | void = this.renderBar;
+    public labelRenderer: (value: FacetTermValue) => TemplateResult | void = this.renderLabel;
+    public annotationRenderer: (value: FacetTermValue) => TemplateResult | void = this.renderAnnotation;
+    public valueRenderer: (value: FacetTermValue) => TemplateResult | void = this.renderValue;
 
     private _data: FacetTermData = kDefaultData;
     public set data(newData: FacetTermData) {
