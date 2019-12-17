@@ -1,0 +1,34 @@
+{
+    "name": "@uncharted.software/facets-builder",
+    "version": "0.0.1",
+    "license": "MIT",
+    "entry": "src/index.ts",
+    "entry:server": "server/index.ts",
+    "main": "dist/server/index.js",
+    "client": "dist/client/index.js",
+    "server": "dist/server/index.js",
+    "types": "dist/types/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "npm-run-all --parallel build:**",
+        "build:server": "cross-env TARGET='server' rollup --config",
+        "build:types": "tsc --declaration --declarationMap --emitDeclarationOnly --outDir ./dist/types",
+        "prestart": "cross-env TARGET='server' rollup --config",
+        "start": "node .",
+        "watch": "cross-env TARGET='server' rollup --config --watch",
+        "lint": "eslint . --ext .js,.ts,.jsx,.tsx --ignore-path ../../.eslintignore",
+        "prepack": "npm-run-all build"
+    },
+    "dependencies": {
+        "@uncharted.software/facets-core": "^0.0.1",
+        "@uncharted.software/facets-plugins": "^0.0.1",
+        "express": "^4.17.1",
+        "nick-generator": "^1.0.1"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.2",
+        "@types/node": "^12.12.19"
+    }
+}
