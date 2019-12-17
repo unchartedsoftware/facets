@@ -12,4 +12,23 @@
     font-weight: 600;
     line-height: 20px;
     padding: 6px 12px 5px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.facet-container-footer {
+    height: 20px;
+    color: #1A1B1C;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 14px;
+    padding: 4px 12px 5px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

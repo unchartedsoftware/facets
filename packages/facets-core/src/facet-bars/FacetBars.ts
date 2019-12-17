@@ -121,7 +121,7 @@ export class FacetBars extends FacetContainer {
     }
 
     protected renderHeaderLabel(): TemplateResult | void {
-        return html`<span class="facet-bars-header-label">${this.data.label}</span>`;
+        return html`<span>${this.data.label}</span>`;
     }
 
     protected renderContent(): TemplateResult | void {
@@ -144,12 +144,6 @@ export class FacetBars extends FacetContainer {
                 <div class="facet-bars-labels"><slot name="labels"></slot></div>
             </div>
         </div>
-        `;
-    }
-
-    protected renderFooter(): TemplateResult | void {
-        return html`
-        <div style="height: 16px"></div>
         `;
     }
 

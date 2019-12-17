@@ -17,13 +17,6 @@
     display: flex;
 }
 
-.facet-bars-header-label {
-    display: block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
 .facet-bars-content {
     flex-grow: 1;
     display: flex;

@@ -58,6 +58,20 @@ export class FacetContainer extends FacetBlueprint {
         return undefined;
     }
 
+    protected renderFooter(): TemplateResult | void {
+        return html`
+        <div class="facet-container-footer">
+            <slot name="footer-label">
+                ${this.renderFooterLabel()}
+            </slot>
+        </div>
+        `;
+    }
+
+    protected renderFooterLabel(): TemplateResult | void {
+        return undefined;
+    }
+
     protected createSlottedElement(slot: string, type: string = 'div'): HTMLElement|void {
         if (this.slottedElements.has(slot)) {
             return this.slottedElements.get(slot);
