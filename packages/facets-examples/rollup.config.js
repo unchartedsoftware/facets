@@ -5,7 +5,7 @@ const pkg = require('./package.json');
 const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 
-const config = generator(pkg, __dirname, [['/dist/workers', './dist/workers']]);
+const config = generator(pkg, __dirname);
 
 // config.push({
 //     input: [
