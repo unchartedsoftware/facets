@@ -39,6 +39,9 @@ function generateSingleConfig(target, input, output, dependencies = null, module
             // babelTargets = { chrome: '51' };
             break;
 
+        case 'client':
+            includeNodeModules = true;
+            // fall through
         case 'next':
         default:
             format = 'esm';
@@ -112,7 +115,7 @@ function generateSingleConfig(target, input, output, dependencies = null, module
             objectHashIgnoreUnknownHack: true,
             tsconfigOverride: {
                 compilerOptions: {
-                    target: target === 'next' || target === 'server' ? 'esnext' : target === 'iife' ? 'es5' : target,
+                    target: target === 'next' || target === 'server' || target === 'client' ? 'esnext' : target === 'iife' ? 'es5' : target,
                 }
             }
         }));
@@ -220,7 +223,7 @@ function generateConfig(pkg, basedir, mount = []) {
         ));
 
         config.push(generateSingleConfig(
-            'next',
+            'client',
             [path.resolve(basedir, pkg.entry)],
             path.resolve(basedir, path.dirname(pkg.client))
         ));
