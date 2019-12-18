@@ -1,4 +1,5 @@
 import express from 'express';
+import {log} from './log';
 import path from 'path';
 import fs from 'fs';
 import * as http from 'http';
@@ -50,12 +51,12 @@ export class App {
         reload(this.app).then((): void => {
             // Reload started, start web server
             this.httpServer.listen(this.options.httpPort, this.options.host, (): void => {
-                console.log(`HTTP Web server listening on port ${this.options.httpPort}`);
+                log(`HTTP Web server listening on port ${this.options.httpPort}`);
             });
 
             if (this.httpsServer) {
                 this.httpsServer.listen(this.options.httpsPort, this.options.host, (): void => {
-                    console.log(`HTTPS Web server listening on port ${this.options.httpsPort}`);
+                    log(`HTTPS Web server listening on port ${this.options.httpsPort}`);
                 });
             }
         }).catch((err: Error): void => {
@@ -69,7 +70,7 @@ export class App {
         this.app.use((req, res, next): any => {
             if (this.httpsServer && !req.secure) {
                 const host = req.hostname + (this.options.httpsPort === 443 ? '' : `:${this.options.httpsPort}`);
-                console.log(`Upgrading "http://${req.get('host')}${req.baseUrl}" to "https://${host}${req.baseUrl}"`);
+                log(`Upgrading "http://${req.get('host')}${req.baseUrl}" to "https://${host}${req.baseUrl}"`);
                 return res.redirect(['https://', host, req.baseUrl].join(''));
             }
             next();
