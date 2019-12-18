@@ -5,6 +5,7 @@ import fs from 'fs';
 import * as http from 'http';
 import * as https from 'https';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const reload = require('reload');
 
 export interface AppOptions {
@@ -60,12 +61,12 @@ export class App {
                 });
             }
         }).catch((err: Error): void => {
+            // eslint-disable-next-line no-console
             console.error('Reload could not start, could not start server app', err);
         });
     }
 
     private initializeRoutes(): void {
-
         // upgrade to https if needed
         this.app.use((req, res, next): any => {
             if (this.httpsServer && !req.secure) {
