@@ -9,7 +9,9 @@
         "downlevelIteration": true,
         "removeComments": false,
         "isolatedModules": false,
-        "noEmit": false
+        "noEmit": false,
+        "declaration": false,
+        "declarationMap": false
     },
     "include": [
         "src/**/*"
