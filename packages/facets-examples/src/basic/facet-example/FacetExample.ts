@@ -204,6 +204,6 @@ ${this.editorHTML.getValue()}
 
     private _handleSelectChange(e: Event): void {
         const select = e.target as HTMLSelectElement;
-        window.location.href = `example.html?ex=${select.options[select.selectedIndex].value}`;
+        window.location.href = `${window.location.pathname}?ex=${select.options[select.selectedIndex].value}`;
     }
 }
