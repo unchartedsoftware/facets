@@ -1,0 +1,27 @@
+.facet-container {
+    width: 300px;
+}
+
+/* text styles */
+code {
+    padding: 1px;
+    background-color: #d5d5d5;
+    border: 1px solid #767676;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+.annotation {
+    color: #767676;
+    font-family: monospace;
+    font-size: 13px;
+    margin: 6px 0;
+}
+
+.code-block {
+    padding: 1px;
+    background-color: #d5d5d5;
+    border: 1px solid #767676;
+    font-family: monospace;
+    font-size: 13px;
+}

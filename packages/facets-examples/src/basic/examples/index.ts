@@ -34,6 +34,13 @@ import templateCSS from './facet-template/style.css';
 import templateJS from './facet-template/source.example';
 
 // @ts-ignore
+import pluginHTML from './facet-plugin/example.html';
+// @ts-ignore
+import pluginCSS from './facet-plugin/style.css';
+// @ts-ignore
+import pluginJS from './facet-plugin/source.example';
+
+// @ts-ignore
 import buildHTML from './build-a-facet/example.html';
 // @ts-ignore
 import buildCSS from './build-a-facet/style.css';
@@ -65,6 +72,11 @@ export const examples = {
         html: templateHTML,
         css: templateCSS,
         js: templateJS,
+    },
+    'facet-plugin': {
+        html: pluginHTML,
+        css: pluginCSS,
+        js: pluginJS,
     },
     'build-a-facet': {
         html: buildHTML,
