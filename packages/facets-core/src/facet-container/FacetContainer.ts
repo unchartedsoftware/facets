@@ -1,6 +1,5 @@
 import {css, CSSResult, customElement, unsafeCSS, html, TemplateResult, LitElement} from 'lit-element';
 import {FacetBlueprint} from '../facet-blueprint/FacetBlueprint';
-import {FacetTemplate} from '../facet-template/FacetTemplate';
 import {MutationWrapper} from '../tools/MutationWrapper';
 
 // @ts-ignore
@@ -8,7 +7,6 @@ import facetContainerStyle from './FacetContainer.css';
 
 @customElement('facet-container')
 export class FacetContainer extends FacetBlueprint {
-    protected templates: Map<string, FacetTemplate> = new Map();
     protected slottedElements: Map<string, HTMLElement> = new Map();
     private mutationObserver: MutationWrapper;
 
@@ -99,23 +97,10 @@ export class FacetContainer extends FacetBlueprint {
                 {scopeName: this.localName, eventContext: this});
     }
 
-    protected setTemplateForTarget(target: string, template: FacetTemplate): void {
-        this.templates.set(target, template);
-    }
-
-    protected deleteTemplateForTarget(target: string): void {
-        this.templates.delete(target);
-    }
-
     private _processAddedNodes(nodes: NodeList): void {
         for (let i = 0, n = nodes.length; i < n; ++i) {
             if (nodes[i] instanceof HTMLElement) {
                 const child = nodes[i] as HTMLElement;
-                if (child instanceof FacetTemplate) {
-                    this.setTemplateForTarget(child.target, child);
-                    this.requestUpdate();
-                }
-
                 if (child.hasAttribute('slot')) {
                     const slot = child.getAttribute('slot') as string;
                     const slotted = this.slottedElements.get(slot);
@@ -132,11 +117,6 @@ export class FacetContainer extends FacetBlueprint {
         for (let i = 0, n = nodes.length; i < n; ++i) {
             if (nodes[i] instanceof HTMLElement) {
                 const child = nodes[i] as HTMLElement;
-                if (child instanceof FacetTemplate && this.renderRoot.constructor.name === 'ShadowRoot') {
-                    this.deleteTemplateForTarget(child.target);
-                    this.requestUpdate();
-                }
-
                 if (child.hasAttribute('slot')) {
                     const slot = child.getAttribute('slot') as string;
                     if (child === this.slottedElements.get(slot)) {

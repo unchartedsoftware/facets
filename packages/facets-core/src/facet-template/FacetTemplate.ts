@@ -1,5 +1,4 @@
-import {customElement, property, LitElement, TemplateResult, html} from 'lit-element';
-import {FacetBlueprint} from '../facet-blueprint/FacetBlueprint';
+import {customElement, LitElement, TemplateResult, html} from 'lit-element';
 import {MutationWrapper} from '../tools/MutationWrapper';
 
 const kSlotsKey = Symbol('FacetTemplate::Slots');
@@ -12,8 +11,23 @@ export interface TemplateComponents {
 
 @customElement('facet-template')
 export class FacetTemplate extends LitElement {
-    @property({type: String})
+    public static connectedEvent = 'facet-template-connected';
+    public static disconnectedEvent = 'facet-template-disconnected';
+
+    public static get properties(): any {
+        return {
+            target: {type: String},
+        };
+    }
     public target: string = '';
+
+    private _host: LitElement|null = null;
+    public get host(): LitElement|null {
+        return this._host;
+    }
+    public set host(value: LitElement|null) {
+        this._host = value;
+    }
 
     private readonly slots: TemplateComponents[];
 
@@ -73,11 +87,30 @@ export class FacetTemplate extends LitElement {
 
         this.mutationObserver.start();
         this._processAddedNodes(this.childNodes);
+
+        // stupid IE11...
+        requestAnimationFrame((): void => {
+            this.dispatchEvent(new CustomEvent(FacetTemplate.connectedEvent, {
+                bubbles: true,
+                detail: {
+                    template: this,
+                },
+            }));
+        });
     }
 
     public disconnectedCallback(): void {
         super.disconnectedCallback();
         this.mutationObserver.stop();
+
+        if (this.host) {
+            this.host.dispatchEvent(new CustomEvent(FacetTemplate.disconnectedEvent, {
+                bubbles: true,
+                detail: {
+                    plugin: this,
+                },
+            }));
+        }
     }
 
     protected createRenderRoot(): Element | ShadowRoot {
@@ -150,7 +183,7 @@ export class FacetTemplate extends LitElement {
                 this._processHtmlParts(slotHTML, slotComponents);
                 this.slots.push(slotComponents);
 
-                if (this.parentNode instanceof FacetBlueprint) {
+                if (this.parentNode instanceof LitElement) {
                     this.parentNode.requestUpdate();
                 }
             }
