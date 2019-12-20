@@ -33,7 +33,7 @@
     height: 100%;
     width: 7px;
     background-image: linear-gradient(transparent, transparent 8px, green 8px, #ddff00, orange 65px, red 80px, transparent 80px);
-    transform: translate(16px, 0);
+    transform: translate(16px, -4px);
 }
 
 .inspired-container {

@@ -3,43 +3,31 @@
 <div class="facet-container">
     <facet-list data='[
         {
-            "type": "facet-term",
+            "type": "facet-terms",
             "data": {
-                "ratio": 0.5,
-                "label": "Fifty",
-                "value": 50
-            }
-        },
-        {
-            "type": "facet-term",
-            "data": {
-                "ratio": 0.7,
-                "label": "Seventy",
-                "value": 70
-            }
-        },
-        {
-            "type": "facet-term",
-            "data": {
-                "ratio": 0.9,
-                "label": "Ninety",
-                "value": 90
-            }
-        },
-        {
-            "type": "facet-histogram",
-            "data": {
+                "label": "Facet Terms",
                 "values": [
-                    { "ratio": 0.1, "labels": { "left": 0, "right": 1 } },
-                    { "ratio": 0.2, "labels": { "left": 1, "right": 2 } },
-                    { "ratio": 0.3, "labels": { "left": 2, "right": 3 } },
-                    { "ratio": 0.4, "labels": { "left": 3, "right": 4 } },
-                    { "ratio": 0.5, "labels": { "left": 4, "right": 5 } },
-                    { "ratio": 0.6, "labels": { "left": 5, "right": 6 } },
-                    { "ratio": 0.7, "labels": { "left": 6, "right": 7 } },
-                    { "ratio": 0.8, "labels": { "left": 7, "right": 8 } },
-                    { "ratio": 0.9, "labels": { "left": 8, "right": 9 } },
-                    { "ratio": 1.0, "labels": { "left": 9, "right": 10 } }
+                    { "ratio": 0.5, "label": "Fifty", "value": 50 },
+                    { "ratio": 0.7, "label": "Seventy", "value": 70 },
+                    { "ratio": 0.9, "label": "Ninety", "value": 90 }
+                ]
+            }
+        },
+        {
+            "type": "facet-bars",
+            "data": {
+                "label": "Facet Bars",
+                "values": [
+                    { "ratio": 0.1 },
+                    { "ratio": 0.2 },
+                    { "ratio": 0.3 },
+                    { "ratio": 0.4 },
+                    { "ratio": 0.5 },
+                    { "ratio": 0.6 },
+                    { "ratio": 0.7 },
+                    { "ratio": 0.8 },
+                    { "ratio": 0.9 },
+                    { "ratio": 1.0 }
                 ]
             }
         }
@@ -53,58 +41,61 @@
 <div class="facet-container">
     <facet-list data='[
         {
-            "type": "facet-term",
+            "type": "facet-terms",
             "data": {
-                "ratio": 0.11,
-                "label": "Phillip Laliberte",
-                "annotation": "(Scott Dafreed)",
-                "value": 11,
-                "metadata": "img/phillaliberte@2x.png"
-            }
-        },
-        {
-            "type": "facet-term",
-            "data": {
-                "ratio": 0.12,
-                "label": "Chris Dickson",
-                "value": 12,
-                "metadata": "img/chrisdickson@2x.png"
-            }
-        },
-        {
-            "type": "facet-term",
-            "data": {
-                "ratio": 0.13,
-                "label": "Sean McIntyre",
-                "value": 13,
-                "metadata": "img/seanmcintyre@2x.png"
-            }
-        },
-        {
-            "type": "facet-histogram",
-            "data": {
+                "label": "Facet Terms",
                 "values": [
-                    { "ratio": 0.1, "labels": { "left": 0, "right": 1 } },
-                    { "ratio": 0.2, "labels": { "left": 1, "right": 2 } },
-                    { "ratio": 0.3, "labels": { "left": 2, "right": 3 } },
-                    { "ratio": 0.4, "labels": { "left": 3, "right": 4 } },
-                    { "ratio": 0.5, "labels": { "left": 4, "right": 5 } },
-                    { "ratio": 0.6, "labels": { "left": 5, "right": 6 } },
-                    { "ratio": 0.7, "labels": { "left": 6, "right": 7 } },
-                    { "ratio": 0.8, "labels": { "left": 7, "right": 8 } },
-                    { "ratio": 0.9, "labels": { "left": 8, "right": 9 } },
-                    { "ratio": 1.0, "labels": { "left": 9, "right": 10 } }
+                    {
+                        "ratio": 0.11,
+                        "label": "Phillip Laliberte",
+                        "annotation": "(Scott Dafreed)",
+                        "value": 11,
+                        "metadata": "img/phillaliberte@2x.png"
+                    },
+                    {
+                        "ratio": 0.12,
+                        "label": "Chris Dickson",
+                        "value": 12,
+                        "metadata": "img/chrisdickson@2x.png"
+                    },
+                    {
+                        "ratio": 0.13,
+                        "label": "Sean McIntyre",
+                        "value": 13,
+                        "metadata": "img/seanmcintyre@2x.png"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "facet-bars",
+            "data": {
+                "label": "Facet Bars",
+                "values": [
+                    { "ratio": 0.1 },
+                    { "ratio": 0.2 },
+                    { "ratio": 0.3 },
+                    { "ratio": 0.4 },
+                    { "ratio": 0.5 },
+                    { "ratio": 0.6 },
+                    { "ratio": 0.7 },
+                    { "ratio": 0.8 },
+                    { "ratio": 0.9 },
+                    { "ratio": 1.0 }
                 ]
             }
         }
     ]'>
         <div slot="header" class="example-header">List of Customized Facets</div>
-        <facet-template target="facet-term">
-            <div slot="left" class="image-left" template-style="background-image:url('${metadata}')"></div>
-            <div slot="value" class="big-value">${value}</div>
+        <facet-template target="facet-terms">
+            <facet-template target="facet-terms-value">
+                <div slot="left" class="image-left" template-style="background-image:url('${metadata}')"></div>
+                <div slot="value" class="big-value">${value}</div>
+            </facet-template>
+            <span slot="footer-label">a ton more...</span>
         </facet-template>
-        <facet-template target="facet-histogram">
-            <div slot="header" class="histogram-header">Customer Satisfaction</div>
+        <facet-template target="facet-bars">
+            <div slot="header" class="histogram-header">Customized Header</div>
             <div slot="left" class="gradient-scale"></div>
         </facet-template>
     </facet-list>
@@ -115,75 +106,33 @@
 <div class="inspired-container">
     <facet-list data='[
         {
-            "type": "facet-term",
-            "data": {
-                "ratio": 0.1428571429,
-                "label": "Programs",
-                "value": 14.28
-            }
-        },
-        {
-            "type": "facet-term",
-            "data": {
-                "ratio": 0.2857142857,
-                "label": "Favorites",
-                "value": 28.57
-            }
-        },
-        {
-            "type": "facet-term",
-            "data": {
-                "ratio": 0.4285714286,
-                "label": "Documents",
-                "value": 42.85
-            }
-        },
-        {
-            "type": "facet-term",
-            "data": {
-                "ratio": 0.5714285714,
-                "label": "Settings",
-                "value": 57.14
-            }
-        },
-        {
-            "type": "facet-term",
-            "data": {
-                "ratio": 0.7142857143,
-                "label": "Find",
-                "value": 71.24
-            }
-        },
-        {
-            "type": "facet-term",
-            "data": {
-                "ratio": 0.8571428571,
-                "label": "Help",
-                "value": 85.71
-            }
-        },
-        {
-            "type": "facet-term",
-            "data": {
-                "ratio": 1.0,
-                "label": "Run!",
-                "value": "100.00"
-            }
-        },
-        {
-            "type": "facet-histogram",
+            "type": "facet-terms",
             "data": {
                 "values": [
-                    { "ratio": 0.1, "labels": { "left": 0, "right": 1 } },
-                    { "ratio": 0.2, "labels": { "left": 1, "right": 2 } },
-                    { "ratio": 0.3, "labels": { "left": 2, "right": 3 } },
-                    { "ratio": 0.4, "labels": { "left": 3, "right": 4 } },
-                    { "ratio": 0.5, "labels": { "left": 4, "right": 5 } },
-                    { "ratio": 0.6, "labels": { "left": 5, "right": 6 } },
-                    { "ratio": 0.7, "labels": { "left": 6, "right": 7 } },
-                    { "ratio": 0.8, "labels": { "left": 7, "right": 8 } },
-                    { "ratio": 0.9, "labels": { "left": 8, "right": 9 } },
-                    { "ratio": 1.0, "labels": { "left": 9, "right": 10 } }
+                    { "ratio": 0.1428571429, "label": "Programs", "value": 14.28 },
+                    { "ratio": 0.2857142857, "label": "Favorites", "value": 28.57 },
+                    { "ratio": 0.4285714286, "label": "Documents", "value": 42.85 },
+                    { "ratio": 0.5714285714, "label": "Settings", "value": 57.14 },
+                    { "ratio": 0.7142857143, "label": "Find", "value": 71.24 },
+                    { "ratio": 0.8571428571, "label": "Help", "value": 85.71 },
+                    { "ratio": 1.0, "label": "Run!", "value": "100.00" }
+                ]
+            }
+        },
+        {
+            "type": "facet-bars",
+            "data": {
+                "values": [
+                    { "ratio": 0.1 },
+                    { "ratio": 0.2 },
+                    { "ratio": 0.3 },
+                    { "ratio": 0.4 },
+                    { "ratio": 0.5 },
+                    { "ratio": 0.6 },
+                    { "ratio": 0.7 },
+                    { "ratio": 0.8 },
+                    { "ratio": 0.9 },
+                    { "ratio": 1.0 }
                 ],
                 "metadata": "Shut Down..."
             }
@@ -196,8 +145,13 @@
                 <span class="inspired-left-2">3.0</span>
             </div>
         </div>
-        <facet-template target="facet-histogram">
+        <facet-template target="facet-terms">
+            <div slot="header"></div>
+            <div slot="footer"></div>
+        </facet-template>
+        <facet-template target="facet-bars">
             <div slot="header" class="histogram-header">${metadata}</div>
+            <div slot="footer"></div>
         </facet-template>
     </facet-list>
 </div>
@@ -211,27 +165,27 @@ any facet instances, as described in its <code>data</code> attribute:<br />
 <div class="facet-container">
     <facet-list data='[
         {
-            "type": "facet-term",
+            "type": "facet-terms",
             "data": {
-                "ratio": 0.5,
-                "label": "Fifty",
-                "value": 50
+                "label": "Facet Terms",
+                "values": [{ "ratio": 0.5, "label": "Fifty", "value": 50 }]
             }
         },
         {
-            "type": "facet-histogram",
+            "type": "facet-bars",
             "data": {
+                "label": "Facet Bars",
                 "values": [
-                    { "ratio": 0.1, "labels": { "left": 0, "right": 1 } },
-                    { "ratio": 0.2, "labels": { "left": 1, "right": 2 } },
-                    { "ratio": 0.3, "labels": { "left": 2, "right": 3 } },
-                    { "ratio": 0.4, "labels": { "left": 3, "right": 4 } },
-                    { "ratio": 0.5, "labels": { "left": 4, "right": 5 } },
-                    { "ratio": 0.6, "labels": { "left": 5, "right": 6 } },
-                    { "ratio": 0.7, "labels": { "left": 6, "right": 7 } },
-                    { "ratio": 0.8, "labels": { "left": 7, "right": 8 } },
-                    { "ratio": 0.9, "labels": { "left": 8, "right": 9 } },
-                    { "ratio": 1.0, "labels": { "left": 9, "right": 10 } }
+                    { "ratio": 0.1 },
+                    { "ratio": 0.2 },
+                    { "ratio": 0.3 },
+                    { "ratio": 0.4 },
+                    { "ratio": 0.5 },
+                    { "ratio": 0.6 },
+                    { "ratio": 0.7 },
+                    { "ratio": 0.8 },
+                    { "ratio": 0.9 },
+                    { "ratio": 1.0 }
                 ]
             }
         }
@@ -248,27 +202,27 @@ that they use the full width of its parent element:<br />
 <div style="width:75%">
     <facet-list data='[
         {
-            "type": "facet-term",
+            "type": "facet-terms",
             "data": {
-                "ratio": 0.5,
-                "label": "Fifty",
-                "value": 50
+                "label": "Facet Terms",
+                "values": [{ "ratio": 0.5, "label": "Fifty", "value": 50 }]
             }
         },
         {
-            "type": "facet-histogram",
+            "type": "facet-bars",
             "data": {
+                "label": "Facet Bars",
                 "values": [
-                    { "ratio": 0.1, "labels": { "left": 0, "right": 1 } },
-                    { "ratio": 0.2, "labels": { "left": 1, "right": 2 } },
-                    { "ratio": 0.3, "labels": { "left": 2, "right": 3 } },
-                    { "ratio": 0.4, "labels": { "left": 3, "right": 4 } },
-                    { "ratio": 0.5, "labels": { "left": 4, "right": 5 } },
-                    { "ratio": 0.6, "labels": { "left": 5, "right": 6 } },
-                    { "ratio": 0.7, "labels": { "left": 6, "right": 7 } },
-                    { "ratio": 0.8, "labels": { "left": 7, "right": 8 } },
-                    { "ratio": 0.9, "labels": { "left": 8, "right": 9 } },
-                    { "ratio": 1.0, "labels": { "left": 9, "right": 10 } }
+                    { "ratio": 0.1 },
+                    { "ratio": 0.2 },
+                    { "ratio": 0.3 },
+                    { "ratio": 0.4 },
+                    { "ratio": 0.5 },
+                    { "ratio": 0.6 },
+                    { "ratio": 0.7 },
+                    { "ratio": 0.8 },
+                    { "ratio": 0.9 },
+                    { "ratio": 1.0 }
                 ]
             }
         }
@@ -310,27 +264,27 @@ slots inherited from their parent <code>facet-blueprint</code> element:<br />
 <div class="facet-container">
     <facet-list data='[
         {
-            "type": "facet-term",
+            "type": "facet-terms",
             "data": {
-                "ratio": 0.5,
-                "label": "Fifty",
-                "value": 50
+                "label": "Facet Terms",
+                "values": [{ "ratio": 0.5, "label": "Fifty", "value": 50 }]
             }
         },
         {
-            "type": "facet-histogram",
+            "type": "facet-bars",
             "data": {
+                "label": "Facet Bars",
                 "values": [
-                    { "ratio": 0.1, "labels": { "left": 0, "right": 1 } },
-                    { "ratio": 0.2, "labels": { "left": 1, "right": 2 } },
-                    { "ratio": 0.3, "labels": { "left": 2, "right": 3 } },
-                    { "ratio": 0.4, "labels": { "left": 3, "right": 4 } },
-                    { "ratio": 0.5, "labels": { "left": 4, "right": 5 } },
-                    { "ratio": 0.6, "labels": { "left": 5, "right": 6 } },
-                    { "ratio": 0.7, "labels": { "left": 6, "right": 7 } },
-                    { "ratio": 0.8, "labels": { "left": 7, "right": 8 } },
-                    { "ratio": 0.9, "labels": { "left": 8, "right": 9 } },
-                    { "ratio": 1.0, "labels": { "left": 9, "right": 10 } }
+                    { "ratio": 0.1 },
+                    { "ratio": 0.2 },
+                    { "ratio": 0.3 },
+                    { "ratio": 0.4 },
+                    { "ratio": 0.5 },
+                    { "ratio": 0.6 },
+                    { "ratio": 0.7 },
+                    { "ratio": 0.8 },
+                    { "ratio": 0.9 },
+                    { "ratio": 1.0 }
                 ]
             }
         }
@@ -351,27 +305,27 @@ from their respective <code>facet-blueprint</code> parents:<br />
 <div style="width: 400px">
     <facet-list data='[
         {
-            "type": "facet-term",
+            "type": "facet-terms",
             "data": {
-                "ratio": 0.5,
-                "label": "Fifty",
-                "value": 50
+                "label": "Facet Terms",
+                "values": [{ "ratio": 0.5, "label": "Fifty", "value": 50 }]
             }
         },
         {
-            "type": "facet-histogram",
+            "type": "facet-bars",
             "data": {
+                "label": "Facet Bars",
                 "values": [
-                    { "ratio": 0.1, "labels": { "left": 0, "right": 1 } },
-                    { "ratio": 0.2, "labels": { "left": 1, "right": 2 } },
-                    { "ratio": 0.3, "labels": { "left": 2, "right": 3 } },
-                    { "ratio": 0.4, "labels": { "left": 3, "right": 4 } },
-                    { "ratio": 0.5, "labels": { "left": 4, "right": 5 } },
-                    { "ratio": 0.6, "labels": { "left": 5, "right": 6 } },
-                    { "ratio": 0.7, "labels": { "left": 6, "right": 7 } },
-                    { "ratio": 0.8, "labels": { "left": 7, "right": 8 } },
-                    { "ratio": 0.9, "labels": { "left": 8, "right": 9 } },
-                    { "ratio": 1.0, "labels": { "left": 9, "right": 10 } }
+                    { "ratio": 0.1 },
+                    { "ratio": 0.2 },
+                    { "ratio": 0.3 },
+                    { "ratio": 0.4 },
+                    { "ratio": 0.5 },
+                    { "ratio": 0.6 },
+                    { "ratio": 0.7 },
+                    { "ratio": 0.8 },
+                    { "ratio": 0.9 },
+                    { "ratio": 1.0 }
                 ]
             }
         }
@@ -380,13 +334,13 @@ from their respective <code>facet-blueprint</code> parents:<br />
         <div slot="footer" class="slot-footer">footer</div>
         <div slot="left" class="slot-left">left</div>
         <div slot="right" class="slot-right">right</div>
-        <facet-template target="facet-term">
+        <facet-template target="facet-terms">
             <div slot="header" class="slot-header">header</div>
             <div slot="footer" class="slot-footer">footer</div>
             <div slot="left" class="slot-left">left</div>
             <div slot="right" class="slot-right">right</div>
         </facet-template>
-        <facet-template target="facet-histogram">
+        <facet-template target="facet-bars">
             <div slot="header" class="slot-header">header</div>
             <div slot="footer" class="slot-footer">footer</div>
             <div slot="left" class="slot-left">left</div>
