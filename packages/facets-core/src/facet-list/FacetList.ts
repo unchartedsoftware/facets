@@ -1,4 +1,4 @@
-import {customElement, TemplateResult, html, LitElement} from 'lit-element';
+import {customElement, TemplateResult, html} from 'lit-element';
 import {preHTML} from '../tools/preHTML';
 import {FacetContainer} from '../facet-container/FacetContainer';
 
