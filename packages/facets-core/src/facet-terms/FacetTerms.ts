@@ -50,6 +50,7 @@ export class FacetTerms extends FacetContainer {
 
     public selection: FacetTermsSelection | null = null;
     public subselection: FacetTermsSubselection | null = null;
+    public actionButtons: number = 2;
 
     private _data: FacetTermsData = kDefaultData;
     public get data(): FacetTermsData {
@@ -83,6 +84,7 @@ export class FacetTerms extends FacetContainer {
     protected setTemplateForTarget(target: string, template: FacetTemplate): void {
         super.setTemplateForTarget(target, template);
         template.addCustomAttribute('id');
+        template.addCustomAttribute('action-buttons');
         template.addCustomAttribute('state');
         template.addCustomAttribute('contrast');
         template.addCustomAttribute('.subselection');
@@ -122,6 +124,7 @@ export class FacetTerms extends FacetContainer {
                 if (template) {
                     return template.getHTML(value, {
                         'id': key,
+                        'action-buttons': this.actionButtons,
                         'state': state,
                         'contrast': contrast,
                         '.subselection': subselection,
@@ -131,6 +134,7 @@ export class FacetTerms extends FacetContainer {
                     return html`
                     <facet-terms-value
                         id="${key}"
+                        action-buttons="${this.actionButtons}"
                         state="${state}"
                         contrast="${contrast}"
                         .subselection="${subselection}"
@@ -141,6 +145,7 @@ export class FacetTerms extends FacetContainer {
                 return preHTML`
                 <${type}
                     id="${key}"
+                    action-buttons="${this.actionButtons}"
                     state="${state}"
                     contrast="${contrast}"
                     .subselection="${subselection}"
