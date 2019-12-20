@@ -35,6 +35,14 @@ export class FacetList extends FacetContainer {
         }
     }
 
+    protected renderHeader(): TemplateResult | void {
+        return undefined;
+    }
+
+    protected renderFooter(): TemplateResult | void {
+        return undefined;
+    }
+
     protected renderSlottedElements(): void {
         super.renderSlottedElements();
         const listSlot = this.slottedElements.get('content');
