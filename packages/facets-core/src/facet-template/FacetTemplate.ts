@@ -180,7 +180,11 @@ export class FacetTemplate extends LitElement {
                     /template-(.*?):/gm,
                     (match: string, inner: string): string => `${inner}:`
                 );
-                this._processHtmlParts(slotHTML, slotComponents);
+                if (child.tagName.toLowerCase() === 'facet-template') {
+                    slotComponents.strings.push(slotHTML);
+                } else {
+                    this._processHtmlParts(slotHTML, slotComponents);
+                }
                 this.slots.push(slotComponents);
 
                 if (this.parentNode instanceof LitElement) {
