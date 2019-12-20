@@ -89,14 +89,17 @@ export class FacetTemplate extends LitElement {
         this._processAddedNodes(this.childNodes);
 
         // stupid IE11...
-        requestAnimationFrame((): void => {
-            this.dispatchEvent(new CustomEvent(FacetTemplate.connectedEvent, {
-                bubbles: true,
-                detail: {
-                    template: this,
-                },
-            }));
-        });
+        const parent = this.parentElement;
+        if (parent) {
+            requestAnimationFrame((): void => {
+                parent.dispatchEvent(new CustomEvent(FacetTemplate.connectedEvent, {
+                    bubbles: true,
+                    detail: {
+                        template: this,
+                    },
+                }));
+            });
+        }
     }
 
     public disconnectedCallback(): void {

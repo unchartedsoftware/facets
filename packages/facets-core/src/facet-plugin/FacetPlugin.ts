@@ -31,14 +31,17 @@ export class FacetPlugin extends LitElement {
     public connectedCallback(): void {
         super.connectedCallback();
         // stupid IE11...
-        requestAnimationFrame((): void => {
-            this.dispatchEvent(new CustomEvent(FacetPlugin.connectedEvent, {
-                bubbles: true,
-                detail: {
-                    plugin: this,
-                },
-            }));
-        });
+        const parent = this.parentElement;
+        if (parent) {
+            requestAnimationFrame((): void => {
+                parent.dispatchEvent(new CustomEvent(FacetPlugin.connectedEvent, {
+                    bubbles: true,
+                    detail: {
+                        plugin: this,
+                    },
+                }));
+            });
+        }
     }
 
     public disconnectedCallback(): void {
