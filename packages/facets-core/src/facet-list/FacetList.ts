@@ -1,6 +1,6 @@
 import {customElement, TemplateResult, html, LitElement} from 'lit-element';
 import {preHTML} from '../tools/preHTML';
-import {FacetBlueprint} from '../facet-blueprint/FacetBlueprint';
+import {FacetContainer} from '../facet-container/FacetContainer';
 
 export interface FacetListDataElement {
     type: string;
@@ -10,7 +10,7 @@ export interface FacetListDataElement {
 export type FacetListData = FacetListDataElement[];
 
 @customElement('facet-list')
-export class FacetList extends FacetBlueprint {
+export class FacetList extends FacetContainer {
     public static get properties(): any {
         return {
             data: { type: Object },
@@ -27,44 +27,23 @@ export class FacetList extends FacetBlueprint {
         return this._data;
     }
 
-    private contentSlot: HTMLElement | null;
-
-    public constructor() {
-        super();
-        this.contentSlot = null;
-    }
-
     public connectedCallback(): void {
         super.connectedCallback();
-
-        this.contentSlot = document.createElement('div');
-        this.contentSlot.setAttribute('slot', 'content');
-        this.appendChild(this.contentSlot);
-    }
-
-    public disconnectedCallback(): void {
-        super.disconnectedCallback();
-    }
-
-    protected update(changedProperties: Map<PropertyKey, unknown>): void {
-        super.update(changedProperties);
-        this._renderContentSlot();
-    }
-
-    private _renderContentSlot(): void {
-        if (this.contentSlot) {
-            const templateResult = this._renderContent() as unknown;
-            if (templateResult instanceof TemplateResult) {
-                (this.constructor as typeof LitElement)
-                    .render(
-                        templateResult,
-                        this.contentSlot,
-                        {scopeName: this.localName, eventContext: this});
-            }
+        const list = this.createSlottedElement('content');
+        if (list) {
+            list.setAttribute('id', 'facet-list-content');
         }
     }
 
-    private _renderContent(): TemplateResult | void {
+    protected renderSlottedElements(): void {
+        super.renderSlottedElements();
+        const listSlot = this.slottedElements.get('content');
+        if (listSlot) {
+            this.renderSlottedElement(this._renderContent(), listSlot);
+        }
+    }
+
+    private _renderContent(): TemplateResult {
         const result: TemplateResult[] = [];
 
         for (let i = 0, n = this.data.length; i < n; ++i) {
