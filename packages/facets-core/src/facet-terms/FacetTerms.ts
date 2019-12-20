@@ -93,7 +93,23 @@ export class FacetTerms extends FacetContainer {
         return html`<span>${this.data.label}</span>`;
     }
 
-    protected renderContent(): TemplateResult | void {
+    public connectedCallback(): void {
+        super.connectedCallback();
+        const content = this.createSlottedElement('content');
+        if (content) {
+            content.setAttribute('id', 'facet-terms-content');
+        }
+    }
+
+    protected renderSlottedElements(): void {
+        super.renderSlottedElements();
+        const content = this.slottedElements.get('content');
+        if (content) {
+            this.renderSlottedElement(this._renderContent() || html``, content);
+        }
+    }
+
+    private _renderContent(): TemplateResult | void {
         const contrast = this.hover;
         const keyFunction = (key: number): number => key;
         const htmlFunction = (key: number): TemplateResult | void => {
