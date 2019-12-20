@@ -11,12 +11,6 @@
     color: #454545;
 }
 
-.color-right {
-    width: 5px;
-    height: 100%;
-    margin-right: 5px;
-}
-
 .image-left {
     margin: 5px;
     width: 40px;
@@ -85,12 +79,6 @@
     display: flex;
     align-items: center;
     max-width: 44px;
-}
-
-.big-value {
-    font-size: 16px;
-    line-height: 24px;
-    white-space: nowrap;
 }
 
 /* text styles */
