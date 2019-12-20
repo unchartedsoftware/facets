@@ -24,7 +24,7 @@ export class MutationWrapper {
         });
 
         this._target = target;
-        this._config = { attributes: false, childList: true, subtree: true };
+        this._config = { attributes: false, childList: true, subtree: false };
 
         if (autoStart) {
             this._observer.observe(this._target, this._config);
