@@ -14,6 +14,21 @@
     }'>
     </facet-terms>
 
+    <facet-terms subselection="[null, null, null, null, 0.35, 0.25, 0.15, 0.05]" data='{
+        "label": "Subselection",
+        "values": [
+            { "ratio": 0.05, "label": "5%" },
+            { "ratio": 0.15, "label": "15%" },
+            { "ratio": 0.25, "label": "25%" },
+            { "ratio": 0.35, "label": "35%" },
+            { "ratio": 0.45, "label": "45%" },
+            { "ratio": 0.55, "label": "55%" },
+            { "ratio": 0.65, "label": "65%" },
+            { "ratio": 0.75, "label": "75%" }
+        ]
+    }'>
+    </facet-terms>
+
     <facet-terms data='{
         "label": "Customized Facets",
         "values": [
@@ -41,6 +56,31 @@
         <facet-template target="facet-terms-value">
             <div slot="left" class="image-left" template-style="background-image:url('${metadata}')"></div>
             <div slot="value" class="big-value">${value}</div>
+        </facet-template>
+    </facet-terms>
+
+    <facet-terms data='{
+        "label": "About Us...",
+        "values": [
+            {
+                "type": "facet-terms-value#products",
+                "ratio": 0.66,
+                "label": "Products",
+                "value": 66
+            },
+            {
+                "type": "facet-terms-value#employee",
+                "ratio": 0.96,
+                "label": "Employee Satisfaction",
+                "value": 96
+            }
+        ]
+    }'>
+        <facet-template target="facet-terms-value#products">
+            <div slot="header" class="geotime-header"></div>
+        </facet-template>
+        <facet-template target="facet-terms-value#employee">
+            <div slot="header" class="employee-header"></div>
         </facet-template>
     </facet-terms>
 </div>
