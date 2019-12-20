@@ -93,12 +93,12 @@ export class FacetElement extends LitElement {
         this.addEventListener(FacetPlugin.disconnectedEvent, this.boundAddOnEventHandler);
         this.addEventListener(FacetTemplate.connectedEvent, this.boundAddOnEventHandler);
         this.addEventListener(FacetTemplate.disconnectedEvent, this.boundAddOnEventHandler);
-        if (this.renderRoot !== this) {
-            this.renderRoot.addEventListener(FacetPlugin.connectedEvent, this.boundAddOnEventHandler);
-            this.renderRoot.addEventListener(FacetPlugin.disconnectedEvent, this.boundAddOnEventHandler);
-            this.renderRoot.addEventListener(FacetTemplate.connectedEvent, this.boundAddOnEventHandler);
-            this.renderRoot.addEventListener(FacetTemplate.disconnectedEvent, this.boundAddOnEventHandler);
-        }
+        // if (this.renderRoot !== this) {
+        //     this.renderRoot.addEventListener(FacetPlugin.connectedEvent, this.boundAddOnEventHandler);
+        //     this.renderRoot.addEventListener(FacetPlugin.disconnectedEvent, this.boundAddOnEventHandler);
+        //     this.renderRoot.addEventListener(FacetTemplate.connectedEvent, this.boundAddOnEventHandler);
+        //     this.renderRoot.addEventListener(FacetTemplate.disconnectedEvent, this.boundAddOnEventHandler);
+        // }
     }
 
     private _teardownAddOnEvents(): void {
@@ -106,12 +106,12 @@ export class FacetElement extends LitElement {
         this.removeEventListener(FacetPlugin.disconnectedEvent, this.boundAddOnEventHandler);
         this.removeEventListener(FacetTemplate.connectedEvent, this.boundAddOnEventHandler);
         this.removeEventListener(FacetTemplate.disconnectedEvent, this.boundAddOnEventHandler);
-        if (this.renderRoot !== this) {
-            this.renderRoot.removeEventListener(FacetPlugin.connectedEvent, this.boundAddOnEventHandler);
-            this.renderRoot.removeEventListener(FacetPlugin.disconnectedEvent, this.boundAddOnEventHandler);
-            this.renderRoot.removeEventListener(FacetTemplate.connectedEvent, this.boundAddOnEventHandler);
-            this.renderRoot.removeEventListener(FacetTemplate.disconnectedEvent, this.boundAddOnEventHandler);
-        }
+        // if (this.renderRoot !== this) {
+        //     this.renderRoot.removeEventListener(FacetPlugin.connectedEvent, this.boundAddOnEventHandler);
+        //     this.renderRoot.removeEventListener(FacetPlugin.disconnectedEvent, this.boundAddOnEventHandler);
+        //     this.renderRoot.removeEventListener(FacetTemplate.connectedEvent, this.boundAddOnEventHandler);
+        //     this.renderRoot.removeEventListener(FacetTemplate.disconnectedEvent, this.boundAddOnEventHandler);
+        // }
     }
 
     private _addOnEventHandler(evt: Event): void {
