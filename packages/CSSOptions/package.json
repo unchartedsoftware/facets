@@ -1,5 +1,5 @@
 {
-    "name": "@uncharted.software/css-options",
+    "name": "@uncharted/css-options",
     "version": "0.0.1",
     "license": "MIT",
     "entry": "src/index.ts",
@@ -8,6 +8,9 @@
     "iife": "dist/iife/index.js",
     "jsnext:main": "dist/next/index.js",
     "types": "dist/types/index.d.ts",
+    "publishConfig": {
+        "registry": "https://npm.uncharted.software/repository/uncharted/"
+    },
     "files": [
         "dist"
     ],
