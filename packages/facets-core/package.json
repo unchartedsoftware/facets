@@ -29,6 +29,6 @@
     "dependencies": {
         "@fortawesome/free-regular-svg-icons": "^5.10.2",
         "@fortawesome/free-solid-svg-icons": "^5.10.2",
-        "@uncharted.software/css-options": "^0.0.1"
+        "@uncharted/css-options": "^0.0.1"
     }
 }
