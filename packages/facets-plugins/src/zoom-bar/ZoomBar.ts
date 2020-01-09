@@ -1,7 +1,7 @@
 import {css, CSSResult, customElement, unsafeCSS, html, TemplateResult} from 'lit-element';
-import {FacetPlugin} from '@uncharted.software/facets-core';
-import {FacetBars} from '@uncharted.software/facets-core';
-import {FacetBarsValues} from '@uncharted.software/facets-core';
+import {FacetPlugin} from '@uncharted/facets-core';
+import {FacetBars} from '@uncharted/facets-core';
+import {FacetBarsValues} from '@uncharted/facets-core';
 
 // @ts-ignore
 import ZoomBarStyle from './ZoomBar.css';

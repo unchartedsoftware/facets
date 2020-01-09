@@ -1,7 +1,7 @@
-import * as Facets from '@uncharted.software/facets-core';
+import * as Facets from '@uncharted/facets-core';
 export {Facets};
 
-import * as Plugins from '@uncharted.software/facets-plugins';
+import * as Plugins from '@uncharted/facets-plugins';
 export {Plugins};
 
 import {bootstrap as basic} from './basic/ExampleBootstrap';

@@ -1,5 +1,5 @@
 import {CSSResult, customElement, LitElement, TemplateResult} from 'lit-element';
-import {CSSOptions} from '@uncharted.software/css-options';
+import {CSSOptions} from '@uncharted/css-options';
 import {FacetPlugin} from '../facet-plugin/FacetPlugin';
 import {FacetTemplate} from '../facet-template/FacetTemplate';
 

@@ -1,5 +1,5 @@
 import Vue, {VNode} from 'vue';
-import * as Facets from '@uncharted.software/facets-core';
+import * as Facets from '@uncharted/facets-core';
 export {Facets}; // keep facets code from tree shaking
 
 // @ts-ignore
