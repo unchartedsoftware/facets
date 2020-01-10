@@ -106,6 +106,8 @@ export class FacetTemplate extends LitElement {
         super.disconnectedCallback();
         this.mutationObserver.stop();
 
+        this.slots.length = 0;
+
         if (this.host) {
             this.host.dispatchEvent(new CustomEvent(FacetTemplate.disconnectedEvent, {
                 bubbles: true,
