@@ -225,7 +225,7 @@ const kZoomLevelViews = [
 function getLabel(zoomLevel, detailLevel, i) {
     return kLabelsTemplate[zoomLevel][detailLevel]
         .values[Math.floor(
-            i / kLabelsTemplate[zoomLevel][detailLevel].count
+            i / kLabelsTemplate[zoomLevel][detailLevel].count,
         ) % kLabelsTemplate[zoomLevel][detailLevel].values.length];
 }
 

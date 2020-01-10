@@ -141,7 +141,7 @@ export class FacetBarsValues extends FacetBlueprint {
         const htmlTemplate: DirectiveFn = this.getValuesHTML(
             this._getViewValues(values, view),
             actionButtons,
-            view[0]
+            view[0],
         );
 
         this._activeView = view;
@@ -164,7 +164,7 @@ export class FacetBarsValues extends FacetBlueprint {
     protected getValuesHTML(
         values: (FacetBarsValueData|null)[],
         actionButtons: string,
-        offset: number
+        offset: number,
     ): DirectiveFn {
         let id = 0;
 

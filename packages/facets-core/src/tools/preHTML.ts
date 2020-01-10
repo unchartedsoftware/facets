@@ -46,7 +46,7 @@ export function preHTML(strings: TemplateStringsArray, ...values: any[]): Templa
             if (isSame) {
                 return html(
                     cachedStrings[i].strings as any,
-                    ...dropIndices(values, needlessValues)
+                    ...dropIndices(values, needlessValues),
                 );
             }
         }

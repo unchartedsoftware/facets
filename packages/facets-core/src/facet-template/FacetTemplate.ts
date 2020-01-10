@@ -135,8 +135,8 @@ export class FacetTemplate extends LitElement {
             const result: string[] = [];
             this.templateAttributes.forEach(
                 (value, key): number => result.push(
-                    `${key.replace(/template-(.*?)/gm, '')}="${value}"`
-                )
+                    `${key.replace(/template-(.*?)/gm, '')}="${value}"`,
+                ),
             );
             return result.join(' ');
         })()}` : ''}`;
@@ -183,7 +183,7 @@ export class FacetTemplate extends LitElement {
 
                 const slotHTML = child.outerHTML.replace(
                     /template-(.*?):/gm,
-                    (match: string, inner: string): string => `${inner}:`
+                    (match: string, inner: string): string => `${inner}:`,
                 );
                 if (child.tagName.toLowerCase() === 'facet-template') {
                     slotComponents.strings.push(slotHTML);
