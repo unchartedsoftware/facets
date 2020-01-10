@@ -44,12 +44,14 @@ export class FacetTerms extends FacetContainer {
             data: {type: Object},
             selection: {type: Object},
             subselection: {type: Object},
+            multiselect: {type: Object},
             actionButtons: {type: Number, attribute: 'action-buttons'},
         };
     }
 
     public selection: FacetTermsSelection | null = null;
     public subselection: FacetTermsSubselection | null = null;
+    public multiselect: boolean = true;
     public actionButtons: number = 2;
 
     private _data: FacetTermsData = kDefaultData;
@@ -172,11 +174,21 @@ export class FacetTerms extends FacetContainer {
         if (event.currentTarget instanceof Element) {
             const id = parseInt(event.currentTarget.getAttribute('id') || '', 10);
             if (!isNaN(id)) {
-                if (this.selection && this.selection[id]) {
-                    this.selection = null;
+                let selection = Object.assign({}, this.selection);
+                if (selection[id]) {
+                    if (this.multiselect) {
+                        delete selection[id];
+                    } else {
+                        selection = {};
+                    }
                 } else {
-                    this.selection = { [id]: true };
+                    if (this.multiselect) {
+                        selection[id] = true;
+                    } else {
+                        selection = {[id]: true};
+                    }
                 }
+                this.selection = Object.keys(selection).length === 0 ? null : selection;
             }
         }
     }
