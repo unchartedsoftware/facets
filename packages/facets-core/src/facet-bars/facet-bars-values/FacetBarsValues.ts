@@ -1,6 +1,6 @@
 import {css, CSSResult, customElement, html, TemplateResult, unsafeCSS} from 'lit-element';
-import {repeat} from 'lit-element/node_modules/lit-html/directives/repeat';
-import {DirectiveFn} from 'lit-element/node_modules/lit-html/lib/directive';
+import {repeat} from 'lit-html/directives/repeat';
+import {DirectiveFn} from 'lit-html/lib/directive';
 import {FacetBlueprint} from '../../facet-blueprint/FacetBlueprint';
 import {FacetBarsValueData, kFacetVarsValueNullData} from './facet-bar-value/FacetBarsValue';
 import {FacetBarsValuesSelection} from './selection/FacetBarsValuesSelection';

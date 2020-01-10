@@ -2,7 +2,7 @@ import {FacetContainer} from '../facet-container/FacetContainer';
 import {FacetTemplate} from '../facet-template/FacetTemplate';
 import {FacetTermsValueData} from '../facet-terms-value/FacetTermsValue';
 import {css, CSSResult, customElement, html, TemplateResult, unsafeCSS} from 'lit-element';
-import {repeat} from 'lit-element/node_modules/lit-html/directives/repeat';
+import {repeat} from 'lit-html/directives/repeat';
 import {preHTML} from '../tools/preHTML';
 import {polyMatches} from '../tools/PolyMatches';
 
