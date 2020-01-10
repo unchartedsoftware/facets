@@ -69,19 +69,23 @@ export class FacetBarsValues extends FacetBlueprint {
 
     private _domain: [number, number] = kFacetBarsValuesNullDomain;
     public get domain(): [number, number] {
-        if (this._domain === kFacetBarsValuesNullDomain) {
+        if (this._domain === kFacetBarsValuesNullDomain || this._domain === this.nullDomain) {
             if (this.valueKeys.length) {
-                return [this.valueKeys[0], this.valueKeys[this.valueKeys.length - 1] + 1];
+                this.nullDomain[0] = this.valueKeys[0];
+                this.nullDomain[1] = this.valueKeys[this.valueKeys.length - 1] + 1;
+            } else {
+                this.nullDomain[0] = 0;
+                this.nullDomain[1] = 0;
             }
-            return [0, 0];
+            this._domain = this.nullDomain;
         }
         return this._domain;
     }
     // @ts-ignore
     public set domain(value: [number, number] | null) {
         const oldValue = this._domain;
-        if (!value || value === kFacetBarsValuesNullDomain) {
-            this._domain = kFacetBarsValuesNullDomain;
+        if (!value || value === kFacetBarsValuesNullDomain || value === this.nullDomain) {
+            this._domain = this.nullDomain;
         } else {
             this._domain = [Math.max(value[0], 0), Math.max(value[1], 0)];
         }
@@ -90,16 +94,19 @@ export class FacetBarsValues extends FacetBlueprint {
 
     private _view: [number, number] = kFacetBarsValuesNullView;
     public get view(): [number, number] {
-        if (this._view === kFacetBarsValuesNullView) {
-            return this.domain;
+        if (this._view === kFacetBarsValuesNullView || this._view === this.nullView) {
+            const domain = this.domain;
+            this.nullView[0] = domain[0];
+            this.nullView[1] = domain[1];
+            this._view = this.nullView;
         }
         return this._view;
     }
     // @ts-ignore
     public set view(value: [number, number] | null) {
         const oldValue = this._view;
-        if (!value || value === kFacetBarsValuesNullView) {
-            this._view = kFacetBarsValuesNullView;
+        if (!value || value === kFacetBarsValuesNullView || value === this.nullView) {
+            this._view = this.nullView;
         } else {
             this._view = [Math.max(value[0], 0), Math.max(value[1], 0)];
         }
@@ -118,6 +125,9 @@ export class FacetBarsValues extends FacetBlueprint {
         }
         return this._activeView;
     }
+
+    private readonly nullDomain: [number, number] = [0, 0];
+    private readonly nullView: [number, number] = [0, 0];
 
     private valueKeys: number[] = Object.keys(kFacetBarsValuesDefaultValues).map((key: string): number => parseInt(key, 10));
     private viewValues: FacetBarsValuesData = {};
