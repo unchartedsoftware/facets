@@ -72,8 +72,6 @@ export class FacetList extends FacetContainer {
                     }
                 }
             }
-        } else {
-
         }
         this.requestUpdate('selection', oldValue);
     }
