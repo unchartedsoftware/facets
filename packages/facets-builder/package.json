@@ -17,7 +17,7 @@
     "scripts": {
         "build": "npm-run-all --parallel build:**",
         "build:server": "cross-env TARGET='server' rollup --config",
-        "build:types": "tsc --declaration --declarationMap --emitDeclarationOnly --outDir ./dist/types",
+        "build:types": "tsc --declaration --declarationMap --emitDeclarationOnly --skipLibCheck --outDir ./dist/types",
         "prestart": "cross-env TARGET='server' rollup --config",
         "start": "npm-run-all --parallel start:**",
         "start:watch": "cross-env TARGET='server' rollup --config --watch",
