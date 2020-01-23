@@ -17,11 +17,11 @@
     width: 100%;
 }
 
-:host(:hover) .facet-term-container {
+:host(:hover) .facet-blueprint {
     background-color: #F7F7F7;
 }
 
-:host([state="highlighted"]) .facet-term-container {
+:host([state="highlighted"]) .facet-blueprint {
     background-color: #EBF1FC;
 }
 
