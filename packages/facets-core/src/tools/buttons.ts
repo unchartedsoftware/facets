@@ -5,11 +5,22 @@ import {faEye} from '@fortawesome/free-solid-svg-icons/faEye';
 import {faBan} from '@fortawesome/free-solid-svg-icons/faBan';
 import {faQuestionCircle} from '@fortawesome/free-regular-svg-icons/faQuestionCircle';
 
+export function renderButtonIcon(facet: any, index: number, total: number): TemplateResult {
+    if (total > 1) {
+        if (index === total - 2) {
+            return makeIconSVG(faEye, 14, 14);
+        } else if (index === total - 1) {
+            return makeIconSVG(faBan, 12, 12);
+        }
+    }
+    return makeIconSVG(faQuestionCircle, 12, 12, '#C9CACB');
+}
+
 function _generateButton(facet: any, className: string, index: number, total: number): TemplateResult {
     return html`
             <div class="facet-button ${className}">
                 <slot name="button_${index}">
-                    ${facet.hasOwnProperty('buttonIconRenderer') ? facet.buttonIconRenderer(facet, index, total) : ''}
+                    ${renderButtonIcon(facet, index, total)}
                 </slot>
             </div>
         `;
@@ -38,15 +49,4 @@ export function renderButtons(facet: any): TemplateResult | void {
         return html`${template}`;
     }
     return undefined;
-}
-
-export function renderButtonIcon(facet: any, index: number, total: number): TemplateResult {
-    if (total > 1) {
-        if (index === total - 2) {
-            return makeIconSVG(faEye, 14, 14);
-        } else if (index === total - 1) {
-            return makeIconSVG(faBan, 12, 12);
-        }
-    }
-    return makeIconSVG(faQuestionCircle, 12, 12, '#C9CACB');
 }
