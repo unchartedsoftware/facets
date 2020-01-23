@@ -1,6 +1,6 @@
 import {customElement, html, TemplateResult} from 'lit-element';
 import {FacetElement} from '../../../facet-element/FacetElement';
-import {renderButtonIcon, renderButtons} from '../../../tools/buttons';
+import {renderButtons} from '../../../tools/buttons';
 
 export interface FacetBarsValueData {
     ratio: number | null;
@@ -44,9 +44,6 @@ export class FacetBarsValue extends FacetElement {
     public subselection: number = NaN;
     public actionButtons: number = 2;
 
-    public buttonsRenderer: (facet: any) => TemplateResult | void = renderButtons;
-    public buttonIconRenderer: (facet: any, index: number, total: number) => TemplateResult | void = renderButtonIcon;
-
     protected createRenderRoot(): Element | ShadowRoot {
         return this;
     }
@@ -60,7 +57,7 @@ export class FacetBarsValue extends FacetElement {
             <div class="facet-bars-value-bar" style="height: ${selectionHeight}%"></div>
         </div>
         <div class="facet-hoverable-buttons"><slot name="buttons">
-            ${this.buttonsRenderer(this)}
+            ${renderButtons(this)}
         </slot></div>
         `;
     }

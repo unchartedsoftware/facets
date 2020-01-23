@@ -37,11 +37,6 @@ export class FacetTermsValue extends FacetHoverable {
     public contrast: boolean = false;
     public subselection: number | null = null;
 
-    public barRenderer: (value: FacetTermsValue) => TemplateResult | void = this.renderBar;
-    public labelRenderer: (value: FacetTermsValue) => TemplateResult | void = this.renderLabel;
-    public annotationRenderer: (value: FacetTermsValue) => TemplateResult | void = this.renderAnnotation;
-    public valueRenderer: (value: FacetTermsValue) => TemplateResult | void = this.renderValue;
-
     private _data: FacetTermsValueData = kDefaultData;
     public set data(newData: FacetTermsValueData) {
         const oldData = this._data;
@@ -55,11 +50,11 @@ export class FacetTermsValue extends FacetHoverable {
     protected renderContent(): TemplateResult | void {
         return html`
         <div class="facet-term-container">
-            <div class="facet-term-bar"><slot name="bar">${this.barRenderer(this)}</slot></div>
+            <div class="facet-term-bar"><slot name="bar">${this.renderBar()}</slot></div>
             <div class="facet-term-details">
-                <div class="facet-term-label"><slot name="label">${this.labelRenderer(this)}</slot></div>
-                <div class="facet-term-annotation"><slot name="annotation">${this.annotationRenderer(this)}</slot></div>
-                <div class="facet-term-value"><slot name="value">${this.valueRenderer(this)}</slot></div>
+                <div class="facet-term-label"><slot name="label">${this.renderLabel()}</slot></div>
+                <div class="facet-term-annotation"><slot name="annotation">${this.renderAnnotation()}</slot></div>
+                <div class="facet-term-value"><slot name="value">${this.renderValue()}</slot></div>
             </div>
         </div>
         `;

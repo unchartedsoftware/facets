@@ -1,6 +1,6 @@
 import {customElement, TemplateResult, html, CSSResult, css, unsafeCSS} from 'lit-element';
 import {FacetBlueprint} from '../facet-blueprint/FacetBlueprint';
-import {renderButtonIcon, renderButtons} from '../tools/buttons';
+import {renderButtons} from '../tools/buttons';
 
 // @ts-ignore
 import buttonsStyle from '../tools/buttons.css';
@@ -24,9 +24,6 @@ export class FacetHoverable extends FacetBlueprint {
         };
     }
 
-    public buttonsRenderer: (blueprint: FacetBlueprint) => TemplateResult | void = renderButtons;
-    public buttonIconRenderer: (blueprint: FacetBlueprint, index: number, total: number) => TemplateResult | void = renderButtonIcon;
-
     private _actionButtons: number = 2;
     public set actionButtons(value: number) {
         const oldValue = this._actionButtons;
@@ -40,7 +37,7 @@ export class FacetHoverable extends FacetBlueprint {
     protected renderLayoutAdditions(): TemplateResult | void {
         return html`
         <div class="facet-hoverable-buttons"><slot name="buttons">
-            ${this.buttonsRenderer(this)}
+            ${renderButtons(this)}
         </slot></div>
         `;
     }
