@@ -27,7 +27,7 @@
         "prepack": "npm-run-all build"
     },
     "dependencies": {
-        "@uncharted/facets-core": "^0.0.1",
+        "@uncharted/facets-core": "^0.0.2",
         "@uncharted/facets-plugins": "^0.0.1",
         "express": "^4.17.1",
         "nick-generator": "^1.0.1"
