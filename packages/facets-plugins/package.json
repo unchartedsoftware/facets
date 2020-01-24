@@ -27,7 +27,7 @@
         "prepack": "npm-run-all build"
     },
     "dependencies": {
-        "@uncharted/facets-core": "^0.0.1",
+        "@uncharted/facets-core": "^0.0.2",
         "lit-element": "^2.2.1",
         "lit-html": "^1.1.2"
     }
