@@ -142,7 +142,7 @@ export class FacetBarsBase extends FacetContainer {
         super.connectedCallback();
         const values = this.createSlottedElement('values');
         if (values) {
-            values.setAttribute('class', 'facet-bars-values-container');
+            values.setAttribute('class', 'facet-bars-base-container');
         }
     }
 
@@ -163,16 +163,20 @@ export class FacetBarsBase extends FacetContainer {
         template.addCustomAttribute('.subselection');
     }
 
-    protected renderContent(): TemplateResult | void {
-        return html`<slot
-                    name="values"
-                    @click="${this.handleMouseEvent}"
-                    @mousedown="${this.handleMouseEvent}"
-                    @mousemove="${this.handleMouseEvent}"
-                    @mouseenter="${this.handleMouseEvent}"
-                    @mouseleave="${this.handleMouseEvent}"
-                    @mouseup="${this.handleMouseEvent}"
-                ></slot>`;
+    protected renderContentRaw(): TemplateResult {
+        return html`
+        <div
+            class="facet-bars-base-values-container"
+            @click="${this.handleMouseEvent}"
+            @mousedown="${this.handleMouseEvent}"
+            @mousemove="${this.handleMouseEvent}"
+            @mouseenter="${this.handleMouseEvent}"
+            @mouseleave="${this.handleMouseEvent}"
+            @mouseup="${this.handleMouseEvent}"
+        >
+            <slot name="values"></slot>
+        </div>
+        `;
     }
 
     protected renderValues(): TemplateResult | void {

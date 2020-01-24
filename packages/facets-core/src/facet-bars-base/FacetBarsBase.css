@@ -2,12 +2,18 @@
     display: flex;
 }
 
-.facet-blueprint-content ::slotted(.facet-bars-values-container) {
-    position: relative;
+.facet-bars-base-values-container {
     height: 100%;
     min-height: 64px;
     display: flex;
-    flex-direction: row;
     align-items: stretch;
     margin-left: 1px;
+}
+
+.facet-bars-base-values-container ::slotted(.facet-bars-base-container) {
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
 }
