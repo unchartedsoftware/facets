@@ -1,0 +1,13 @@
+:host {
+    display: flex;
+}
+
+.facet-blueprint-content ::slotted(.facet-bars-values-container) {
+    position: relative;
+    height: 100%;
+    min-height: 64px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    margin-left: 1px;
+}
