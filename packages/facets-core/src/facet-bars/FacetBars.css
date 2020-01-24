@@ -1,42 +1,15 @@
 .facet-blueprint-content {
     display: flex;
-}
-
-.facet-bars-hover-tab {
-    width: 4px;
-    margin-right: 4px;
-}
-
-.facet-blueprint-body:hover .facet-bars-hover-tab {
-    background-color: #255DCC;
-}
-
-.facet-bars-container {
-    flex-grow: 1;
-    padding: 4px 8px 4px 0;
-    display: flex;
-}
-
-.facet-bars-content {
-    flex-grow: 1;
-    display: flex;
     flex-direction: column;
-}
-
-.facet-bars-values {
-    min-height: 64px;
-    flex-grow: 1;
-    margin: 0 16px;
-
-    display: flex;
     align-items: stretch;
-}
-
-.facet-bars-values > facet-bars-values {
-    flex-grow: 1;
-}
-
-.facet-bars-labels {
+    padding: 4px 8px 4px 0;
     margin: 0 16px;
 }
 
+.facet-blueprint-left {
+    border-left: 4px solid transparent;
+}
+
+:host(:hover) .facet-blueprint-left {
+    border-left: 4px solid #255DCC;
+}
