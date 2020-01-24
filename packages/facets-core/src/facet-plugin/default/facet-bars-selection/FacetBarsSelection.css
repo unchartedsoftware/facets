@@ -1,0 +1,108 @@
+.facet-bars-selection-user {
+    position: absolute;
+    border: 1px dashed black;
+    pointer-events: none;
+    user-select: none;
+    -ms-user-select: none;
+}
+
+.facet-bars-selection-computed {
+    position: absolute;
+    background-color: rgba(37,93,204, 0.15);
+    border: 1px solid #255DCC;
+    pointer-events: none;
+    user-select: none;
+    -ms-user-select: none;
+    top: 0;
+    bottom: 0;
+}
+
+.facet-bars-selection-handle {
+    position: absolute;
+    top: calc(50% - 9px);
+    width: 0;
+    height: 15px;
+    cursor: ew-resize;
+    pointer-events: all;
+
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+}
+
+.facet-bars-selection-handle:before {
+    content: '';
+    position: absolute;
+    width: 1px;
+    top: -4px;
+    bottom: -4px;
+    background-color: transparent;
+}
+
+.facet-bars-selection-handle:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    width: 1px;
+    height: 11px;
+    background-color: #EBF1FC;
+}
+
+.facet-bars-selection-handle-left {
+    left: -7px;
+    border-right: 5px solid #255DCC;
+}
+
+.facet-bars-selection-handle-left:after {
+    left: 2px;
+}
+
+.facet-bars-selection-handle-left:before {
+    left: 5px;
+}
+
+.facet-bars-selection-handle-right {
+    right: -7px;
+    border-left: 5px solid #255DCC;
+}
+
+.facet-bars-selection-handle-right:after {
+    right: 2px;
+}
+
+.facet-bars-selection-handle-right:before {
+    right: 5px;
+}
+
+.facet-bars-selection-clear-button {
+    position: absolute;
+    right: -11px;
+    top: -1px;
+    width: 9px;
+    height: 9px;
+    background-color: #255DCC;
+    border-radius: 2px;
+    cursor: pointer;
+    pointer-events: all;
+}
+
+.facet-bars-selection-clear-button:after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    height: 7px;
+    width: 1px;
+    background-color: white;
+    transform: rotate(45deg);
+}
+
+.facet-bars-selection-clear-button:before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    height: 7px;
+    width: 1px;
+    background-color: white;
+    transform: rotate(-45deg);
+}
