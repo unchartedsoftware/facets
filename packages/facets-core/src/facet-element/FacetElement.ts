@@ -21,6 +21,12 @@ export class FacetElement extends LitElement {
         return desc && desc.get ? desc.get.call(proto) : [];
     }
 
+    protected static getSuperProperties(): any {
+        const proto = Object.getPrototypeOf(this);
+        const desc = Object.getOwnPropertyDescriptor(proto, 'properties');
+        return desc && desc.get ? desc.get.call(proto) : {};
+    }
+
     public constructor() {
         super();
         this.mOptions = new CSSOptions(this);
