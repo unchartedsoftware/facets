@@ -43,13 +43,17 @@ export class FacetContainer extends FacetBlueprint {
     }
 
     protected renderHeader(): TemplateResult | void {
-        return html`
-        <div class="facet-container-header">
-            <slot name="header-label">
-                ${this.renderHeaderLabel()}
-            </slot>
-        </div>
-        `;
+        const label = this.renderHeaderLabel();
+        if (label) {
+            return html`
+            <div class="facet-container-header">
+                <slot name="header-label">
+                    ${label}
+                </slot>
+            </div>
+            `;
+        }
+        return undefined;
     }
 
     protected renderHeaderLabel(): TemplateResult | void {
@@ -57,13 +61,17 @@ export class FacetContainer extends FacetBlueprint {
     }
 
     protected renderFooter(): TemplateResult | void {
-        return html`
-        <div class="facet-container-footer">
-            <slot name="footer-label">
-                ${this.renderFooterLabel()}
-            </slot>
-        </div>
-        `;
+        const label = this.renderFooterLabel();
+        if (label) {
+            return html`
+            <div class="facet-container-footer">
+                <slot name="footer-label">
+                    ${this.renderFooterLabel()}
+                </slot>
+            </div>
+            `;
+        }
+        return undefined;
     }
 
     protected renderFooterLabel(): TemplateResult | void {
