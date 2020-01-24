@@ -62,9 +62,9 @@ export class FacetBars extends FacetBarsBase {
         return html`<span>${this.data.label}</span>`;
     }
 
-    protected renderContent(): TemplateResult | void {
+    protected renderContentRaw(): TemplateResult {
         return html`
-        ${super.renderContent()}
+        ${super.renderContentRaw()}
         <slot name="labels"></slot>
         `;
     }
