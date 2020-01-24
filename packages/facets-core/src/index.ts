@@ -8,9 +8,10 @@ export {FacetTerms} from './facet-terms/FacetTerms';
 export {FacetTermsValue} from './facet-terms-value/FacetTermsValue';
 
 export {FacetBars} from './facet-bars/FacetBars';
-export {FacetBarsValues} from './facet-bars/facet-bars-values/FacetBarsValues';
-export {FacetBarsValue} from './facet-bars/facet-bars-values/facet-bar-value/FacetBarsValue';
-export {FacetBarsLabels} from './facet-bars/facet-bars-labels/FacetBarsLabels';
+export {FacetBarsBase} from './facet-bars-base/FacetBarsBase';
+export {FacetBarsValue} from './facet-bars-value/FacetBarsValue';
+export {FacetBarsLabels} from './facet-plugin/default/facet-bars-labels/FacetBarsLabels';
+export {FacetBarsSelection} from './facet-plugin/default/facet-bars-selection/FacetBarsSelection';
 
 export {FacetList} from './facet-list/FacetList';
 export {FacetPlugin} from './facet-plugin/FacetPlugin';
