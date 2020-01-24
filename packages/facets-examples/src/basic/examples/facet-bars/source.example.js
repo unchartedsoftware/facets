@@ -235,7 +235,7 @@ function getDummyData(range, zoomLevel, oldData = { values: {} } ) {
     for (let i = range[0]; i < range[1]; ++i) {
         values[i] = {
             ratio: Math.random(),
-            labels: [
+            label: [
                 getLabel(zoomLevel, 0, i),
                 getLabel(zoomLevel, 1, i),
                 getLabel(zoomLevel, 2, i),
