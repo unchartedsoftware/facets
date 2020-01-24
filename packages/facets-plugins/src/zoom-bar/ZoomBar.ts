@@ -1,7 +1,6 @@
 import {css, CSSResult, customElement, unsafeCSS, html, TemplateResult} from 'lit-element';
 import {FacetPlugin} from '@uncharted/facets-core';
-import {FacetBars} from '@uncharted/facets-core';
-import {FacetBarsValues} from '@uncharted/facets-core';
+import {FacetBarsBase} from '@uncharted/facets-core';
 
 // @ts-ignore
 import ZoomBarStyle from './ZoomBar.css';
@@ -33,7 +32,7 @@ export class ZoomBar extends FacetPlugin {
         this.requestUpdate('enabled', oldValue);
     }
 
-    private facet: FacetBars | FacetBarsValues | null = null;
+    private facet: FacetBarsBase | null = null;
     private mouseTarget: string | null = null;
     private mouseX: number | null = null;
     private boundMouseHandler: EventListener = this.handleMouseEvent.bind(this);
@@ -49,7 +48,7 @@ export class ZoomBar extends FacetPlugin {
             this.facet.removeEventListener('touchmove', this.boundMouseHandler);
         }
 
-        if (host instanceof FacetBars || host instanceof FacetBarsValues) {
+        if (host instanceof FacetBarsBase) {
             this.facet = host;
             this.facet.addEventListener('mousemove', this.boundMouseHandler);
             this.facet.addEventListener('mouseleave', this.boundMouseHandler);
