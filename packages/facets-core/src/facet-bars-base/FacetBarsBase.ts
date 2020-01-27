@@ -163,7 +163,7 @@ export class FacetBarsBase extends FacetContainer {
         template.addCustomAttribute('.subselection');
     }
 
-    protected renderContentRaw(): TemplateResult {
+    protected renderContent(): TemplateResult {
         return html`
         <div
             class="facet-bars-base-values-container"

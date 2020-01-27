@@ -62,32 +62,10 @@ export class FacetBars extends FacetBarsBase {
         return html`<span>${this.data.label}</span>`;
     }
 
-    protected renderContentRaw(): TemplateResult {
+    protected renderContent(): TemplateResult {
         return html`
-        ${super.renderContentRaw()}
+        ${super.renderContent()}
         <slot name="labels"></slot>
         `;
     }
-
-    // protected renderContent(): TemplateResult | void {
-    //     return html`
-    //     <div class="facet-bars-container">
-    //         <div class="facet-bars-content">
-    //             <div class="facet-bars-values">
-    //                 <facet-bars-values
-    //                     id="facet-bars-values-imp"
-    //                     .values="${this.data.values}"
-    //                     .domain="${this.domain}"
-    //                     .view="${this.view}"
-    //                     .selection="${this.selection}"
-    //                     .subselection="${this.subselection}"
-    //                     .actionButtons="${this.actionButtons}"
-    //                     @facet-element-updated="${this._handleUpdatedEvent}"
-    //                 ></facet-bars-values>
-    //             </div>
-    //             <div class="facet-bars-labels"><slot name="labels"></slot></div>
-    //         </div>
-    //     </div>
-    //     `;
-    // }
 }
