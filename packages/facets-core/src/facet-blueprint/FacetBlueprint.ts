@@ -1,4 +1,5 @@
 import {FacetElement} from '../facet-element/FacetElement';
+import {polyMatches} from '../tools/PolyMatches';
 import {LitElement, CSSResult, TemplateResult, html, css, unsafeCSS, customElement} from 'lit-element';
 // @ts-ignore
 import FacetBlueprintStyle from './FacetBlueprint.css';
@@ -14,16 +15,36 @@ export class FacetBlueprint extends FacetElement {
     }
 
     protected render(): TemplateResult | void {
+        const children = this.children;
+        const slots = new Set(); // could it be optimized with member variable? is it worth the optimization?
+        let slot: string | null;
+        for (let i = 0, n = children.length; i < n; ++i) {
+            slot = children[i].getAttribute('slot');
+            if (slot) {
+                slots.add(slot);
+            }
+        }
+
         return html`
             ${this.computeStyle()}
             <div class="facet-blueprint">
-                <div class="facet-blueprint-header">${this.renderHeaderRaw()}</div>
-                <div class="facet-blueprint-body">
-                    <div class="facet-blueprint-left">${this.renderLeftRaw()}</div>
-                    <div class="facet-blueprint-content">${this.renderContentRaw()}</div>
-                    <div class="facet-blueprint-right">${this.renderRightRaw()}</div>
+                <div class="facet-blueprint-header">
+                    ${slots.has('header') ? html`<slot name="header"></slot>` : this.renderHeader()}
                 </div>
-                <div class="facet-blueprint-footer">${this.renderFooterRaw()}</div>
+                <div class="facet-blueprint-body">
+                    <div class="facet-blueprint-left">
+                        ${slots.has('left') ? html`<slot name="left"></slot>` : this.renderLeft()}
+                    </div>
+                    <div class="facet-blueprint-content">
+                        ${slots.has('content') ? html`<slot name="content"></slot>` : this.renderContent()}
+                    </div>
+                    <div class="facet-blueprint-right">
+                        ${slots.has('right') ? html`<slot name="right"></slot>` : this.renderRight()}
+                    </div>
+                </div>
+                <div class="facet-blueprint-footer">
+                    ${slots.has('footer') ? html`<slot name="footer"></slot>` : this.renderFooter()}
+                </div>
                 ${this.renderLayoutAdditions()}
             </div>
         `;
@@ -47,40 +68,20 @@ export class FacetBlueprint extends FacetElement {
         return undefined;
     }
 
-    protected renderContentRaw(): TemplateResult {
-        return html`<slot name="content">${this.renderContent()}</slot>`;
-    }
-
     protected renderContent(): TemplateResult | void {
         return undefined;
-    }
-
-    protected renderHeaderRaw(): TemplateResult {
-        return html`<slot name="header">${this.renderHeader()}</slot>`;
     }
 
     protected renderHeader(): TemplateResult | void {
         return undefined;
     }
 
-    protected renderFooterRaw(): TemplateResult {
-        return html`<slot name="footer">${this.renderFooter()}</slot>`;
-    }
-
     protected renderFooter(): TemplateResult | void {
         return undefined;
     }
 
-    protected renderLeftRaw(): TemplateResult {
-        return html`<slot name="left">${this.renderLeft()}</slot>`;
-    }
-
     protected renderLeft(): TemplateResult | void {
         return undefined;
-    }
-
-    protected renderRightRaw(): TemplateResult {
-        return html`<slot name="right">${this.renderRight()}</slot>`;
     }
 
     protected renderRight(): TemplateResult | void {
