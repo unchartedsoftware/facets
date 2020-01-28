@@ -1,8 +1,5 @@
 // Rules reference: http://eslint.org/docs/rules/
 module.exports = {
-    "extends": [
-        "plugin:@typescript-eslint/recommended",
-    ],
     "env": {
         "browser": true,
         "node": true,
@@ -15,18 +12,31 @@ module.exports = {
         "ecmaVersion": 2018
     },
 
+    "overrides": [
+        {
+            "files": ["**/*.ts", "**/*.tsx"],
+            "extends": [
+                "plugin:@typescript-eslint/recommended",
+            ],
+            "rules": {
+                "@typescript-eslint/no-parameter-properties": 2,
+                "@typescript-eslint/no-explicit-any": 0,
+                "@typescript-eslint/no-var-requires": 2,
+                "@typescript-eslint/no-non-null-assertion": 2,
+                "@typescript-eslint/no-use-before-define": 2,
+                "@typescript-eslint/camelcase": 0,
+                "@typescript-eslint/no-empty-interface": 2,
+                "@typescript-eslint/explicit-function-return-type": 2,
+                "@typescript-eslint/ban-ts-ignore": 0,
+                "@typescript-eslint/no-inferrable-types": [2, {
+                    "ignoreParameters": true,
+                    "ignoreProperties": true,
+                }]
+            }
+        }
+    ],
+
     "rules": {
-
-        "@typescript-eslint/no-parameter-properties": 2,
-        "@typescript-eslint/no-explicit-any": 0,
-        "@typescript-eslint/no-var-requires": 2,
-        "@typescript-eslint/no-non-null-assertion": 2,
-        "@typescript-eslint/no-use-before-define": 2,
-        "@typescript-eslint/camelcase": 0,
-        "@typescript-eslint/no-object-literal-type-assertion": 2,
-        "@typescript-eslint/no-empty-interface": 2,
-        "@typescript-eslint/explicit-function-return-type": 2,
-
         //=========================================================================
         //==================== Possible Errors ====================================
         //=========================================================================
