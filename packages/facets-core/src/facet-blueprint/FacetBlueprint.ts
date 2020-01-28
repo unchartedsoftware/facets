@@ -1,10 +1,7 @@
 import {FacetElement} from '../facet-element/FacetElement';
-import {polyMatches} from '../tools/PolyMatches';
 import {LitElement, CSSResult, TemplateResult, html, css, unsafeCSS, customElement} from 'lit-element';
 // @ts-ignore
 import FacetBlueprintStyle from './FacetBlueprint.css';
-
-export type FacetBlueprintRenderer = (blueprint?: FacetBlueprint) => TemplateResult | void;
 
 @customElement('facet-blueprint')
 export class FacetBlueprint extends FacetElement {

@@ -13,7 +13,5 @@ export class FacetTimeline extends FacetBarsBase {
         `);
         return styles;
     }
-
-
 }
 
