@@ -42,8 +42,8 @@
     content: '';
     position: absolute;
     top: 2px;
+    bottom: 2px;
     width: 1px;
-    height: 11px;
     background-color: #EBF1FC;
 }
 
