@@ -1,6 +1,6 @@
 {
     "name": "@uncharted/css-options",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "license": "MIT",
     "entry": "src/index.ts",
     "main": "dist/es5/index.js",
