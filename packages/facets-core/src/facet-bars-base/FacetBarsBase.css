@@ -7,7 +7,7 @@
     min-height: 64px;
     display: flex;
     align-items: stretch;
-    margin-left: 1px;
+    margin: 0 1px;
 }
 
 .facet-bars-base-values-container ::slotted(.facet-bars-base-container) {

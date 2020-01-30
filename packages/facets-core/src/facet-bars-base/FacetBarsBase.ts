@@ -132,6 +132,10 @@ export class FacetBarsBase extends FacetContainer {
         return this.slottedElements.get('values') || null;
     }
 
+    public get barValueTheme(): string {
+        return 'default';
+    }
+
     private readonly nullDomain: [number, number] = [0, 0];
     private readonly nullView: [number, number] = [0, 0];
 
@@ -157,6 +161,7 @@ export class FacetBarsBase extends FacetContainer {
     protected setTemplateForTarget(target: string, template: FacetTemplate): void {
         super.setTemplateForTarget(target, template);
         template.addCustomAttribute('id');
+        template.addCustomAttribute('theme');
         template.addCustomAttribute('facet-value-state');
         template.addCustomAttribute('action-buttons');
         template.addCustomAttribute('contrast');
@@ -200,6 +205,7 @@ export class FacetBarsBase extends FacetContainer {
         actionButtons: string,
         offset: number,
     ): DirectiveFn {
+        const theme = this.barValueTheme;
         const contrast = this.hover;
         let id = 0;
         const keyFunction = (): number => (id++) + offset;
@@ -212,6 +218,7 @@ export class FacetBarsBase extends FacetContainer {
             if (template) {
                 return template.getHTML(value || kFacetVarsValueNullData, {
                     'id': i + offset,
+                    'theme': theme,
                     'facet-value-state': overrideState !== null ? overrideState : computedState,
                     'action-buttons': actionButtons,
                     'contrast': contrast,
@@ -221,6 +228,7 @@ export class FacetBarsBase extends FacetContainer {
                 return html`
                 <facet-bars-value
                     id="${i + offset}"
+                    theme="${theme}"
                     facet-value-state="${overrideState !== null ? overrideState : computedState}"
                     action-buttons="${actionButtons}"
                     contrast="${contrast}"
@@ -231,6 +239,7 @@ export class FacetBarsBase extends FacetContainer {
             return preHTML`
             <${type}
                 id="${i + offset}"
+                theme="${theme}"
                 facet-value-state="${overrideState !== null ? overrideState : computedState}"
                 action-buttons="${actionButtons}"
                 contrast="${contrast}"

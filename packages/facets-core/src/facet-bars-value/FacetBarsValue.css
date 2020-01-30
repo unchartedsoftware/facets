@@ -2,7 +2,10 @@
     height: inherit;
     position: relative;
     flex-grow: 1;
-    padding: 0 1px;
+}
+
+:host(:not(:last-of-type)) {
+    padding-right: 2px;
 }
 
 .facet-hoverable-buttons {
@@ -37,128 +40,20 @@
     transition: margin-left 200ms ease-out, background-color 128ms ease-out;
 }
 
-:host([facet-value-state="normal"]) .facet-bars-value-background {
-    background-color: #EAEBEC;
-}
-
-:host([contrast=true][facet-value-state="normal"]) .facet-bars-value-background {
-    background-color: #F7F7F7;
-}
-
-:host([contrast=true][facet-value-state="normal"]):hover .facet-bars-value-background {
-    background-color: #EAEBEC;
-}
-
-:host([facet-value-state="highlighted"]) .facet-bars-value-background {
-    background-color: #EBF1FC;
-}
-
-:host([contrast=true][facet-value-state="highlighted"]) .facet-bars-value-background {
-    background-color: #EAEBEC;
-}
-
-:host([contrast=true][facet-value-state="highlighted"]:hover) .facet-bars-value-background {
-    background-color: #EAEBEC;
-}
-
-:host([facet-value-state="muted"]) .facet-bars-value-background {
-    background-color: #EAEBEC;
-}
-
-:host([contrast=true][facet-value-state="muted"]) .facet-bars-value-background {
-    background-color: #F7F7F7;
-}
-
-:host([contrast=true][facet-value-state="muted"]:hover) .facet-bars-value-background {
-    background-color: #EBF1FC;
-}
-
 .facet-bars-value-bar-total {
-    width: 100%;
     position: absolute;
     left: 0;
+    right: 0;
     bottom: 0;
     transition: height 200ms ease-out, background-color 128ms ease-out;
-}
-
-:host([facet-value-state="normal"]) .facet-bars-value-bar-total {
-    background-color: #C2C3C4;
-}
-
-:host([contrast=true][facet-value-state="normal"]) .facet-bars-value-bar-total {
-    background-color: #D9DADB;
-}
-
-:host([contrast=true][facet-value-state="normal"]:hover) .facet-bars-value-bar-total {
-    background-color: #C2C3C4;
-}
-
-:host([facet-value-state="highlighted"]) .facet-bars-value-bar-total {
-    background-color: #C2C3C4;
-}
-
-:host([contrast=true][facet-value-state="highlighted"]) .facet-bars-value-bar-total {
-    background-color: #D9DADB;
-}
-
-:host([contrast=true][facet-value-state="highlighted"]:hover) .facet-bars-value-bar-total {
-    background-color: #C2C3C4;
-}
-
-:host([facet-value-state="muted"]) .facet-bars-value-bar-total {
-    background-color: #D9DADB;
-}
-
-:host([contrast=true][facet-value-state="muted"]) .facet-bars-value-bar-total {
-    background-color: #EAEBEC;
-}
-
-:host([contrast=true][facet-value-state="muted"]:hover) .facet-bars-value-bar-total {
-    background-color: #C4D9FC;
 }
 
 .facet-bars-value-bar {
-    width: 100%;
     position: absolute;
     left: 0;
+    right: 0;
     bottom: 0;
     transition: height 200ms ease-out, background-color 128ms ease-out;
-}
-
-:host([facet-value-state="normal"]) .facet-bars-value-bar {
-    background-color: #255DCC;
-}
-
-:host([contrast=true][facet-value-state="normal"]) .facet-bars-value-bar {
-    background-color: #A4C2FC;
-}
-
-:host([contrast=true][facet-value-state="normal"]:hover) .facet-bars-value-bar {
-    background-color: #255DCC;
-}
-
-:host([facet-value-state="highlighted"]) .facet-bars-value-bar {
-    background-color: #255DCC;
-}
-
-:host([contrast=true][facet-value-state="highlighted"]) .facet-bars-value-bar {
-    background-color: #A4C2FC;
-}
-
-:host([contrast=true][facet-value-state="highlighted"]:hover) .facet-bars-value-bar {
-    background-color: #255DCC;
-}
-
-:host([facet-value-state="muted"]) .facet-bars-value-bar {
-    background-color: #C2C3C4;
-}
-
-:host([contrast=true][facet-value-state="muted"]) .facet-bars-value-bar {
-    background-color: #D9DADB;
-}
-
-:host([contrast=true][facet-value-state="muted"]:hover) .facet-bars-value-bar {
-    background-color: #255DCC;
 }
 
 @keyframes facet-bars-value-loading-background {
@@ -206,7 +101,6 @@
 
 :host([facet-value-state="loading"]) .facet-bars-value-background
 {
-    background-color: #F7F7F7;
     animation-name: facet-bars-value-loading-background;
     animation-timing-function: linear;
     animation-duration: 2048ms;
@@ -253,7 +147,6 @@
 :host([facet-value-state="loading"]) .facet-bars-value-bar
 {
     height: 0;
-    background-color: #ECECEC;
     animation-name: facet-bars-value-loading-foreground;
     animation-timing-function: ease;
     animation-duration: 3072ms;

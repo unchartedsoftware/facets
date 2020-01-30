@@ -3,8 +3,13 @@ import {FacetElement} from '../facet-element/FacetElement';
 import {renderButtons} from '../tools/buttons';
 // @ts-ignore
 import buttonsStyle from '../tools/buttons.css';
+
 // @ts-ignore
-import facetBarsValueStyle from './FacetBarsValue.css';
+import FacetBarsValueStyle from './FacetBarsValue.css';
+// @ts-ignore
+import FacetBarsValueDefaultTheme from './FacetBarsValue.default.css';
+// @ts-ignore
+import FacetBarsValueTimelineTheme from './FacetBarsValue.timeline.css';
 
 export interface FacetBarsValueData {
     ratio: number | null;
@@ -20,7 +25,9 @@ export class FacetBarsValue extends FacetElement {
         const styles = this.getSuperStyles();
         styles.push(css`
             ${unsafeCSS(buttonsStyle)}
-            ${unsafeCSS(facetBarsValueStyle)}
+            ${unsafeCSS(FacetBarsValueStyle)}
+            ${unsafeCSS(FacetBarsValueDefaultTheme)}
+            ${unsafeCSS(FacetBarsValueTimelineTheme)}
         `);
         return styles;
     }
