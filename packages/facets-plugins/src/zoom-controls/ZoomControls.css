@@ -1,0 +1,37 @@
+.zoom-controls-container {
+    height: 100%;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+}
+
+.zoom-controls-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.zoom-controls-button {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #A7A7A8;
+    background-color: #F0F1F2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.zoom-controls-button:not(:first-child):not(:last-child) {
+    border-top: 0;
+    border-bottom: 0;
+}
+
+.zoom-controls-button:first-child {
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+}
+
+.zoom-controls-button:last-child {
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
