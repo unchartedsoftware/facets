@@ -13,12 +13,16 @@
     overflow: hidden;
     display: flex;
     border-radius: 4px;
+
+    z-index: 1;
 }
 
 .scrollbar-area {
     height: 100%;
     flex-grow: 1;
     position: relative;
+
+    z-index: 1;
 }
 
 .scrollbar-selection {
@@ -26,6 +30,8 @@
     top: 0;
     bottom: 0;
     background-color: white;
+
+    z-index: 1;
 }
 
 .scrollbar-thumb {
@@ -35,5 +41,7 @@
     background-color: #A0A1A2;
     cursor: pointer;
     border-radius: 2px;
+
+    z-index: 1;
 }
 
