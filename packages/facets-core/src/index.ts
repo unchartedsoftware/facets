@@ -16,6 +16,7 @@ export {FacetBarsSelection} from './facet-plugin/default/facet-bars-selection/Fa
 
 export {FacetTimeline} from './facet-timeline/FacetTimeline';
 export {FacetTimelineLabels} from './facet-plugin/default/facet-timeline-labels/FacetTimelineLabels';
+export {FacetTimelineSelection} from './facet-plugin/default/facet-timeline-selection/FacetTimelineSelection';
 
 export {FacetList} from './facet-list/FacetList';
 export {FacetPlugin} from './facet-plugin/FacetPlugin';
