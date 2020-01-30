@@ -28,6 +28,8 @@
     },
     "dependencies": {
         "@uncharted/facets-core": "^0.0.3",
+        "@fortawesome/free-regular-svg-icons": "^5.10.2",
+        "@fortawesome/free-solid-svg-icons": "^5.10.2",
         "lit-element": "^2.2.1",
         "lit-html": "^1.1.2"
     }
