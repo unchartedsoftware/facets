@@ -6,7 +6,8 @@
         "test": "lerna run --stream test",
         "prePush": "npm-run-all prePush:**",
         "prePush:lint": "yarn lint",
-        "prePush:test": "yarn test"
+        "prePush:test": "yarn test",
+        "bump": "lerna version --no-changelog --no-commit-hooks --no-git-tag-version --no-push"
     },
     "devDependencies": {
         "@babel/core": "^7.5.5",
