@@ -1,2 +1,12 @@
+.facet-blueprint {
+    background-color: #F0F1F2;
+}
 
+.facet-timeline-content {
+    padding: 2px 8px 0;
+}
 
+.facet-bars-base-values-container {
+    min-height: 38px;
+    background-color: white;
+}
