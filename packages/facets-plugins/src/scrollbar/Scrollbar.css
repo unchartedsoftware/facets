@@ -1,0 +1,39 @@
+.scrollbar-container {
+    width: 100%;
+    height: 6px;
+    display: flex;
+}
+
+.scrollbar-background {
+    height: 100%;
+    flex-grow: 1;
+    margin: 0 -2px;
+    padding: 0 1px;
+    background-color: #EAEBEC;
+    overflow: hidden;
+    display: flex;
+    border-radius: 4px;
+}
+
+.scrollbar-area {
+    height: 100%;
+    flex-grow: 1;
+    position: relative;
+}
+
+.scrollbar-selection {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: white;
+}
+
+.scrollbar-thumb {
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    background-color: #A0A1A2;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
