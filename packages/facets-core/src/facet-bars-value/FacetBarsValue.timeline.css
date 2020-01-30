@@ -1,19 +1,13 @@
 /* .facet-bars-value-background */
 :host([theme="timeline"]) .facet-bars-value-background
 {
-    margin: 0 -1px;
-}
-
-:host([theme="timeline"][facet-value-state="muted"]) .facet-bars-value-background
-{
-    background-color: #F0F1F2;
+    background-color: transparent;
 }
 
 
 /* .facet-bars-value-bar-total */
 :host([theme="timeline"]) .facet-bars-value-bar-total
 {
-    margin: 0 1px;
     background-color: #EAEBEC;
 }
 
@@ -21,8 +15,7 @@
 /* .facet-bars-value-bar */
 :host([theme="timeline"]) .facet-bars-value-bar
 {
-    margin: 0 1px;
-    background-color: #255DCC;
+    background-color: #2B6AC1;
 }
 
 :host([theme="timeline"][facet-value-state="muted"]) .facet-bars-value-bar

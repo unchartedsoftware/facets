@@ -2,11 +2,18 @@
     background-color: #F0F1F2;
 }
 
+.facet-blueprint-content {
+    padding: 2px 10px 0;
+}
+
 .facet-timeline-content {
-    padding: 2px 8px 0;
+    position: relative;
 }
 
 .facet-bars-base-values-container {
     min-height: 38px;
-    background-color: white;
+}
+
+.facet-bars-base-values-container ::slotted(.facet-bars-base-container) {
+    z-index: 1;
 }

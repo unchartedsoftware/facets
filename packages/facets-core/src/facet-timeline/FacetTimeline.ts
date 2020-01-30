@@ -9,8 +9,8 @@ import {
 import FacetTimelineStyle from './FacetTimeline.css';
 
 export interface FacetTimelineValue extends FacetBarsValueDataTyped {
-    startDateLabel: string;
-    endDateLabel: string;
+    minDateLabel: string;
+    maxDateLabel: string;
 }
 
 export interface FacetTimelineData { [key: number]: FacetTimelineValue | null }
@@ -59,19 +59,25 @@ export class FacetTimeline extends FacetBarsBase {
             labels.setAttribute('id', 'facet-timeline-labels');
         }
 
-        const selection = this.createSlottedElement('selection', 'facet-bars-selection');
+        const selection = this.createSlottedElement('selection', 'facet-timeline-selection');
         if (selection) {
-            selection.setAttribute('id', 'facet-bars-selection');
+            selection.setAttribute('id', 'facet-timeline-selection');
         }
     }
 
     protected renderContent(): TemplateResult {
         return html`
         <div class="facet-timeline-content">
-            ${super.renderContent()}
-            <slot name="labels"></slot>
+            ${this.renderTimelineContent()}
             <slot name="scrollbar"></slot>
         </div>
+        `;
+    }
+
+    protected renderTimelineContent(): TemplateResult {
+        return html`
+        ${super.renderContent()}
+        <slot name="labels"></slot>
         `;
     }
 }
