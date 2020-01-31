@@ -1,5 +1,5 @@
 import {css, CSSResult, customElement, html, TemplateResult, unsafeCSS} from 'lit-element';
-import {FacetElement} from '../facet-element/FacetElement';
+import {FacetBlueprint} from '../facet-blueprint/FacetBlueprint';
 import {renderButtons} from '../tools/buttons';
 // @ts-ignore
 import buttonsStyle from '../tools/buttons.css';
@@ -20,7 +20,7 @@ export interface FacetBarsValueData {
 export const kFacetVarsValueNullData: FacetBarsValueData = { ratio: 0 };
 
 @customElement('facet-bars-value')
-export class FacetBarsValue extends FacetElement {
+export class FacetBarsValue extends FacetBlueprint {
     public static get styles(): CSSResult[] {
         const styles = this.getSuperStyles();
         styles.push(css`
@@ -68,7 +68,7 @@ export class FacetBarsValue extends FacetElement {
     //     return this;
     // }
 
-    protected render(): TemplateResult | void {
+    protected renderContent(): TemplateResult | void {
         const totalHeight = Math.round(Math.max(Math.min(this._data.ratio ? this._data.ratio : 0, 1), 0) * 100);
         const selectionHeight = isNaN(this.subselection) ? totalHeight : Math.round(Math.max(Math.min(this.subselection, 1), 0) * 100);
         return html`

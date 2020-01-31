@@ -8,6 +8,10 @@
     padding-right: 2px;
 }
 
+.facet-blueprint {
+    height: 100%;
+}
+
 .facet-hoverable-buttons {
     position: absolute;
     z-index: 1;
