@@ -6,9 +6,11 @@
 }
 
 .facet-blueprint-header {
+    position: relative;
 }
 
 .facet-blueprint-footer {
+    position: relative;
 }
 
 .facet-blueprint-body {
