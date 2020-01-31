@@ -1,4 +1,5 @@
 import {customElement, LitElement, TemplateResult, html} from 'lit-element';
+import {directive} from 'lit-html';
 import {MutationWrapper} from '../tools/MutationWrapper';
 
 const kSlotsKey = Symbol('FacetTemplate::Slots');
@@ -17,9 +18,18 @@ export class FacetTemplate extends LitElement {
     public static get properties(): any {
         return {
             target: {type: String},
+            escapeRegex: {type: String, attribute: 'escape-regex'},
         };
     }
     public target: string = '';
+
+    private _escapeRegex: RegExp = new RegExp('\\${(.*?)}', 'gm');
+    public get escapeRegex(): string {
+        return this._escapeRegex.source;
+    }
+    public set escapeRegex(value: string) {
+        this._escapeRegex = new RegExp(value, 'gm');
+    }
 
     private _host: LitElement|null = null;
     public get host(): LitElement|null {
@@ -32,15 +42,18 @@ export class FacetTemplate extends LitElement {
     private readonly slots: TemplateComponents[];
 
     private templateAttributes: Map<string, string | null>;
+    private xlinkAttributes: Map<symbol, TemplateComponents>;
     private customAttributesNames: Map<string, symbol>;
     private customAttributesKeys: Map<symbol, string>;
     private tagComponents: TemplateComponents;
     private mutationObserver: MutationWrapper;
+    private xlinkDirective: (...args: any[]) => object;
 
     public constructor() {
         super();
         this.slots = [];
         this.templateAttributes = new Map<string, string | null>();
+        this.xlinkAttributes = new Map<symbol, TemplateComponents>();
         this.customAttributesNames = new Map<string, symbol>();
         this.customAttributesKeys = new Map<symbol, string>();
         this.tagComponents = {
@@ -49,6 +62,10 @@ export class FacetTemplate extends LitElement {
         };
         this.mutationObserver = new MutationWrapper(this, false);
         this.mutationObserver.nodesAdded = this._processAddedNodes.bind(this);
+
+        this.xlinkDirective = directive((value: string) => (part: any): void => {
+            part.committer.element.setAttributeNS('http://www.w3.org/1999/xlink', part.committer.name, value);
+        });
     }
 
     public getHTML(data: any, customAttributes: {[key: string]: any} = {}): TemplateResult {
@@ -125,7 +142,7 @@ export class FacetTemplate extends LitElement {
     private _initializeTemplateTag(): void {
         const attributes = this.attributes;
         for (let i = 0, n = attributes.length; i < n; ++i) {
-            if (attributes[i].nodeName !== 'target') {
+            if (attributes[i].nodeName !== 'target' && attributes[i].nodeName !== 'escape-regex') {
                 this.templateAttributes.set(attributes[i].nodeName, attributes[i].nodeValue);
             }
         }
@@ -182,9 +199,13 @@ export class FacetTemplate extends LitElement {
                 };
 
                 const slotHTML = child.outerHTML.replace(
-                    /template-(.*?):/gm,
-                    (match: string, inner: string): string => `${inner}:`,
+                    /\stemplate-(.*?\s?)=/gm,
+                    (match: string, inner: string): string => ` ${inner}=`,
+                ).replace(
+                    /(<\/?)template-(.*?)>/gm,
+                    (match: string, open: string, inner: string): string => `${open}${inner}>`,
                 );
+
                 if (child.tagName.toLowerCase() === 'facet-template') {
                     slotComponents.strings.push(slotHTML);
                 } else {
@@ -200,7 +221,28 @@ export class FacetTemplate extends LitElement {
     }
 
     private _processHtmlParts(rawHTML: string, components: TemplateComponents): TemplateComponents {
-        const parts = rawHTML.split(/\${(.*?)}/gm);
+        return this._processXlinkAttributes(rawHTML, components);
+    }
+
+    private _processXlinkAttributes(rawHTML: string, components: TemplateComponents): TemplateComponents {
+        const parts = rawHTML.split(/xlink:href="(.*?)"/gm);
+        for (let i = 0, n = parts.length; i < n; ++i) {
+            if (i % 2) {
+                components.strings[components.strings.length - 1] += 'xlink:href="';
+                parts[i + 1] = `"${parts[i + 1]}`;
+                const xlinkComponents = this._processEscapedValues(parts[i], { strings: [], values: [] });
+                const key = Symbol(`FacetTemplate::XlinkAttribute::${this.target}::${parts[i]}`);
+                this.xlinkAttributes.set(key, xlinkComponents);
+                components.values.push(key);
+            } else {
+                this._processEscapedValues(parts[i], components);
+            }
+        }
+        return components;
+    }
+
+    private _processEscapedValues(rawHTML: string, components: TemplateComponents): TemplateComponents {
+        const parts = rawHTML.split(this._escapeRegex);
         for (let i = 0, n = parts.length; i < n; ++i) {
             if (i % 2) {
                 components.values.push(parts[i]);
@@ -220,6 +262,8 @@ export class FacetTemplate extends LitElement {
                     values.push(data);
                 } else if (key === kSlotsKey) {
                     values.push(this._getSlotsHTML(data));
+                } else if (this.xlinkAttributes.has(key)) {
+                    values.push(this._getXlinkValue(this.xlinkAttributes.get(key) as TemplateComponents, data));
                 } else if (
                     this.customAttributesKeys.has(key) &&
                     customAttributes.hasOwnProperty(this.customAttributesKeys.get(key) as string)
@@ -241,6 +285,17 @@ export class FacetTemplate extends LitElement {
             slots.push(this._getHTML(data, this.slots[i], {}));
         }
         return slots;
+    }
+
+    private _getXlinkValue(components: TemplateComponents, data: any): any {
+        let value = '';
+        for (let i = 0, n = components.strings.length; i < n; ++i) {
+            value += components.strings[i];
+            if (i < components.values.length) {
+                value += this._readData(data, components.values[i]);
+            }
+        }
+        return this.xlinkDirective(value);
     }
 
     private _readData(data: any, key: string | symbol): any {
