@@ -20,6 +20,13 @@ import barsCSS from './facet-bars/style.css';
 import barsJS from './facet-bars/source.example';
 
 // @ts-ignore
+import timelineHTML from './facet-timeline/example.html';
+// @ts-ignore
+import timelineCSS from './facet-timeline/style.css';
+// @ts-ignore
+import timelineJS from './facet-timeline/source.example';
+
+// @ts-ignore
 import listHTML from './facet-list/example.html';
 // @ts-ignore
 import listCSS from './facet-list/style.css';
@@ -62,6 +69,11 @@ export const examples = {
         html: barsHTML,
         css: barsCSS,
         js: barsJS,
+    },
+    'facet-timeline': {
+        html: timelineHTML,
+        css: timelineCSS,
+        js: timelineJS,
     },
     'facet-list': {
         html: listHTML,

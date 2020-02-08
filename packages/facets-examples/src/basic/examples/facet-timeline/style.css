@@ -1,0 +1,9 @@
+.facet-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+facet-timeline {
+    padding: 10px 0;
+}
