@@ -1,5 +1,6 @@
 .facet-blueprint {
     background-color: #F0F1F2;
+    overflow: hidden;
 }
 
 .facet-blueprint-content {
@@ -11,7 +12,7 @@
 }
 
 .facet-bars-base-values-container {
-    min-height: 38px;
+    min-height: 34px;
 }
 
 .facet-bars-base-values-container ::slotted(.facet-bars-base-container) {
