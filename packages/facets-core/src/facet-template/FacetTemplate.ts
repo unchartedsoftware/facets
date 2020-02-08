@@ -273,7 +273,7 @@ export class FacetTemplate extends LitElement {
                     values.push('');
                 }
             } else {
-                values.push(this._readData(data, components.values[i]));
+                values.push(this._getEscapedValue(data, components.values[i]));
             }
         }
         return html(components.strings as any, ...values);
@@ -292,17 +292,34 @@ export class FacetTemplate extends LitElement {
         for (let i = 0, n = components.strings.length; i < n; ++i) {
             value += components.strings[i];
             if (i < components.values.length) {
-                value += this._readData(data, components.values[i]);
+                value += this._getEscapedValue(data, components.values[i]);
             }
         }
         return this.xlinkDirective(value);
     }
 
-    private _readData(data: any, key: string | symbol): any {
-        const route = (key as string).split('.');
+    private _getEscapedValue(data: any, key: string | symbol): any {
+        const valueStr = key as string;
+        const funcCall = valueStr.split(/\((.*?)\)/g, 2);
+        let result = this._readValueFromRoute(funcCall[0], data);
+        if (funcCall.length === 2 && typeof result === 'function') {
+            // it's important to pass `null` as `this` to avoid leaking data when possible so disable es-lint
+            if (funcCall[1]) {
+                // eslint-disable-next-line no-useless-call
+                result = result.call(null, this._readValueFromRoute(funcCall[1], data));
+            } else {
+                // eslint-disable-next-line no-useless-call
+                result = result.call(null);
+            }
+        }
+        return result;
+    }
+
+    private _readValueFromRoute(route: string, data: any): any {
+        const components = route.split('.');
         let value = data;
-        for (let i = 0, n = route.length; i < n; ++i) {
-            value = value[route[i]];
+        for (let i = 0, n = components.length; i < n; ++i) {
+            value = value[components[i]];
         }
         return value;
     }
