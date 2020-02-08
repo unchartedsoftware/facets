@@ -8,19 +8,39 @@
 /* .facet-bars-value-bar-total */
 :host([theme="timeline"]) .facet-bars-value-bar-total
 {
-    background-color: #EAEBEC;
+    background-color: #a4d1ff;
+}
+
+:host([theme="timeline"][facet-value-state="unselected"]) .facet-bars-value-bar-total
+{
+    background-color: #b2d0f4;
 }
 
 
 /* .facet-bars-value-bar */
 :host([theme="timeline"]) .facet-bars-value-bar
 {
-    background-color: #2B6AC1;
+    background-color: #255DCC;
+}
+
+:host([theme="timeline"]:hover) .facet-bars-value-bar
+{
+    background-color: #73abf1;
+}
+
+:host([theme="timeline"][facet-value-state="unselected"]) .facet-bars-value-bar
+{
+    background-color: #a4d1ff;
+}
+
+:host([theme="timeline"][facet-value-state="unselected"]:hover) .facet-bars-value-bar
+{
+    background-color: #73abf1;
 }
 
 :host([theme="timeline"][facet-value-state="muted"]) .facet-bars-value-bar
 {
-    background-color: #D9DADB;
+    background-color: #D8D9DA;
 }
 
 

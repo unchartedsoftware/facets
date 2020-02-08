@@ -18,22 +18,40 @@
     background-color: #EAEBEC;
 }
 
-:host(:not([theme])[facet-value-state="highlighted"]) .facet-bars-value-background,
-:host([theme="default"][facet-value-state="highlighted"]) .facet-bars-value-background
+:host(:not([theme])[facet-value-state="selected"]) .facet-bars-value-background,
+:host([theme="default"][facet-value-state="selected"]) .facet-bars-value-background
 {
     background-color: #EBF1FC;
 }
 
-:host(:not([theme])[contrast=true][facet-value-state="highlighted"]) .facet-bars-value-background,
-:host([theme="default"][contrast=true][facet-value-state="highlighted"]) .facet-bars-value-background
+:host(:not([theme])[contrast=true][facet-value-state="selected"]) .facet-bars-value-background,
+:host([theme="default"][contrast=true][facet-value-state="selected"]) .facet-bars-value-background
 {
     background-color: #EAEBEC;
 }
 
-:host(:not([theme])[contrast=true][facet-value-state="highlighted"]:hover) .facet-bars-value-background,
-:host([theme="default"][contrast=true][facet-value-state="highlighted"]:hover) .facet-bars-value-background
+:host(:not([theme])[contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-background,
+:host([theme="default"][contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-background
 {
     background-color: #EAEBEC;
+}
+
+:host(:not([theme])[facet-value-state="unselected"]) .facet-bars-value-background,
+:host([theme="default"][facet-value-state="unselected"]) .facet-bars-value-background
+{
+    background-color: #EAEBEC;
+}
+
+:host(:not([theme])[contrast=true][facet-value-state="unselected"]) .facet-bars-value-background,
+:host([theme="default"][contrast=true][facet-value-state="unselected"]) .facet-bars-value-background
+{
+    background-color: #F7F7F7;
+}
+
+:host(:not([theme])[contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-background,
+:host([theme="default"][contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-background
+{
+    background-color: #EBF1FC;
 }
 
 :host(:not([theme])[facet-value-state="muted"]) .facet-bars-value-background,
@@ -75,22 +93,40 @@
     background-color: #C2C3C4;
 }
 
-:host(:not([theme])[facet-value-state="highlighted"]) .facet-bars-value-bar-total,
-:host([theme="default"][facet-value-state="highlighted"]) .facet-bars-value-bar-total
+:host(:not([theme])[facet-value-state="selected"]) .facet-bars-value-bar-total,
+:host([theme="default"][facet-value-state="selected"]) .facet-bars-value-bar-total
 {
     background-color: #C2C3C4;
 }
 
-:host(:not([theme])[contrast=true][facet-value-state="highlighted"]) .facet-bars-value-bar-total,
-:host([theme="default"][contrast=true][facet-value-state="highlighted"]) .facet-bars-value-bar-total
+:host(:not([theme])[contrast=true][facet-value-state="selected"]) .facet-bars-value-bar-total,
+:host([theme="default"][contrast=true][facet-value-state="selected"]) .facet-bars-value-bar-total
 {
     background-color: #D9DADB;
 }
 
-:host(:not([theme])[contrast=true][facet-value-state="highlighted"]:hover) .facet-bars-value-bar-total,
-:host([theme="default"][contrast=true][facet-value-state="highlighted"]:hover) .facet-bars-value-bar-total
+:host(:not([theme])[contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar-total,
+:host([theme="default"][contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar-total
 {
     background-color: #C2C3C4;
+}
+
+:host(:not([theme])[facet-value-state="unselected"]) .facet-bars-value-bar-total,
+:host([theme="default"][facet-value-state="unselected"]) .facet-bars-value-bar-total
+{
+    background-color: #D9DADB;
+}
+
+:host(:not([theme])[contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar-total,
+:host([theme="default"][contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar-total
+{
+    background-color: #EAEBEC;
+}
+
+:host(:not([theme])[contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar-total,
+:host([theme="default"][contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar-total
+{
+    background-color: #C4D9FC;
 }
 
 :host(:not([theme])[facet-value-state="muted"]) .facet-bars-value-bar-total,
@@ -132,20 +168,38 @@
     background-color: #255DCC;
 }
 
-:host(:not([theme])[facet-value-state="highlighted"]) .facet-bars-value-bar,
-:host([theme="default"][facet-value-state="highlighted"]) .facet-bars-value-bar
+:host(:not([theme])[facet-value-state="selected"]) .facet-bars-value-bar,
+:host([theme="default"][facet-value-state="selected"]) .facet-bars-value-bar
 {
     background-color: #255DCC;
 }
 
-:host(:not([theme])[contrast=true][facet-value-state="highlighted"]) .facet-bars-value-bar,
-:host([theme="default"][contrast=true][facet-value-state="highlighted"]) .facet-bars-value-bar
+:host(:not([theme])[contrast=true][facet-value-state="selected"]) .facet-bars-value-bar,
+:host([theme="default"][contrast=true][facet-value-state="selected"]) .facet-bars-value-bar
 {
     background-color: #A4C2FC;
 }
 
-:host(:not([theme])[contrast=true][facet-value-state="highlighted"]:hover) .facet-bars-value-bar,
-:host([theme="default"][contrast=true][facet-value-state="highlighted"]:hover) .facet-bars-value-bar
+:host(:not([theme])[contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar,
+:host([theme="default"][contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar
+{
+    background-color: #255DCC;
+}
+
+:host(:not([theme])[facet-value-state="unselected"]) .facet-bars-value-bar,
+:host([theme="default"][facet-value-state="unselected"]) .facet-bars-value-bar
+{
+    background-color: #C2C3C4;
+}
+
+:host(:not([theme])[contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar,
+:host([theme="default"][contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar
+{
+    background-color: #D9DADB;
+}
+
+:host(:not([theme])[contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar,
+:host([theme="default"][contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar
 {
     background-color: #255DCC;
 }
