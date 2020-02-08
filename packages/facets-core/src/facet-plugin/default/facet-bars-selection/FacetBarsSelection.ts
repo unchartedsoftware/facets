@@ -176,8 +176,7 @@ export class FacetBarsSelection extends FacetPlugin {
         return undefined;
     }
 
-    private handleMouseEvent(evt: CustomEvent): void {
-        const mouseEvent = evt.detail.mouseEvent;
+    private handleMouseEvent(mouseEvent: MouseEvent): void {
         const host = this.facet;
         if (host && host.barAreaElement) {
             switch (mouseEvent.type) {
