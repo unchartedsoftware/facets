@@ -1,6 +1,6 @@
 .scrollbar-container {
     width: 100%;
-    height: 6px;
+    height: 14px;
     display: flex;
 }
 
@@ -9,39 +9,43 @@
     flex-grow: 1;
     margin: 0 -2px;
     padding: 0 1px;
-    background-color: #EAEBEC;
     overflow: hidden;
     display: flex;
-    border-radius: 4px;
+    z-index: 2;
 
-    z-index: 1;
+    background-color: rgb(248,248,248);
+    border-top: 1px solid rgb(231,231,231);
+    border-bottom: 1px solid rgb(231,231,231);
+
+    box-sizing: border-box;
 }
 
 .scrollbar-area {
     height: 100%;
     flex-grow: 1;
     position: relative;
-
-    z-index: 1;
 }
 
-.scrollbar-selection {
+.scrollbar-filter {
     position: absolute;
     top: 0;
     bottom: 0;
-    background-color: white;
-
-    z-index: 1;
+    background-color: rgba(164,194,252,0.5);
 }
 
 .scrollbar-thumb {
     position: absolute;
-    top: 1px;
-    bottom: 1px;
-    background-color: #A0A1A2;
+    top: 2px;
+    bottom: 2px;
+    background-color: rgb(195,195,195);
     cursor: pointer;
-    border-radius: 2px;
+    border-radius: 4px;
+    transition: background-color 150ms ease;
+}
 
-    z-index: 1;
+.scrollbar-thumb:hover,
+.scrollbar-thumb[dark=true]
+{
+    background-color: rgb(125,125,125);
 }
 
