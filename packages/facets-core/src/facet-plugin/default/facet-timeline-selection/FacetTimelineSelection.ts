@@ -1,5 +1,6 @@
 import {FacetPlugin} from '../../FacetPlugin';
 import {customElement, TemplateResult, html} from 'lit-element';
+import { styleMap, StyleInfo } from 'lit-html/directives/style-map';
 import {FacetTimeline} from '../../../facet-timeline/FacetTimeline';
 
 // @ts-ignore
@@ -12,6 +13,25 @@ interface SelectionMouse {
     endX: number;
     endY: number;
     offset: number;
+}
+
+interface FilterRenderInfo {
+    style: StyleInfo;
+    displayBorder: string;
+    minHandleStyle: StyleInfo;
+    maxHandleStyle: StyleInfo;
+    minLabel: string | null;
+    maxLabel: string | null;
+    minLabelStyle: StyleInfo;
+    maxLabelStyle: StyleInfo;
+    filterWidth: number;
+    outerLeftWidth: number;
+    outerRightWidth: number;
+}
+
+interface SelectionRenderInfo {
+    style: StyleInfo;
+    userBoxStyle: StyleInfo;
 }
 
 @customElement('facet-timeline-selection')
@@ -44,6 +64,12 @@ export class FacetTimelineSelection extends FacetPlugin {
             window.document.removeEventListener('mousemove', this.boundMouseHandler);
             window.document.removeEventListener('mouseup', this.boundMouseHandler);
             window.document.removeEventListener('mouseleave', this.boundMouseHandler);
+
+            const barArea = this.facet.barAreaElement;
+            if (barArea) {
+                barArea.removeEventListener('mousedown', this.boundMouseHandler);
+            }
+
             this.monkeyUnpatchRenderer(this.facet);
         }
 
@@ -52,10 +78,16 @@ export class FacetTimelineSelection extends FacetPlugin {
             window.document.addEventListener('mousemove', this.boundMouseHandler);
             window.document.addEventListener('mouseup', this.boundMouseHandler);
             window.document.addEventListener('mouseleave', this.boundMouseHandler);
+
+            const barArea = this.facet.barAreaElement;
+            if (barArea) {
+                barArea.addEventListener('mousedown', this.boundMouseHandler);
+            }
+
             this.monkeyPatchRenderer(this.facet);
 
-            if (!this.facet.selection) {
-                this.facet.selection = this.facet.domain;
+            if (!this.facet.filter) {
+                this.facet.filter = this.facet.domain;
             }
         } else {
             this.facet = null;
@@ -66,200 +98,405 @@ export class FacetTimelineSelection extends FacetPlugin {
         return this;
     }
 
-    protected renderSelection(renderedValues: TemplateResult | void): TemplateResult | void {
-        const host = this.facet;
-        if (host) {
-            if (!host.selection) {
-                host.selection = host.domain;
+    protected renderPlugin(renderedValues: TemplateResult | void): TemplateResult | void {
+        const facet = this.facet;
+        if (facet) {
+            if (!facet.filter) {
+                facet.filter = facet.domain;
             }
 
-            const barArea = host.barAreaElement;
-            let computedStyle = 'display:none';
-            let leftStyle = 'display:block';
-            let rightStyle = 'display:block';
-            let displayBorder = ';';
+            const barArea = facet.barAreaElement;
+            const filterInfo = this.computeFilterRenderInfo(facet, barArea);
+            const selectionInfo = this.computeSelectionRenderInfo(facet, barArea);
 
-            let maxDateStyle = 'display:none';
-            let minDateLabel = null;
-
-            let minDateStyle = 'display:none';
-            let maxDateLabel = null;
-
-            if (barArea) {
-                const rect = barArea.getBoundingClientRect();
-                const width = rect.right - rect.left;
-                const view = host.view;
-                const viewLength = view[1] - view[0];
-                const barStep = width / viewLength;
-
-                let selectionWidth = 0;
-                let outerLeftWidth = 0;
-                let outerRightWidth = 0;
-
-                host.style.cursor = 'default';
-
-                if (this.mouse.tracking) {
-                    const values = host.values;
-                    const left = Math.min(this.mouse.startX, this.mouse.endX) - rect.left;
-                    const right = rect.right - Math.max(this.mouse.startX, this.mouse.endX);
-                    const barStepPercentage = 100 / viewLength;
-                    let leftIndex = Math.floor(left / barStep);
-                    let rightIndex = viewLength - Math.floor(right / barStep);
-
-                    while (leftIndex < rightIndex && !values[leftIndex + view[0]]) {
-                        ++leftIndex;
-                    }
-
-                    while (rightIndex > leftIndex && !values[rightIndex + view[0] - 1]) {
-                        --rightIndex;
-                    }
-
-                    host.style.cursor = 'ew-resize';
-
-                    if (leftIndex !== rightIndex) {
-                        const leftPercentage = (barStepPercentage * leftIndex);
-                        const rightPercentage = (100 - barStepPercentage * rightIndex);
-                        const displayLeft = Math.min(Math.max(0, leftPercentage), 100).toFixed(2);
-                        const displayRight = Math.min(Math.max(0, rightPercentage), 100).toFixed(2);
-                        const leftBar = host.data[view[0] + leftIndex];
-                        const rightBar = host.data[view[0] + rightIndex - 1];
-
-                        computedStyle = `left:${displayLeft}%;right:${displayRight}%;`;
-                        outerLeftWidth = Math.max(0, barStep * leftIndex);
-                        outerRightWidth = Math.max(0, width - barStep * rightIndex);
-                        selectionWidth = width - outerLeftWidth - outerRightWidth;
-
-                        if (parseFloat(rightPercentage.toFixed(2)) < 0) {
-                            displayBorder += 'no-right;';
-                            rightStyle = 'display:none';
-                            maxDateLabel = '●●●';
-                        } else if (rightBar) {
-                            maxDateLabel = rightBar.maxDateLabel;
-                        } else {
-                            maxDateLabel = '...';
-                        }
-
-                        if (parseFloat(leftPercentage.toFixed(2)) < 0) {
-                            displayBorder += 'no-left;';
-                            leftStyle = 'display:none';
-                            minDateLabel = '●●●';
-                        } else if (leftBar) {
-                            minDateLabel = leftBar.minDateLabel;
-                        } else {
-                            minDateLabel = '...';
-                        }
-                    }
-                } else if (host.selection) {
-                    const selection = host.selection;
-                    const barStepPercentage = 100 / viewLength;
-                    const leftPercentage = barStepPercentage * (selection[0] - view[0]);
-                    const rightPercentage = barStepPercentage * (view[1] - selection[1]);
-                    const displayLeft = Math.min(Math.max(0, leftPercentage), 100).toFixed(2);
-                    const displayRight = Math.min(Math.max(0, rightPercentage), 100).toFixed(2);
-                    const leftBar = host.data[selection[0]];
-                    const rightBar = host.data[selection[1] - 1];
-
-                    if (rightPercentage <= 100 && leftPercentage <= 100) {
-                        computedStyle = `left:${displayLeft}%;right:${displayRight}%;`;
-                        outerLeftWidth = Math.max(0, barStep * (selection[0] - view[0]));
-                        outerRightWidth = Math.max(0, width - barStep * (selection[1] - view[0]));
-                        selectionWidth = width - outerLeftWidth - outerRightWidth;
-
-                        if (rightPercentage < 0) {
-                            displayBorder += 'no-right;';
-                            rightStyle = 'display:none';
-                            maxDateLabel = '●●●';
-                        } else if (rightBar) {
-                            maxDateLabel = rightBar.maxDateLabel;
-                        } else {
-                            maxDateLabel = '...';
-                        }
-
-                        if (leftPercentage < 0) {
-                            displayBorder += 'no-left;';
-                            leftStyle = 'display:none';
-                            minDateLabel = '●●●';
-                        } else if (leftBar) {
-                            minDateLabel = leftBar.minDateLabel;
-                        } else {
-                            minDateLabel = '...';
-                        }
-                    }
-                }
-
-                if (minDateLabel && maxDateLabel) {
-                    const minDateWidth = this.computeLabelWidth(minDateLabel as string);
-                    const maxDateWidth = this.computeLabelWidth(maxDateLabel as string);
-                    const dateLabelsPadding = 15; /* px */
-
-                    if (selectionWidth > minDateWidth + maxDateWidth + dateLabelsPadding) {
-                        minDateStyle = 'left:4px;';
-                        maxDateStyle = 'right:4px';
-                    } else {
-                        if (outerLeftWidth < minDateWidth && outerRightWidth < maxDateWidth) {
-                            minDateStyle = `left:4px;width:${selectionWidth * 0.5}px`;
-                            maxDateStyle = `right:4px;width:${selectionWidth * 0.5}px`;
-                        } else if (outerLeftWidth < minDateWidth) {
-                            minDateStyle = `left:4px;width:${Math.max(selectionWidth - dateLabelsPadding, 0)}px`;
-                            maxDateStyle = 'right:-10px;transform:translate(100%,0);';
-                        } else if (outerRightWidth < maxDateWidth) {
-                            minDateStyle = 'left:-10px;transform:translate(-100%,0);';
-                            maxDateStyle = `right:4px;width:${Math.max(selectionWidth - dateLabelsPadding, 0)}px`;
-                        } else {
-                            minDateStyle = 'left:-10px;transform:translate(-100%,0);';
-                            maxDateStyle = 'right:-10px;transform:translate(100%,0);';
-                        }
-                    }
-                }
+            if (this.mouse.tracking === 'selection-draw') {
+                facet.style.cursor = 'crosshair';
+            } else if (this.mouse.tracking === 'filter-resize') {
+                facet.style.cursor = 'ew-resize';
+            } else {
+                facet.style.cursor = 'default';
             }
+
             return html`
             <style>${FacetTimelineSelectionStyle}</style>
+            <div class="facet-timeline-filter-handle-track"></div>
             ${renderedValues}
-            <div class="facet-timeline-selection-computed" display-border="${displayBorder}" style="${computedStyle}">
+            <div class="facet-timeline-filter-computed" display-border="${filterInfo.displayBorder}" style="${styleMap(filterInfo.style)}">
                 <div
-                    class="facet-timeline-selection-handle facet-timeline-selection-handle-left"
-                    style="${leftStyle}"
+                    class="facet-timeline-filter-handle facet-timeline-filter-handle-left"
+                    style="${styleMap(filterInfo.minHandleStyle)}"
                     @mousedown="${this.boundLocalMouseHandler}">
                 </div>
                 <div
-                    class="facet-timeline-selection-handle facet-timeline-selection-handle-right"
-                    style="${rightStyle}"
+                    class="facet-timeline-filter-handle facet-timeline-filter-handle-right"
+                    style="${styleMap(filterInfo.maxHandleStyle)}"
                     @mousedown="${this.boundLocalMouseHandler}">
                 </div>
-                <div class="facet-timeline-date-label facet-timeline-date-label-left" style="${minDateStyle}">${minDateLabel}</div>
-                <div class="facet-timeline-date-label facet-timeline-date-label-right" style="${maxDateStyle}">${maxDateLabel}</div>
+                <div class="facet-timeline-date-label facet-timeline-date-label-left" style="${styleMap(filterInfo.minLabelStyle)}">${filterInfo.minLabel}</div>
+                <div class="facet-timeline-date-label facet-timeline-date-label-right" style="${styleMap(filterInfo.maxLabelStyle)}">${filterInfo.maxLabel}</div>
             </div>
+            <div class="facet-timeline-selection-computed" style="${styleMap(selectionInfo.style)}">
+            </div>
+            <div class="facet-timeline-selection-user" style="${styleMap(selectionInfo.userBoxStyle)}"></div>
             `;
         }
         return undefined;
     }
 
+    protected computeSelectionRenderInfo(facet: FacetTimeline, barArea: HTMLElement | null): SelectionRenderInfo {
+        const result: SelectionRenderInfo = {
+            style: { display: 'none' },
+            userBoxStyle: { display: 'none' },
+        };
+
+        if (facet && barArea) {
+            const rect = barArea.getBoundingClientRect();
+            const width = rect.right - rect.left;
+            const view = facet.view;
+            const values = facet.values;
+            const viewLength = view[1] - view[0];
+            const barStep = width / viewLength;
+            const timelineContent = facet.renderRoot.querySelector('.facet-timeline-content');
+            const timelineBB = timelineContent ? timelineContent.getBoundingClientRect() : rect;
+
+            if (this.mouse.tracking === 'selection-draw') {
+                const filter = facet.filter;
+                const minLocation = rect.left + Math.max((filter ? filter[0] : view[0]) - view[0], 0) * barStep;
+                const maxLocation = rect.left + (Math.min(filter ? filter[1] : view[1], view[1]) - view[0]) * barStep;
+                const minIndex = Math.max(filter ? filter[0] - view[0] : 0, 0);
+                const maxIndex = Math.min(view[1] - view[0], filter ? filter[1] - view[0] : view[1] - view[0]);
+                const left = Math.max(Math.min(this.mouse.startX, this.mouse.endX), minLocation) - rect.left;
+                const right = rect.right - Math.min(Math.max(this.mouse.startX, this.mouse.endX), maxLocation);
+                const top = Math.max(Math.min(this.mouse.startY, this.mouse.endY), rect.top) - timelineBB.top;
+                const bottom = timelineBB.bottom - Math.min(Math.max(this.mouse.startY, this.mouse.endY), rect.bottom);
+
+                result.userBoxStyle = {
+                    top: `${top}px`,
+                    bottom: `${bottom}px`,
+                    left: `${left}px`,
+                    right: `${right}px`,
+                };
+
+
+                const barStepPercentage = 100 / viewLength;
+                let leftIndex = Math.max(Math.floor(left / barStep), minIndex);
+                let rightIndex = Math.min(viewLength - Math.floor(right / barStep), maxIndex);
+
+                while (leftIndex < rightIndex && !values[leftIndex + view[0]]) {
+                    ++leftIndex;
+                }
+
+                while (rightIndex > leftIndex && !values[rightIndex + view[0] - 1]) {
+                    --rightIndex;
+                }
+
+                if (leftIndex !== rightIndex) {
+                    const leftPercentage = (barStepPercentage * leftIndex);
+                    const rightPercentage = (100 - barStepPercentage * rightIndex);
+                    const displayLeft = Math.min(Math.max(0, leftPercentage), 100).toFixed(2);
+                    const displayRight = Math.min(Math.max(0, rightPercentage), 100).toFixed(2);
+
+                    result.style = {
+                        left: `${displayLeft}%`,
+                        right: `${displayRight}%`,
+                        top: `${rect.top - timelineBB.top - 2}px`,
+                        bottom: `${timelineBB.bottom - rect.bottom - 1}px`,
+                    };
+                }
+            } else if (facet.selection) {
+                const selection = facet.selection;
+                const barStepPercentage = 100 / viewLength;
+                const leftPercentage = barStepPercentage * (selection[0] - view[0]);
+                const rightPercentage = barStepPercentage * (view[1] - selection[1]);
+                const displayLeft = Math.min(Math.max(0, leftPercentage), 100).toFixed(2);
+                const displayRight = Math.min(Math.max(0, rightPercentage), 100).toFixed(2);
+
+                if (selection[1] >= view[0] && selection[0] <= view[1]) {
+                    const style: {[name: string]: string} = {
+                        left: `${displayLeft}%`,
+                        right: `${displayRight}%`,
+                        top: `${rect.top - timelineBB.top - 3}px`,
+                        bottom: `${timelineBB.bottom - rect.bottom - 1}px`,
+                    };
+
+                    if (selection[0] < view[0]) {
+                        style.borderLeft = 'none';
+                    }
+
+                    if (selection[1] > view[1]) {
+                        style.borderRight = 'none';
+                    }
+
+                    result.style = style;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    protected computeFilterRenderInfo(facet: FacetTimeline, barArea: HTMLElement | null): FilterRenderInfo {
+        const result: FilterRenderInfo = {
+            style: { display: 'none' },
+            displayBorder: ';',
+            minHandleStyle: { display: 'block' },
+            maxHandleStyle: { display: 'block' },
+            minLabel: null,
+            maxLabel: null,
+            minLabelStyle: { display: 'none' },
+            maxLabelStyle: { display: 'none' },
+            filterWidth: 0,
+            outerLeftWidth: 0,
+            outerRightWidth: 0,
+        };
+
+        if (facet && barArea) {
+            if (this.mouse.tracking === 'filter-resize') {
+                this.computeFilterRenderInfoResize(result, facet, barArea);
+            } else if (facet.filter) {
+                this.computeFilterRenderInfoFilter(result, facet, barArea);
+            }
+
+            this.computeFilterLabelsRenderInfo(result);
+        }
+
+        return result;
+    }
+
+    protected computeFilterRenderInfoResize(filterInfo: FilterRenderInfo, facet: FacetTimeline, barArea: HTMLElement): void {
+        const rect = barArea.getBoundingClientRect();
+        const width = rect.right - rect.left;
+        const view = facet.view;
+        const values = facet.values;
+        const viewLength = view[1] - view[0];
+        const barStep = width / viewLength;
+
+        const left = Math.min(this.mouse.startX, this.mouse.endX) - rect.left;
+        const right = rect.right - Math.max(this.mouse.startX, this.mouse.endX);
+        const barStepPercentage = 100 / viewLength;
+        let leftIndex = Math.floor(left / barStep);
+        let rightIndex = viewLength - Math.floor(right / barStep);
+
+        while (leftIndex < rightIndex && !values[leftIndex + view[0]]) {
+            ++leftIndex;
+        }
+
+        while (rightIndex > leftIndex && !values[rightIndex + view[0] - 1]) {
+            --rightIndex;
+        }
+
+        if (leftIndex !== rightIndex) {
+            const leftPercentage = (barStepPercentage * leftIndex);
+            const rightPercentage = (100 - barStepPercentage * rightIndex);
+            const displayLeft = Math.min(Math.max(0, leftPercentage), 100).toFixed(2);
+            const displayRight = Math.min(Math.max(0, rightPercentage), 100).toFixed(2);
+            const leftBar = facet.data[view[0] + leftIndex];
+            const rightBar = facet.data[view[0] + rightIndex - 1];
+
+            filterInfo.style = {
+                left: `${displayLeft}%`,
+                right: `${displayRight}%`,
+            };
+
+            filterInfo.outerLeftWidth = Math.max(0, barStep * leftIndex);
+            filterInfo.outerRightWidth = Math.max(0, width - barStep * rightIndex);
+            filterInfo.filterWidth = width - filterInfo.outerLeftWidth - filterInfo.outerRightWidth;
+
+            if (parseFloat(rightPercentage.toFixed(2)) < 0) {
+                filterInfo.maxLabel = '●●●';
+                filterInfo.displayBorder += 'no-right;';
+                filterInfo.maxHandleStyle = { display: 'none' };
+            } else if (rightBar) {
+                filterInfo.maxLabel = rightBar.maxDateLabel;
+            } else {
+                filterInfo.maxLabel = null;
+            }
+
+            if (parseFloat(leftPercentage.toFixed(2)) < 0) {
+                filterInfo.minLabel = '●●●';
+                filterInfo.displayBorder += 'no-left;';
+                filterInfo.minHandleStyle = { display: 'none' };
+            } else if (leftBar) {
+                filterInfo.minLabel = leftBar.minDateLabel;
+            } else {
+                filterInfo.minLabel = null;
+            }
+        }
+    }
+
+    protected computeFilterRenderInfoFilter(filterInfo: FilterRenderInfo, facet: FacetTimeline, barArea: HTMLElement): void {
+        const rect = barArea.getBoundingClientRect();
+        const width = rect.right - rect.left;
+        const view = facet.view;
+        const values = facet.values;
+        const viewLength = view[1] - view[0];
+        const barStep = width / viewLength;
+
+        const filter = facet.filter as [number, number];
+        const barStepPercentage = 100 / viewLength;
+        const leftPercentage = barStepPercentage * (filter[0] - view[0]);
+        const rightPercentage = barStepPercentage * (view[1] - filter[1]);
+        const displayLeft = Math.min(Math.max(0, leftPercentage), 100).toFixed(2);
+        const displayRight = Math.min(Math.max(0, rightPercentage), 100).toFixed(2);
+        let leftIndex = filter[0];
+        let rightIndex = filter[1];
+
+        while (leftIndex < rightIndex && !values[leftIndex]) {
+            ++leftIndex;
+        }
+
+        while (rightIndex > leftIndex && !values[rightIndex - 1]) {
+            --rightIndex;
+        }
+
+        if (leftIndex !== rightIndex) {
+            const leftBar = facet.data[leftIndex];
+            const rightBar = facet.data[rightIndex - 1];
+
+            if (rightPercentage <= 100 && leftPercentage <= 100) {
+                filterInfo.style = {
+                    left: `${displayLeft}%`,
+                    right: `${displayRight}%`,
+                };
+
+                filterInfo.outerLeftWidth = Math.max(0, barStep * (filter[0] - view[0]));
+                filterInfo.outerRightWidth = Math.max(0, width - barStep * (filter[1] - view[0]));
+                filterInfo.filterWidth = width - filterInfo.outerLeftWidth - filterInfo.outerRightWidth;
+
+                if (rightPercentage < 0) {
+                    filterInfo.maxLabel = '●●●';
+                    filterInfo.displayBorder += 'no-right;';
+                    filterInfo.maxHandleStyle = {display: 'none'};
+                } else if (rightBar) {
+                    filterInfo.maxLabel = rightBar.maxDateLabel;
+                } else {
+                    filterInfo.maxLabel = '●●●';
+                }
+
+                if (leftPercentage < 0) {
+                    filterInfo.minLabel = '●●●';
+                    filterInfo.displayBorder += 'no-left;';
+                    filterInfo.minHandleStyle = {display: 'none'};
+                } else if (leftBar) {
+                    filterInfo.minLabel = leftBar.minDateLabel;
+                } else {
+                    filterInfo.minLabel = '●●●';
+                }
+            }
+        }
+    }
+
+    protected computeFilterLabelsRenderInfo(filterInfo: FilterRenderInfo): void {
+        if (filterInfo.minLabel && filterInfo.maxLabel) {
+            const minDateWidth = this.computeLabelWidth(filterInfo.minLabel);
+            const maxDateWidth = this.computeLabelWidth(filterInfo.maxLabel);
+            const dateLabelsPadding = 15; /* px */
+
+            if (filterInfo.filterWidth > minDateWidth + maxDateWidth + dateLabelsPadding) {
+                filterInfo.minLabelStyle = { left: '4px' };
+                filterInfo.maxLabelStyle = { right: '4px' };
+            } else if (filterInfo.outerLeftWidth < minDateWidth && filterInfo.outerRightWidth < maxDateWidth) {
+                filterInfo.minLabelStyle = {
+                    left: '4px',
+                    width: `${filterInfo.filterWidth * 0.5}px`,
+                };
+                filterInfo.maxLabelStyle = {
+                    right: '4px',
+                    width: `${filterInfo.filterWidth * 0.5}px`,
+                };
+            } else if (filterInfo.outerLeftWidth < minDateWidth) {
+                filterInfo.minLabelStyle = {
+                    left: '4px',
+                    width: `${Math.min(minDateWidth + dateLabelsPadding,
+                        Math.max(filterInfo.filterWidth - dateLabelsPadding, 0))}px`,
+                };
+                filterInfo.maxLabelStyle = {
+                    right: '-10px',
+                    transform: 'translate(100%,0)',
+                };
+            } else if (filterInfo.outerRightWidth < maxDateWidth) {
+                filterInfo.minLabelStyle = {
+                    left: '-10px',
+                    transform: 'translate(-100%,0)',
+                };
+                filterInfo.maxLabelStyle = {
+                    right: '4px',
+                    width: `${Math.min(maxDateWidth + dateLabelsPadding,
+                        Math.max(filterInfo.filterWidth - dateLabelsPadding, 0))}px`,
+                };
+            } else {
+                filterInfo.minLabelStyle = {
+                    left: '-10px',
+                    transform: 'translate(-100%,0)',
+                };
+                filterInfo.maxLabelStyle = {
+                    right: '-10px',
+                    transform: 'translate(100%,0)',
+                };
+            }
+        }
+    }
+
     private handleMouseEvent(evt: Event): void {
-        if (this.mouse.tracking) {
-            const host = this.facet;
-            if (host && host.barAreaElement) {
+        const host = this.facet;
+        if (host) {
+            const barArea = host.barAreaElement;
+            if (barArea) {
                 const mouseEvent = evt as MouseEvent;
 
                 switch (mouseEvent.type) {
+                    case 'mousedown':
+                        mouseEvent.stopPropagation();
+                        mouseEvent.preventDefault();
+                        if (host.filter) {
+                            const rect = barArea.getBoundingClientRect();
+                            const left = mouseEvent.clientX - rect.left;
+                            const right = mouseEvent.clientX - rect.left;
+                            const view = host.view;
+                            const viewLength = view[1] - view[0];
+                            const width = rect.right - rect.left;
+                            const barStep = width / viewLength;
+                            const filter = host.filter;
+                            const leftIndex = Math.floor(left / barStep) + view[0];
+                            const rightIndex = Math.ceil(right / barStep) + view[0];
+                            if (leftIndex < filter[0] || rightIndex > filter[1]) {
+                                break;
+                            }
+                        }
+                        this.mouse.tracking = 'selection-draw';
+                        this.mouse.startX = this.mouse.endX = mouseEvent.clientX;
+                        this.mouse.startY = this.mouse.endY = mouseEvent.clientY;
+                        this.mouse.offset = 0;
+                        host.requestUpdate();
+                        break;
+
                     case 'mousemove':
-                        this.mouse.endX = mouseEvent.clientX;
-                        this.mouse.endY = mouseEvent.clientY;
-                        if (this.mouse.endX > this.mouse.startX) {
-                            this.mouse.endX = Math.max(this.mouse.startX, this.mouse.endX - this.mouse.offset);
-                        } else if (this.mouse.endX < this.mouse.startX) {
-                            this.mouse.endX = Math.min(this.mouse.startX, this.mouse.endX + this.mouse.offset);
+                        if (this.mouse.tracking) {
+                            this.mouse.endX = mouseEvent.clientX;
+                            this.mouse.endY = mouseEvent.clientY;
+                            if (this.mouse.endX > this.mouse.startX) {
+                                this.mouse.endX = Math.max(this.mouse.startX, this.mouse.endX - this.mouse.offset);
+                            } else if (this.mouse.endX < this.mouse.startX) {
+                                this.mouse.endX = Math.min(this.mouse.startX, this.mouse.endX + this.mouse.offset);
+                            }
+                            mouseEvent.stopPropagation();
+                            mouseEvent.preventDefault();
+                            host.requestUpdate();
+                        }
+                        break;
+
+                    case 'mouseleave':
+                    case 'mouseup':
+                        if (this.mouse.tracking === 'filter-resize') {
+                            this.setFilter(host);
+                            host.requestUpdate();
+                        } else if (this.mouse.tracking === 'selection-draw') {
+                            this.setSelection(host);
+                            host.requestUpdate();
                         }
                         mouseEvent.stopPropagation();
                         mouseEvent.preventDefault();
-                        host.requestUpdate();
-                        break;
-                    case 'mouseleave':
-                    case 'mouseup':
                         this.mouse.tracking = null;
-                        this.setSelection(host);
-                        mouseEvent.stopPropagation();
-                        mouseEvent.preventDefault();
-                        host.requestUpdate();
                         break;
 
                     default:
@@ -271,37 +508,75 @@ export class FacetTimelineSelection extends FacetPlugin {
 
     private handleLocalMouseEvent(evt: MouseEvent): void {
         const host = this.facet;
-        if (host && evt.type === 'mousedown' && evt.target instanceof HTMLElement) {
+        if (host && evt.type === 'mousedown' && evt.button === 0 && evt.target instanceof HTMLElement) {
             evt.stopPropagation();
             evt.preventDefault();
-            if (evt.target.className.includes('facet-timeline-selection-clear-button')) {
-                host.selection = null;
+            if (evt.target.className.includes('facet-timeline-filter-clear-button')) {
+                host.filter = null;
             } else {
                 const barArea = host.barAreaElement;
-                const selection = host.selection;
-                if (barArea && selection) {
+                const filter = host.filter;
+                if (barArea && filter) {
                     const view = host.view;
                     const rect = barArea.getBoundingClientRect();
                     const viewLength = view[1] - view[0];
                     const width = rect.right - rect.left;
                     const barStep = width / viewLength;
 
-                    if (evt.target.className.includes('facet-timeline-selection-handle-left')) {
-                        this.mouse.tracking = 'resize';
-                        this.mouse.startX = rect.left + barStep * (selection[1] - view[0]) - 1;
+                    if (evt.target.className.includes('facet-timeline-filter-handle-left')) {
+                        this.mouse.tracking = 'filter-resize';
+                        this.mouse.startX = rect.left + barStep * (filter[1] - view[0]) - 1;
                         this.mouse.startY = rect.top;
-                        this.mouse.endX = rect.left + barStep * (selection[0] - view[0]) + 1;
+                        this.mouse.endX = rect.left + barStep * (filter[0] - view[0]) + 1;
                         this.mouse.endY = evt.clientY;
                         this.mouse.offset = this.mouse.endX - evt.clientX;
-                    } else if (evt.target.className.includes('facet-timeline-selection-handle-right')) {
-                        this.mouse.tracking = 'resize';
-                        this.mouse.startX = rect.left + barStep * (selection[0] - view[0]) + 1;
+                    } else if (evt.target.className.includes('facet-timeline-filter-handle-right')) {
+                        this.mouse.tracking = 'filter-resize';
+                        this.mouse.startX = rect.left + barStep * (filter[0] - view[0]) + 1;
                         this.mouse.startY = rect.top;
-                        this.mouse.endX = rect.left + barStep * (selection[1] - view[0]) - 1;
+                        this.mouse.endX = rect.left + barStep * (filter[1] - view[0]) - 1;
                         this.mouse.endY = evt.clientY;
                         this.mouse.offset = evt.clientX - this.mouse.endX;
                     }
                 }
+            }
+        }
+    }
+
+    private setFilter(host: FacetTimeline): void {
+        const barArea = host.barAreaElement;
+        if (barArea) {
+            const rect = barArea.getBoundingClientRect();
+            const left = Math.min(this.mouse.startX, this.mouse.endX) - rect.left;
+            const right = Math.max(this.mouse.startX, this.mouse.endX) - rect.left;
+            const view = host.view;
+            const viewLength = view[1] - view[0];
+            const width = rect.right - rect.left;
+            const barStep = width / viewLength;
+            const values = host.values;
+            let leftIndex = Math.floor(left / barStep) + view[0];
+            let rightIndex = Math.ceil(right / barStep) + view[0];
+
+            while (leftIndex < rightIndex && !values[leftIndex]) {
+                ++leftIndex;
+            }
+
+            while (rightIndex > leftIndex && !values[rightIndex - 1]) {
+                --rightIndex;
+            }
+
+            if (leftIndex !== rightIndex) {
+                host.filter = [leftIndex, rightIndex];
+                const selection = host.selection;
+                if (selection) {
+                    if (selection[1] <= leftIndex || selection[0] >= rightIndex) {
+                        host.selection = null;
+                    } else if (selection[0] < leftIndex || selection[1] > rightIndex) {
+                        host.selection = [Math.max(selection[0], leftIndex), Math.min(selection[1], rightIndex)];
+                    }
+                }
+            } else {
+                host.filter = null;
             }
         }
     }
@@ -317,8 +592,9 @@ export class FacetTimelineSelection extends FacetPlugin {
             const width = rect.right - rect.left;
             const barStep = width / viewLength;
             const values = host.values;
-            let leftIndex = Math.floor(left / barStep) + view[0];
-            let rightIndex = Math.ceil(right / barStep) + view[0];
+            const filter = host.filter || view;
+            let leftIndex = Math.max(Math.floor(left / barStep) + view[0], filter[0]);
+            let rightIndex = Math.min(Math.ceil(right / barStep) + view[0], filter[1]);
 
             while (leftIndex < rightIndex && !values[leftIndex]) {
                 ++leftIndex;
@@ -342,7 +618,7 @@ export class FacetTimelineSelection extends FacetPlugin {
             this.facetRenderContent = facetAny.renderTimelineContent;
             facetAny.renderTimelineContent = (): TemplateResult | void => {
                 if (this.facetRenderContent) {
-                    return this.renderSelection(this.facetRenderContent.call(facetAny));
+                    return this.renderPlugin(this.facetRenderContent.call(facetAny));
                 }
                 return undefined;
             };
@@ -358,7 +634,7 @@ export class FacetTimelineSelection extends FacetPlugin {
     }
 
     private computeLabelWidth(label: string): number {
-        this.labelContext.font = '8px "IBM Plex Sans", sans-serif';
+        this.labelContext.font = '12px "IBM Plex Sans", sans-serif';
         return this.labelContext.measureText(label).width;
     }
 }

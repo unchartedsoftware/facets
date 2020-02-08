@@ -1,4 +1,9 @@
-.facet-timeline-selection-computed {
+.facet-timeline-filter-handle-track {
+    height: 16px;
+    pointer-events: none;
+}
+
+.facet-timeline-filter-computed {
     position: absolute;
     pointer-events: none;
     user-select: none;
@@ -9,7 +14,7 @@
     margin: -2px -2px 0;
 }
 
-.facet-timeline-selection-computed:before {
+.facet-timeline-filter-computed:before {
     content: '';
     position: absolute;
     top: 0;
@@ -20,7 +25,7 @@
     z-index: 0;
 }
 
-.facet-timeline-selection-computed:after {
+.facet-timeline-filter-computed:after {
     content: '';
     position: absolute;
     top: 0;
@@ -30,22 +35,22 @@
     border-top: 2px solid #FFC107;
     border-left: 2px solid #FFC107;
     border-right: 2px solid #FFC107;
-    z-index: 1;
+    z-index: 2;
 }
 
-.facet-timeline-selection-computed[display-border*="no-right"]:after {
+.facet-timeline-filter-computed[display-border*="no-right"]:after {
     border-right: none;
 }
 
-.facet-timeline-selection-computed[display-border*="no-left"]:after {
+.facet-timeline-filter-computed[display-border*="no-left"]:after {
     border-left: none;
 }
 
-.facet-timeline-selection-handle {
+.facet-timeline-filter-handle {
     position: absolute;
     top: 0;
     width: 8px;
-    height: 12px;
+    height: 18px;
     cursor: ew-resize;
     pointer-events: all;
 
@@ -54,7 +59,7 @@
     z-index: 1;
 }
 
-.facet-timeline-selection-handle:before {
+.facet-timeline-filter-handle:before {
     content: '';
     position: absolute;
     top: 3px;
@@ -64,21 +69,21 @@
     border-right: 1px solid white;
 }
 
-.facet-timeline-selection-handle-left {
+.facet-timeline-filter-handle-left {
     left: -8px;
     border-radius: 2px 0 0 2px;
 }
 
-.facet-timeline-selection-handle-left:before {
+.facet-timeline-filter-handle-left:before {
     left: 3px;
 }
 
-.facet-timeline-selection-handle-right {
+.facet-timeline-filter-handle-right {
     right: -8px;
     border-radius: 0 2px 2px 0;
 }
 
-.facet-timeline-selection-handle-right:before {
+.facet-timeline-filter-handle-right:before {
     right: 3px;
 }
 
@@ -86,17 +91,19 @@
     position: absolute;
     top: 2px;
 
-    color: black;
+    color: #050D5C;
     font-family: "IBM Plex Sans", sans-serif;
-    font-size: 8px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 600;
-    line-height: 10px;
+    line-height: 16px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 
     z-index: 1;
+    cursor: pointer;
+    pointer-events: all;
 }
 
 .facet-timeline-date-label-left {
@@ -105,4 +112,23 @@
 
 .facet-timeline-date-label-right {
     text-align: right;
+}
+
+.facet-timeline-selection-user {
+    position: absolute;
+    border: 1px dashed black;
+    pointer-events: none;
+    user-select: none;
+    -ms-user-select: none;
+    z-index: 1;
+}
+
+.facet-timeline-selection-computed {
+    position: absolute;
+    background-color: rgba(37,93,204, 0.15);
+    border: 1px solid #255DCC;
+    pointer-events: none;
+    user-select: none;
+    -ms-user-select: none;
+    z-index: 1;
 }
