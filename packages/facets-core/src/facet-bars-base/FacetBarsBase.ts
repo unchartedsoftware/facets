@@ -20,7 +20,12 @@ export const kFacetBarsBaseDefaultValues: FacetBarsBaseData = [null, null, null,
 export const kFacetBarsBaseNullView: [number, number] = [null as unknown as number, null as unknown as number];
 export const kFacetBarsBaseNullDomain: [number, number] = [null as unknown as number, null as unknown as number];
 
-const kRangeValueHasChanged = (newVal: [number, number], oldVal: [number, number]): boolean => newVal[0] !== oldVal[0] || newVal[1] !== oldVal[1];
+const kRangeValueHasChanged = (newVal: [number, number], oldVal: [number, number]): boolean => {
+    if (!oldVal || !newVal) {
+        return oldVal !== newVal;
+    }
+    return newVal[0] !== oldVal[0] || newVal[1] !== oldVal[1];
+};
 
 @customElement('facet-bars-base') /* should not be instantiated as a custom element */
 export class FacetBarsBase extends FacetContainer {
@@ -37,15 +42,17 @@ export class FacetBarsBase extends FacetContainer {
             values: { type: Object },
             domain: { type: Array, hasChanged: kRangeValueHasChanged },
             view: { type: Array, hasChanged: kRangeValueHasChanged },
-            selection: { type: Array},
+            filter: { type: Array, hasChanged: kRangeValueHasChanged },
+            selection: { type: Array, hasChanged: kRangeValueHasChanged },
             subselection: { type: Array },
             actionButtons: { type: Number, attribute: 'action-buttons' },
         };
     }
 
+    public filter: [number, number] | null = null;
     public selection: [number, number] | null = null;
     public subselection: FacetBarsBaseSubselection | null = null;
-    public actionButtons: number = 2;
+    public actionButtons: number = 0;
 
     private _values: FacetBarsBaseData = kFacetBarsBaseDefaultValues;
     public get values(): FacetBarsBaseData {
@@ -172,12 +179,8 @@ export class FacetBarsBase extends FacetContainer {
         return html`
         <div
             class="facet-bars-base-values-container"
-            @click="${this.handleMouseEvent}"
-            @mousedown="${this.handleMouseEvent}"
-            @mousemove="${this.handleMouseEvent}"
             @mouseenter="${this.handleMouseEvent}"
             @mouseleave="${this.handleMouseEvent}"
-            @mouseup="${this.handleMouseEvent}"
         >
             <slot name="values"></slot>
         </div>
@@ -210,7 +213,7 @@ export class FacetBarsBase extends FacetContainer {
         let id = 0;
         const keyFunction = (): number => (id++) + offset;
         const htmlFunction = (value: FacetBarsValueDataTyped|null, i: number): TemplateResult => {
-            const computedState = this.selection ? ((i + offset) >= this.selection[0] && (i + offset) < this.selection[1] ? 'highlighted' : 'muted') : 'normal'; // eslint-disable-line no-nested-ternary
+            const computedState = this.computeValueState(i + offset);
             const subselection = this.subselection ? `${this.subselection[i + offset]}` : 'false';
             const overrideState = value === null || value.ratio === null ? 'loading' : null;
             const type = value && value.type || 'facet-bars-value';
@@ -251,17 +254,29 @@ export class FacetBarsBase extends FacetContainer {
         return repeat(values, keyFunction, htmlFunction);
     }
 
+    protected computeValueState(barIndex: number): string {
+        let result = 'normal';
+        if (this.selection) {
+            if (barIndex >= this.selection[0] && barIndex < this.selection[1]) {
+                result = 'selected';
+            } else {
+                result = 'unselected';
+            }
+        }
+
+        if (this.filter) {
+            if (barIndex < this.filter[0] || barIndex >= this.filter[1]) {
+                result = 'muted';
+            }
+        }
+
+        return result;
+    }
+
     private handleMouseEvent(event: MouseEvent): void {
         if ((event.type === 'mouseenter' || event.type === 'mouseleave') && event.target instanceof Element) {
             this.hover = polyMatches(event.target, ':hover');
         }
-
-        this.dispatchEvent(new CustomEvent('facet-bars-mouse-event', {
-            bubbles: false,
-            detail: {
-                mouseEvent: event,
-            },
-        }));
     }
 
     private _getViewValues(values: FacetBarsBaseData, view: [number, number]): (FacetBarsValueData|null)[] {
