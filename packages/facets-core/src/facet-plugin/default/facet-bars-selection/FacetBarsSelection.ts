@@ -40,11 +40,23 @@ export class FacetBarsSelection extends FacetPlugin {
     protected hostChanged(host: HTMLElement|null): void {
         if (host instanceof FacetBarsBase) {
             this.facet = host;
-            this.facet.addEventListener('facet-bars-mouse-event', this.handleMouseEventBound);
+            const barArea = this.facet.barAreaElement;
+            if (barArea) {
+                barArea.addEventListener('mousedown', this.handleMouseEventBound);
+                barArea.addEventListener('mousemove', this.handleMouseEventBound);
+                barArea.addEventListener('mouseup', this.handleMouseEventBound);
+                barArea.addEventListener('mouseleave', this.handleMouseEventBound);
+            }
             this.monkeyPatchRenderer(this.facet);
         } else {
             if (this.facet) {
-                this.facet.removeEventListener('facet-bars-mouse-event', this.handleMouseEventBound);
+                const barArea = this.facet.barAreaElement;
+                if (barArea) {
+                    barArea.removeEventListener('mousedown', this.handleMouseEventBound);
+                    barArea.removeEventListener('mousemove', this.handleMouseEventBound);
+                    barArea.removeEventListener('mouseup', this.handleMouseEventBound);
+                    barArea.removeEventListener('mouseleave', this.handleMouseEventBound);
+                }
                 this.monkeyUnpatchRenderer(this.facet);
             }
             this.facet = null;
