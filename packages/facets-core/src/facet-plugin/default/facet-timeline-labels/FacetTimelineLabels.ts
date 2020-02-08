@@ -42,7 +42,7 @@ export class FacetTimelineLabels extends FacetPlugin {
                 const view = facet.view;
                 const values = facet.values;
                 const viewLength = view[1] - view[0];
-                const width = barArea.scrollWidth;
+                const width = barArea.getBoundingClientRect().width;
                 const barStep = width / viewLength;
                 const barStepPercentage = 100 / viewLength;
                 const labelLevels: string[] = [];
@@ -52,7 +52,7 @@ export class FacetTimelineLabels extends FacetPlugin {
                 for (let v = view[0], n = view[1] - 1; v <= n; ++v) {
                     const value = values[v];
                     const i = v - view[0];
-                    let tickHeight = 1;
+                    let tickHeight = 2;
 
                     if (value && value.label) {
                         // get the label for the value
@@ -92,7 +92,7 @@ export class FacetTimelineLabels extends FacetPlugin {
                                 labelPosition = width;
                                 offset = labelWidth + padding * 2;
                                 offsetPercent = -100;
-                            } else if (renderedWidth <= barStep * i - labelWidth * 0.5 - padding) {
+                            } else if (renderedWidth <= barStep * i - labelWidth * 0.5 - padding && renderedWidth + labelWidth + padding < width) {
                                 hasSpace = true;
                                 labelPosition = barStep * i;
                                 offset = labelWidth * 0.5 + padding;
@@ -100,7 +100,7 @@ export class FacetTimelineLabels extends FacetPlugin {
                             }
 
                             if (hasSpace) {
-                                tickHeight += renderLevel + 2;
+                                tickHeight += renderLevel * 2 + 2;
                                 labelLevels[renderLevel] = label[renderLevel];
                                 renderedWidth = labelPosition + labelWidth + padding * 2 - offset;
 
@@ -131,7 +131,7 @@ export class FacetTimelineLabels extends FacetPlugin {
     }
 
     private computeLabelWidth(label: string): number {
-        this.labelContext.font = '8px "IBM Plex Sans", sans-serif';
+        this.labelContext.font = '10px "IBM Plex Sans", sans-serif';
         return this.labelContext.measureText(label).width;
     }
 }
