@@ -132,8 +132,20 @@ export class FacetTimelineSelection extends FacetPlugin {
                     style="${styleMap(filterInfo.maxHandleStyle)}"
                     @mousedown="${this.boundLocalMouseHandler}">
                 </div>
-                <div class="facet-timeline-date-label facet-timeline-date-label-left" style="${styleMap(filterInfo.minLabelStyle)}">${filterInfo.minLabel}</div>
-                <div class="facet-timeline-date-label facet-timeline-date-label-right" style="${styleMap(filterInfo.maxLabelStyle)}">${filterInfo.maxLabel}</div>
+                <div
+                    class="facet-timeline-date-label facet-timeline-date-label-left"
+                    style="${styleMap(filterInfo.minLabelStyle)}"
+                    @click="${this.minFilterDateClicked}"
+                    >
+                    ${filterInfo.minLabel}
+                </div>
+                <div
+                    class="facet-timeline-date-label facet-timeline-date-label-right"
+                    style="${styleMap(filterInfo.maxLabelStyle)}"
+                    @click="${this.maxFilterDateClicked}"
+                    >
+                    ${filterInfo.maxLabel}
+                </div>
             </div>
             <div class="facet-timeline-selection-computed" style="${styleMap(selectionInfo.style)}">
             </div>
@@ -541,6 +553,26 @@ export class FacetTimelineSelection extends FacetPlugin {
                 }
             }
         }
+    }
+
+    private minFilterDateClicked(event: Event): void {
+        this.dispatchEvent(new CustomEvent('timeline-interaction', {
+            bubbles: false,
+            detail: {
+                type: 'min-filter-label-clicked',
+                el: event.currentTarget,
+            },
+        }));
+    }
+
+    private maxFilterDateClicked(event: Event): void {
+        this.dispatchEvent(new CustomEvent('timeline-interaction', {
+            bubbles: false,
+            detail: {
+                type: 'max-filter-label-clicked',
+                el: event.currentTarget,
+            },
+        }));
     }
 
     private setFilter(host: FacetTimeline): void {
