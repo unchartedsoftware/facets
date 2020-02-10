@@ -90,6 +90,11 @@ export class Scrollbar extends FacetPlugin {
                 const thumbLeft = (((view[0] - domain[0]) / domainLength) * 100).toFixed(2);
                 const thumbRight = ((1.0 - (view[1] - domain[0]) / domainLength) * 100).toFixed(2);
                 const thumbVisibility = view[0] !== domain[0] || view[1] !== domain[1] ? 'visible' : 'hidden';
+                const thumbStyle = {
+                    left: `${thumbLeft}%`,
+                    right: `${thumbRight}%`,
+                    visibility: thumbVisibility,
+                };
                 return html`
                 <div class="scrollbar-container">
                     <div class="scrollbar-background">
@@ -97,11 +102,7 @@ export class Scrollbar extends FacetPlugin {
                             <div class="scrollbar-thumb"
                             @mousedown="${this.handleMouseEvent}"
                             dark="${this.mouseTarget ? 'true' : 'false'}"
-                            style=${styleMap({
-                                left: `${thumbLeft}%`,
-                                right: `${thumbRight}%`,
-                                visibility: thumbVisibility,
-                            })}></div>
+                            style=${styleMap(thumbStyle)}></div>
                         </div>
                     </div>
                 </div>
