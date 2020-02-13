@@ -2,6 +2,7 @@ import {FacetPlugin} from '../../FacetPlugin';
 import {customElement, TemplateResult, html} from 'lit-element';
 import { styleMap, StyleInfo } from 'lit-html/directives/style-map';
 import {FacetTimeline} from '../../../facet-timeline/FacetTimeline';
+import {FacetBarsFilterValue, FacetBarsFilterEdge} from '../../../facet-bars-base/FacetBarsBase';
 
 // @ts-ignore
 import FacetTimelineSelectionStyle from './FacetTimelineSelection.css';
@@ -173,10 +174,23 @@ export class FacetTimelineSelection extends FacetPlugin {
 
             if (this.mouse.tracking === 'selection-draw') {
                 const filter = facet.filter;
-                const minLocation = rect.left + Math.max((filter ? filter[0] : view[0]) - view[0], 0) * barStep;
-                const maxLocation = rect.left + (Math.min(filter ? filter[1] : view[1], view[1]) - view[0]) * barStep;
-                const minIndex = Math.max(filter ? filter[0] - view[0] : 0, 0);
-                const maxIndex = Math.min(view[1] - view[0], filter ? filter[1] - view[0] : view[1] - view[0]);
+                let minLocation = rect.left;
+                let maxLocation = rect.left;
+                let minIndex;
+                let maxIndex;
+                if (filter) {
+                    const filter0 = Math.ceil(this.getFilterValue(filter, 0));
+                    const filter1 = Math.floor(this.getFilterValue(filter, 1));
+                    minLocation = rect.left + Math.max(filter0 - view[0], 0) * barStep;
+                    maxLocation = rect.left + (Math.min(filter1, view[1]) - view[0]) * barStep;
+                    minIndex = Math.max(filter0 - view[0], 0);
+                    maxIndex = Math.min(view[1] - view[0], filter1 - view[0]);
+                } else {
+                    // minLocation += 0; // no need
+                    maxLocation += (view[1] - view[0]) * barStep;
+                    minIndex = 0;
+                    maxIndex = view[1] - view[0];
+                }
                 const left = Math.max(Math.min(this.mouse.startX, this.mouse.endX), minLocation) - rect.left;
                 const right = rect.right - Math.min(Math.max(this.mouse.startX, this.mouse.endX), maxLocation);
                 const top = Math.max(Math.min(this.mouse.startY, this.mouse.endY), rect.top) - timelineBB.top;
@@ -344,14 +358,16 @@ export class FacetTimelineSelection extends FacetPlugin {
         const viewLength = view[1] - view[0];
         const barStep = width / viewLength;
 
-        const filter = facet.filter as [number, number];
+        const filter = facet.filter as [FacetBarsFilterEdge, FacetBarsFilterEdge];
+        const filter0 = this.getFilterValue(filter, 0);
+        const filter1 = this.getFilterValue(filter, 1);
         const barStepPercentage = 100 / viewLength;
-        const leftPercentage = barStepPercentage * (filter[0] - view[0]);
-        const rightPercentage = barStepPercentage * (view[1] - filter[1]);
+        const leftPercentage = barStepPercentage * (filter0 - view[0]);
+        const rightPercentage = barStepPercentage * (view[1] - filter1);
         const displayLeft = Math.min(Math.max(0, leftPercentage), 100).toFixed(2);
         const displayRight = Math.min(Math.max(0, rightPercentage), 100).toFixed(2);
-        let leftIndex = filter[0];
-        let rightIndex = filter[1];
+        let leftIndex = Math.floor(filter0);
+        let rightIndex = Math.floor(filter1);
 
         while (leftIndex < rightIndex && !values[leftIndex]) {
             ++leftIndex;
@@ -371,14 +387,16 @@ export class FacetTimelineSelection extends FacetPlugin {
                     right: `${displayRight}%`,
                 };
 
-                filterInfo.outerLeftWidth = Math.max(0, barStep * (filter[0] - view[0]));
-                filterInfo.outerRightWidth = Math.max(0, width - barStep * (filter[1] - view[0]));
+                filterInfo.outerLeftWidth = Math.max(0, barStep * (filter0 - view[0]));
+                filterInfo.outerRightWidth = Math.max(0, width - barStep * (filter1 - view[0]));
                 filterInfo.filterWidth = width - filterInfo.outerLeftWidth - filterInfo.outerRightWidth;
 
                 if (rightPercentage < 0) {
                     filterInfo.maxLabel = '●●●';
                     filterInfo.displayBorder += 'no-right;';
                     filterInfo.maxHandleStyle = {display: 'none'};
+                } else if (isNaN(filter[1] as number)) {
+                    filterInfo.maxLabel = (filter[1] as FacetBarsFilterValue).label;
                 } else if (rightBar) {
                     filterInfo.maxLabel = rightBar.maxDateLabel;
                 } else {
@@ -389,6 +407,8 @@ export class FacetTimelineSelection extends FacetPlugin {
                     filterInfo.minLabel = '●●●';
                     filterInfo.displayBorder += 'no-left;';
                     filterInfo.minHandleStyle = {display: 'none'};
+                } else if (isNaN(filter[0] as number)) {
+                    filterInfo.maxLabel = (filter[0] as FacetBarsFilterValue).label;
                 } else if (leftBar) {
                     filterInfo.minLabel = leftBar.minDateLabel;
                 } else {
@@ -469,9 +489,11 @@ export class FacetTimelineSelection extends FacetPlugin {
                             const width = rect.right - rect.left;
                             const barStep = width / viewLength;
                             const filter = host.filter;
+                            const filter0 = Math.floor(this.getFilterValue(filter, 0));
+                            const filter1 = Math.floor(this.getFilterValue(filter, 1));
                             const leftIndex = Math.floor(left / barStep) + view[0];
                             const rightIndex = Math.ceil(right / barStep) + view[0];
-                            if (leftIndex < filter[0] || rightIndex > filter[1]) {
+                            if (leftIndex < filter0 || rightIndex > filter1) {
                                 break;
                             }
                         }
@@ -529,6 +551,8 @@ export class FacetTimelineSelection extends FacetPlugin {
                 const barArea = host.barAreaElement;
                 const filter = host.filter;
                 if (barArea && filter) {
+                    const filter0 = (this.getFilterValue(filter, 0));
+                    const filter1 = (this.getFilterValue(filter, 1));
                     const view = host.view;
                     const rect = barArea.getBoundingClientRect();
                     const viewLength = view[1] - view[0];
@@ -537,16 +561,16 @@ export class FacetTimelineSelection extends FacetPlugin {
 
                     if (evt.target.className.includes('facet-timeline-filter-handle-left')) {
                         this.mouse.tracking = 'filter-resize';
-                        this.mouse.startX = rect.left + barStep * (filter[1] - view[0]) - 1;
+                        this.mouse.startX = rect.left + barStep * (filter1 - view[0]) - 1;
                         this.mouse.startY = rect.top;
-                        this.mouse.endX = rect.left + barStep * (filter[0] - view[0]) + 1;
+                        this.mouse.endX = rect.left + barStep * (filter0 - view[0]) + 1;
                         this.mouse.endY = evt.clientY;
                         this.mouse.offset = this.mouse.endX - evt.clientX;
                     } else if (evt.target.className.includes('facet-timeline-filter-handle-right')) {
                         this.mouse.tracking = 'filter-resize';
-                        this.mouse.startX = rect.left + barStep * (filter[0] - view[0]) + 1;
+                        this.mouse.startX = rect.left + barStep * (filter0 - view[0]) + 1;
                         this.mouse.startY = rect.top;
-                        this.mouse.endX = rect.left + barStep * (filter[1] - view[0]) - 1;
+                        this.mouse.endX = rect.left + barStep * (filter1 - view[0]) - 1;
                         this.mouse.endY = evt.clientY;
                         this.mouse.offset = evt.clientX - this.mouse.endX;
                     }
@@ -624,9 +648,18 @@ export class FacetTimelineSelection extends FacetPlugin {
             const width = rect.right - rect.left;
             const barStep = width / viewLength;
             const values = host.values;
-            const filter = host.filter || view;
-            let leftIndex = Math.max(Math.floor(left / barStep) + view[0], filter[0]);
-            let rightIndex = Math.min(Math.ceil(right / barStep) + view[0], filter[1]);
+            const filter = host.filter;
+            let leftIndex;
+            let rightIndex;
+            if (filter) {
+                const filter0 = this.getFilterValue(filter, 0);
+                const filter1 = this.getFilterValue(filter, 1);
+                leftIndex = Math.max(Math.floor(left / barStep) + view[0], filter0);
+                rightIndex = Math.min(Math.ceil(right / barStep) + view[0], filter1);
+            } else {
+                leftIndex = Math.max(Math.floor(left / barStep) + view[0], view[0]);
+                rightIndex = Math.min(Math.ceil(right / barStep) + view[0], view[1]);
+            }
 
             while (leftIndex < rightIndex && !values[leftIndex]) {
                 ++leftIndex;
@@ -668,5 +701,9 @@ export class FacetTimelineSelection extends FacetPlugin {
     private computeLabelWidth(label: string): number {
         this.labelContext.font = '12px "IBM Plex Sans", sans-serif';
         return this.labelContext.measureText(label).width;
+    }
+
+    private getFilterValue(filter: [FacetBarsFilterEdge, FacetBarsFilterEdge], index: number): number {
+        return isNaN(filter[index] as number) ? (filter[index] as FacetBarsFilterValue).value : filter[index] as number;
     }
 }

@@ -16,6 +16,13 @@ export interface FacetBarsValueDataTyped extends FacetBarsValueData {
 export interface FacetBarsBaseData { [key: number]: FacetBarsValueDataTyped | null }
 export interface FacetBarsBaseSubselection { [key: number]: number }
 
+export interface FacetBarsFilterValue {
+    value: number;
+    label: string;
+}
+
+export type FacetBarsFilterEdge = number | FacetBarsFilterValue;
+
 export const kFacetBarsBaseDefaultValues: FacetBarsBaseData = [null, null, null, null, null, null, null, null, null, null];
 export const kFacetBarsBaseNullView: [number, number] = [null as unknown as number, null as unknown as number];
 export const kFacetBarsBaseNullDomain: [number, number] = [null as unknown as number, null as unknown as number];
@@ -25,6 +32,25 @@ const kRangeValueHasChanged = (newVal: [number, number], oldVal: [number, number
         return oldVal !== newVal;
     }
     return newVal[0] !== oldVal[0] || newVal[1] !== oldVal[1];
+};
+
+const kGetFilterValue = function kGetFilterValue(filter: [FacetBarsFilterEdge, FacetBarsFilterEdge], index: number): number {
+    return isNaN(filter[index] as number) ? (filter[index] as FacetBarsFilterValue).value : filter[index] as number;
+};
+
+const kFilterValueHasChanged = (newVal: [FacetBarsFilterEdge, FacetBarsFilterEdge], oldVal: [FacetBarsFilterEdge, FacetBarsFilterEdge]): boolean => {
+    if (kRangeValueHasChanged(newVal as [number, number], oldVal as [number, number])) {
+        if (newVal && oldVal) {
+            const newVal0 = kGetFilterValue(newVal, 0);
+            const newVal1 = kGetFilterValue(newVal, 1);
+            const oldVal0 = kGetFilterValue(oldVal, 0);
+            const oldVal1 = kGetFilterValue(oldVal, 1);
+
+            return newVal0 !== oldVal0 || newVal1 !== oldVal1;
+        }
+        return true;
+    }
+    return false;
 };
 
 @customElement('facet-bars-base') /* should not be instantiated as a custom element */
@@ -42,14 +68,14 @@ export class FacetBarsBase extends FacetContainer {
             values: { type: Object },
             domain: { type: Array, hasChanged: kRangeValueHasChanged },
             view: { type: Array, hasChanged: kRangeValueHasChanged },
-            filter: { type: Array, hasChanged: kRangeValueHasChanged },
+            filter: { type: Array, hasChanged: kFilterValueHasChanged },
             selection: { type: Array, hasChanged: kRangeValueHasChanged },
             subselection: { type: Array },
             actionButtons: { type: Number, attribute: 'action-buttons' },
         };
     }
 
-    public filter: [number, number] | null = null;
+    public filter: [FacetBarsFilterEdge, FacetBarsFilterEdge] | null = null;
     public selection: [number, number] | null = null;
     public subselection: FacetBarsBaseSubselection | null = null;
     public actionButtons: number = 0;
@@ -265,7 +291,9 @@ export class FacetBarsBase extends FacetContainer {
         }
 
         if (this.filter) {
-            if (barIndex < this.filter[0] || barIndex >= this.filter[1]) {
+            const min = Math.floor(isNaN(this.filter[0] as number) ? (this.filter[0] as FacetBarsFilterValue).value : this.filter[0] as number);
+            const max = Math.floor(isNaN(this.filter[1] as number) ? (this.filter[1] as FacetBarsFilterValue).value : this.filter[1] as number);
+            if (barIndex < min || barIndex >= max) {
                 result = 'muted';
             }
         }
