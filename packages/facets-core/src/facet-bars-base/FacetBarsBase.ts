@@ -166,8 +166,8 @@ export class FacetBarsBase extends FacetContainer {
         if (!filter) {
             return null;
         }
-        const filter0 = kGetFilterValue(filter, 0);
-        const filter1 = kGetFilterValue(filter, 1);
+        const filter0 = Math.floor(kGetFilterValue(filter, 0));
+        const filter1 = Math.floor(kGetFilterValue(filter, 1));
 
         return [filter0, filter1];
     }
