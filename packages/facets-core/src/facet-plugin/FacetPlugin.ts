@@ -21,6 +21,7 @@ export class FacetPlugin extends LitElement {
 
             if (this._host) {
                 this._host.addEventListener('facet-element-updated', this._boundUpdateHandler);
+                this._host.requestUpdate();
             }
 
             this.hostChanged(this._host);
