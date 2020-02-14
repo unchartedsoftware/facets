@@ -172,6 +172,17 @@ export class FacetBarsBase extends FacetContainer {
         return [filter0, filter1];
     }
 
+    public get filterValues(): [number, number] | null {
+        const filter = this.filter;
+        if (!filter) {
+            return null;
+        }
+        const filter0 = kGetFilterValue(filter, 0);
+        const filter1 = kGetFilterValue(filter, 1);
+
+        return [filter0, filter1];
+    }
+
     public get barAreaElement(): HTMLElement | null {
         return this.slottedElements.get('values') || null;
     }
