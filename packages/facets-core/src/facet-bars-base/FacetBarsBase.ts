@@ -302,8 +302,8 @@ export class FacetBarsBase extends FacetContainer {
         }
 
         if (this.filter) {
-            const min = Math.floor(isNaN(this.filter[0] as number) ? (this.filter[0] as FacetBarsFilterValue).value : this.filter[0] as number);
-            const max = Math.floor(isNaN(this.filter[1] as number) ? (this.filter[1] as FacetBarsFilterValue).value : this.filter[1] as number);
+            const min = Math.floor(kGetFilterValue(this.filter, 0));
+            const max = Math.ceil(kGetFilterValue(this.filter, 1));
             if (barIndex < min || barIndex >= max) {
                 result = 'muted';
             }
