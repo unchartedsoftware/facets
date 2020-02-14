@@ -55,7 +55,11 @@ export class FacetTimelineSelection extends FacetPlugin {
 
     protected hostUpdated(changedProperties: Map<PropertyKey, unknown>): void {
         super.hostUpdated(changedProperties);
-        if (changedProperties.has('view') || changedProperties.has('domain') || changedProperties.has('data')) {
+        console.log(changedProperties);
+        if (changedProperties.has('view') ||
+            changedProperties.has('domain') ||
+            changedProperties.has('data') ||
+            changedProperties.has('filter')) {
             this.requestUpdate();
         }
     }
@@ -408,7 +412,7 @@ export class FacetTimelineSelection extends FacetPlugin {
                     filterInfo.displayBorder += 'no-left;';
                     filterInfo.minHandleStyle = {display: 'none'};
                 } else if (isNaN(filter[0] as number)) {
-                    filterInfo.maxLabel = (filter[0] as FacetBarsFilterValue).label;
+                    filterInfo.minLabel = (filter[0] as FacetBarsFilterValue).label;
                 } else if (leftBar) {
                     filterInfo.minLabel = leftBar.minDateLabel;
                 } else {
