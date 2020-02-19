@@ -118,18 +118,14 @@ export class Scrollbar extends FacetPlugin {
             switch (mouseEvent.type) {
                 case 'mousedown':
                     if (mouseEvent.currentTarget instanceof Element) {
-                        if (mouseEvent.currentTarget === this.facet) {
-                            if (mouseEvent.button === 1) {
-                                this.mouseTarget = 'drag';
-                                this.animatedScrolling = false;
-                            }
+                        if (mouseEvent.currentTarget === this.facet && mouseEvent.button === 1) {
+                            this.mouseTarget = 'drag';
+                            this.animatedScrolling = false;
                             event.preventDefault();
                             event.stopImmediatePropagation();
-                        } else if (mouseEvent.currentTarget.className.indexOf('scrollbar-thumb') !== -1) {
-                            if (mouseEvent.button === 0) {
-                                this.mouseTarget = 'thumb';
-                                this.animatedScrolling = false;
-                            }
+                        } else if (mouseEvent.currentTarget.className.indexOf('scrollbar-thumb') !== -1 && mouseEvent.button === 0) {
+                            this.mouseTarget = 'thumb';
+                            this.animatedScrolling = false;
                             event.preventDefault();
                             event.stopImmediatePropagation();
                         } else {
