@@ -18,13 +18,14 @@
         "build": "npm-run-all --parallel build:**",
         "build:server": "cross-env TARGET='server' rollup --config",
         "build:types": "tsc --declaration --declarationMap --emitDeclarationOnly --skipLibCheck --outDir ./dist/types",
+        "clean": "rm -rf ./dist",
         "prestart": "cross-env TARGET='server' rollup --config",
         "start": "npm-run-all --parallel start:**",
         "start:watch": "cross-env TARGET='server' rollup --config --watch",
         "start:server": "nodemon ./dist/server/index.js --watch dist --watch www -e js,html,css",
         "watch": "cross-env TARGET='server' rollup --config --watch",
         "lint": "eslint . --ext .js,.ts,.jsx,.tsx --ignore-path ../../.eslintignore",
-        "prepack": "npm-run-all build"
+        "prepack": "npm-run-all clean build"
     },
     "dependencies": {
         "@uncharted/facets-core": "^0.0.7",
