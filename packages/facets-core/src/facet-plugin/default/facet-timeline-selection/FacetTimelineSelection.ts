@@ -55,7 +55,6 @@ export class FacetTimelineSelection extends FacetPlugin {
 
     protected hostUpdated(changedProperties: Map<PropertyKey, unknown>): void {
         super.hostUpdated(changedProperties);
-        console.log(changedProperties);
         if (changedProperties.has('view') ||
             changedProperties.has('domain') ||
             changedProperties.has('data') ||
@@ -371,7 +370,7 @@ export class FacetTimelineSelection extends FacetPlugin {
         const displayLeft = Math.min(Math.max(0, leftPercentage), 100).toFixed(2);
         const displayRight = Math.min(Math.max(0, rightPercentage), 100).toFixed(2);
         let leftIndex = Math.floor(filter0);
-        let rightIndex = Math.floor(filter1);
+        let rightIndex = Math.ceil(filter1);
 
         while (leftIndex < rightIndex && !values[leftIndex]) {
             ++leftIndex;
