@@ -364,7 +364,7 @@ export class FacetTimelineSelection extends FacetPlugin {
         const viewLength = view[1] - view[0];
         const barStep = width / viewLength;
 
-        const filter = facet.filterValues as [FacetBarsFilterEdge, FacetBarsFilterEdge];
+        const filter = facet.filter as [FacetBarsFilterEdge, FacetBarsFilterEdge];
         const filterValues = facet.filterValues as [number, number];
         const barStepPercentage = 100 / viewLength;
         const leftPercentage = barStepPercentage * (filterValues[0] - view[0]);
