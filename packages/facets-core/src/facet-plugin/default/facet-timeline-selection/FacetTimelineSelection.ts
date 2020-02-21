@@ -262,8 +262,6 @@ export class FacetTimelineSelection extends FacetPlugin {
                     }
 
                     result.style = style;
-
-                    console.log(result);
                 }
             }
         }
