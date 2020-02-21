@@ -11,9 +11,24 @@
     background-color: #a4d1ff;
 }
 
+:host([theme="timeline"]:hover) .facet-bars-value-bar-total
+{
+    background-color: #b6e3ff;
+}
+
 :host([theme="timeline"][facet-value-state="unselected"]) .facet-bars-value-bar-total
 {
-    background-color: #b2d0f4;
+    background-color: #a4d1ff;
+}
+
+:host([theme="timeline"][facet-value-state="unselected"]:hover) .facet-bars-value-bar-total
+{
+    background-color: #b6e3ff;
+}
+
+:host([theme="timeline"][facet-value-state="muted"]) .facet-bars-value-bar-total
+{
+    background-color: #D8D9DA;
 }
 
 
@@ -30,19 +45,18 @@
 
 :host([theme="timeline"][facet-value-state="unselected"]) .facet-bars-value-bar
 {
-    background-color: #a4d1ff;
+    background-color: #73abf1;
 }
 
 :host([theme="timeline"][facet-value-state="unselected"]:hover) .facet-bars-value-bar
 {
-    background-color: #73abf1;
+    background-color: #8dc3ff;
 }
 
 :host([theme="timeline"][facet-value-state="muted"]) .facet-bars-value-bar
 {
     background-color: #D8D9DA;
 }
-
 
 /* facet-value-state="loading" */
 
