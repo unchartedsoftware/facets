@@ -305,7 +305,7 @@ export class FacetBarsBase extends FacetContainer {
     protected computeValueState(barIndex: number): string {
         let result = 'normal';
         if (this.selection) {
-            if (barIndex >= this.selection[0] && barIndex < this.selection[1]) {
+            if (barIndex >= Math.floor(this.selection[0]) && barIndex < Math.ceil(this.selection[1])) {
                 result = 'selected';
             } else {
                 result = 'unselected';
