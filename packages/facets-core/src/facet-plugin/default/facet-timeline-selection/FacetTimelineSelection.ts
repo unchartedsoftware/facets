@@ -125,6 +125,8 @@ export class FacetTimelineSelection extends FacetPlugin {
             <style>${FacetTimelineSelectionStyle}</style>
             <div class="facet-timeline-filter-handle-track"></div>
             ${renderedValues}
+            <div class="facet-timeline-selection-computed" style="${styleMap(selectionInfo.style)}"></div>
+            <div class="facet-timeline-selection-user" style="${styleMap(selectionInfo.userBoxStyle)}"></div>
             <div class="facet-timeline-filter-computed" display-border="${filterInfo.displayBorder}" style="${styleMap(filterInfo.style)}">
                 <div
                     class="facet-timeline-filter-handle facet-timeline-filter-handle-left"
@@ -151,9 +153,6 @@ export class FacetTimelineSelection extends FacetPlugin {
                     ${filterInfo.maxLabel}
                 </div>
             </div>
-            <div class="facet-timeline-selection-computed" style="${styleMap(selectionInfo.style)}">
-            </div>
-            <div class="facet-timeline-selection-user" style="${styleMap(selectionInfo.userBoxStyle)}"></div>
             `;
         }
         return undefined;
@@ -198,6 +197,7 @@ export class FacetTimelineSelection extends FacetPlugin {
                 const bottom = timelineBB.bottom - Math.min(Math.max(this.mouse.startY, this.mouse.endY), rect.bottom);
 
                 result.userBoxStyle = {
+                    display: 'block',
                     top: `${top}px`,
                     bottom: `${bottom}px`,
                     left: `${left}px`,
@@ -226,6 +226,7 @@ export class FacetTimelineSelection extends FacetPlugin {
                     const displayRight = Math.min(Math.max(0, rightPercentage), 100).toFixed(2);
 
                     result.style = {
+                        display: 'block',
                         left: `${displayLeft}%`,
                         right: `${displayRight}%`,
                         top: `${rect.top - timelineBB.top - 2}px`,
@@ -245,6 +246,7 @@ export class FacetTimelineSelection extends FacetPlugin {
 
                 if (selection[1] >= view[0] && selection[0] <= view[1]) {
                     const style: {[name: string]: string} = {
+                        display: 'block',
                         left: `${displayLeft}%`,
                         right: `${displayRight}%`,
                         top: `${rect.top - timelineBB.top - 2}px`,
@@ -260,6 +262,8 @@ export class FacetTimelineSelection extends FacetPlugin {
                     }
 
                     result.style = style;
+
+                    console.log(result);
                 }
             }
         }
@@ -326,6 +330,7 @@ export class FacetTimelineSelection extends FacetPlugin {
             const rightBar = facet.data[view[0] + rightIndex - 1];
 
             filterInfo.style = {
+                display: 'block',
                 left: `${displayLeft}%`,
                 right: `${displayRight}%`,
             };
@@ -388,6 +393,7 @@ export class FacetTimelineSelection extends FacetPlugin {
 
             if (rightPercentage <= 100 && leftPercentage <= 100) {
                 filterInfo.style = {
+                    display: 'block',
                     left: `${displayLeft}%`,
                     right: `${displayRight}%`,
                 };
@@ -430,43 +436,51 @@ export class FacetTimelineSelection extends FacetPlugin {
             const dateLabelsPadding = 15; /* px */
 
             if (filterInfo.filterWidth > minDateWidth + maxDateWidth + dateLabelsPadding) {
-                filterInfo.minLabelStyle = { left: '4px' };
-                filterInfo.maxLabelStyle = { right: '4px' };
+                filterInfo.minLabelStyle = { display: 'block', left: '4px' };
+                filterInfo.maxLabelStyle = { display: 'block', right: '4px' };
             } else if (filterInfo.outerLeftWidth < minDateWidth && filterInfo.outerRightWidth < maxDateWidth) {
                 filterInfo.minLabelStyle = {
+                    display: 'block',
                     left: '4px',
                     width: `${filterInfo.filterWidth * 0.5}px`,
                 };
                 filterInfo.maxLabelStyle = {
+                    display: 'block',
                     right: '4px',
                     width: `${filterInfo.filterWidth * 0.5}px`,
                 };
             } else if (filterInfo.outerLeftWidth < minDateWidth) {
                 filterInfo.minLabelStyle = {
+                    display: 'block',
                     left: '4px',
                     width: `${Math.min(minDateWidth + dateLabelsPadding,
                         Math.max(filterInfo.filterWidth - dateLabelsPadding, 0))}px`,
                 };
                 filterInfo.maxLabelStyle = {
+                    display: 'block',
                     right: '-10px',
                     transform: 'translate(100%,0)',
                 };
             } else if (filterInfo.outerRightWidth < maxDateWidth) {
                 filterInfo.minLabelStyle = {
+                    display: 'block',
                     left: '-10px',
                     transform: 'translate(-100%,0)',
                 };
                 filterInfo.maxLabelStyle = {
+                    display: 'block',
                     right: '4px',
                     width: `${Math.min(maxDateWidth + dateLabelsPadding,
                         Math.max(filterInfo.filterWidth - dateLabelsPadding, 0))}px`,
                 };
             } else {
                 filterInfo.minLabelStyle = {
+                    display: 'block',
                     left: '-10px',
                     transform: 'translate(-100%,0)',
                 };
                 filterInfo.maxLabelStyle = {
+                    display: 'block',
                     right: '-10px',
                     transform: 'translate(100%,0)',
                 };
