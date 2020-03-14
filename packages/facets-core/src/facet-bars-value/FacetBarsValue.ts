@@ -11,6 +11,27 @@ import FacetBarsValueDefaultTheme from './FacetBarsValue.default.css';
 // @ts-ignore
 import FacetBarsValueTimelineTheme from './FacetBarsValue.timeline.css';
 
+function getBarColorStyle(theme: string, state: string, index: number, value: string): string {
+    return `:host(${theme}[facet-value-state="${state}"]) .facet-bars-value-background .facet-bars-value-bar-${index} { background-color:${value} }`;
+}
+
+const kBarStylePrefix = 'facet-bars-';
+const kBarStyleGenerators: {[key: string]: any} = {
+    '-normal': (theme: string, index: number, value: string): string => getBarColorStyle(theme, 'normal', index, value),
+    '-normal-contrast': (value: string): TemplateResult => html`${value}`,
+    '-normal-contrast-hover': (value: string): TemplateResult => html`${value}`,
+    '-selected': (value: string): TemplateResult => html`${value}`,
+    '-selected-contrast': (value: string): TemplateResult => html`${value}`,
+    '-selected-contrast-hover': (value: string): TemplateResult => html`${value}`,
+    '-unselected': (value: string): TemplateResult => html`${value}`,
+    '-unselected-contrast': (value: string): TemplateResult => html`${value}`,
+    '-unselected-contrast-hover': (value: string): TemplateResult => html`${value}`,
+    '-muted': (value: string): TemplateResult => html`${value}`,
+    '-muted-contrast': (value: string): TemplateResult => html`${value}`,
+    '-muted-contrast-hover': (value: string): TemplateResult => html`${value}`,
+};
+const kBarStyleSuffixes = Object.keys(kBarStyleGenerators);
+
 export interface FacetBarsValueData {
     ratio: number | null;
     label?: string | string[];
@@ -35,16 +56,20 @@ export class FacetBarsValue extends FacetBlueprint {
     public static get properties(): any {
         return {
             data: { type: Object },
-            subselection: {
-                type: Number,
+            values: {
+                type: Array,
                 converter: {
-                    fromAttribute: (value: string): number => {
+                    fromAttribute: (value: string): number[] => {
                         if (!value) {
-                            return NaN;
+                            return [];
                         }
-                        return parseFloat(value);
+                        const arr = JSON.parse(value);
+                        for (let i = 0, n = arr.length; i < n; ++i) {
+                            arr[i] = parseFloat(arr[i]);
+                        }
+                        return arr;
                     },
-                    toAttribute: (value: number): string => value.toString(),
+                    toAttribute: (value: number): string => `[${value.toString()}]`,
                 },
             },
             actionButtons: { type: Number, attribute: 'action-buttons' },
@@ -61,24 +86,58 @@ export class FacetBarsValue extends FacetBlueprint {
         this.requestUpdate('data', oldData);
     }
 
-    public subselection: number = NaN;
+    public values: number[] = [];
     public actionButtons: number = 2;
-
-    // protected createRenderRoot(): Element | ShadowRoot {
-    //     return this;
-    // }
+    private barStyles: TemplateResult|void|null = null;
 
     protected renderContent(): TemplateResult | void {
-        const totalHeight = Math.round(Math.max(Math.min(this._data.ratio ? this._data.ratio : 0, 1), 0) * 100);
-        const selectionHeight = isNaN(this.subselection) ? totalHeight : Math.round(Math.max(Math.min(this.subselection, 1), 0) * 100);
         return html`
         <div class="facet-bars-value-background">
-            <div class="facet-bars-value-bar-total" style="height: ${totalHeight}%"></div>
-            <div class="facet-bars-value-bar" style="height: ${selectionHeight}%"></div>
+            ${this.renderBars()}
         </div>
         <div class="facet-hoverable-buttons"><slot name="buttons">
             ${renderButtons(this)}
         </slot></div>
         `;
+    }
+
+    protected renderBars(): TemplateResult[] {
+        const result = [];
+        for (let i = 0, n = this.values.length; i < n; ++i) {
+            const value = this.values[i];
+            if (!isNaN(value)) {
+                const height = Math.round(Math.max(Math.min(value, 1), 0) * 100);
+                result.push(html`
+                <div class="facet-bars-value-bar-${n - i - 1}" style="height: ${height}%"></div>
+                `);
+            }
+        }
+        return result;
+    }
+
+    protected computeStyle(): TemplateResult | void {
+        if (this.barStyles === null) {
+            const theme = this.getAttribute('theme');
+            const hostTheme = theme ? `[theme="${theme}"]` : ':not([theme])';
+
+            const cssOptions = this.cssOptions;
+            const styles = [];
+            for (let i = 0, n = this.values.length; i < n; ++i) {
+                for (let ii = 0, nn = kBarStyleSuffixes.length; ii < nn; ++ii) {
+                    const option = `${kBarStylePrefix}${i}${kBarStyleSuffixes[ii]}`;
+                    const optionValue = cssOptions.read(option);
+                    if (optionValue !== undefined) {
+                        styles.push(kBarStyleGenerators[kBarStyleSuffixes[ii]](hostTheme, i, optionValue));
+                    }
+                }
+            }
+
+            if (styles.length) {
+                this.barStyles = html`<style>${styles}</style>`;
+            } else {
+                this.barStyles = undefined;
+            }
+        }
+        return this.barStyles;
     }
 }

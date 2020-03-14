@@ -5,7 +5,7 @@ import {FacetTemplate} from '../facet-template/FacetTemplate';
 
 @customElement('facet-element')
 export class FacetElement extends LitElement {
-    protected mOptions: CSSOptions;
+    protected cssOptions: CSSOptions;
     protected plugins: Set<FacetPlugin> = new Set();
     protected templates: Map<string, FacetTemplate> = new Map();
 
@@ -29,7 +29,7 @@ export class FacetElement extends LitElement {
 
     public constructor() {
         super();
-        this.mOptions = new CSSOptions(this);
+        this.cssOptions = new CSSOptions(this);
     }
 
     public connectedCallback(): void {
@@ -40,10 +40,6 @@ export class FacetElement extends LitElement {
     public disconnectedCallback(): void {
         super.disconnectedCallback();
         this._teardownAddOnEvents();
-    }
-
-    public get options(): CSSOptions {
-        return this.mOptions;
     }
 
     protected updated(_changedProperties: Map<PropertyKey, unknown>): void {

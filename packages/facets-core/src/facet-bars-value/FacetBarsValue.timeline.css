@@ -4,56 +4,80 @@
     background-color: transparent;
 }
 
-
-/* .facet-bars-value-bar-total */
-:host([theme="timeline"]) .facet-bars-value-bar-total
-{
-    background-color: #a4d1ff;
-}
-
-:host([theme="timeline"]:hover) .facet-bars-value-bar-total
-{
-    background-color: #b6e3ff;
-}
-
-:host([theme="timeline"][facet-value-state="unselected"]) .facet-bars-value-bar-total
-{
-    background-color: #a4d1ff;
-}
-
-:host([theme="timeline"][facet-value-state="unselected"]:hover) .facet-bars-value-bar-total
-{
-    background-color: #b6e3ff;
-}
-
-:host([theme="timeline"][facet-value-state="muted"]) .facet-bars-value-bar-total
-{
-    background-color: #D8D9DA;
-}
-
-
-/* .facet-bars-value-bar */
-:host([theme="timeline"]) .facet-bars-value-bar
+/* .facet-bars-value-bar-0 */
+:host([theme="timeline"]) .facet-bars-value-bar-0
 {
     background-color: #255DCC;
 }
 
-:host([theme="timeline"]:hover) .facet-bars-value-bar
+:host([theme="timeline"]:hover) .facet-bars-value-bar-0
 {
     background-color: #73abf1;
 }
 
-:host([theme="timeline"][facet-value-state="unselected"]) .facet-bars-value-bar
+:host([theme="timeline"][facet-value-state="unselected"]) .facet-bars-value-bar-0
 {
     background-color: #73abf1;
 }
 
-:host([theme="timeline"][facet-value-state="unselected"]:hover) .facet-bars-value-bar
+:host([theme="timeline"][facet-value-state="unselected"]:hover) .facet-bars-value-bar-0
 {
     background-color: #8dc3ff;
 }
 
-:host([theme="timeline"][facet-value-state="muted"]) .facet-bars-value-bar
+:host([theme="timeline"][facet-value-state="muted"]) .facet-bars-value-bar-0
+{
+    background-color: #D8D9DA;
+}
+
+/* .facet-bars-value-bar-1 */
+:host([theme="timeline"]) .facet-bars-value-bar-1
+{
+    background-color: #a4d1ff;
+}
+
+:host([theme="timeline"]:hover) .facet-bars-value-bar-1
+{
+    background-color: #b6e3ff;
+}
+
+:host([theme="timeline"][facet-value-state="unselected"]) .facet-bars-value-bar-1
+{
+    background-color: #a4d1ff;
+}
+
+:host([theme="timeline"][facet-value-state="unselected"]:hover) .facet-bars-value-bar-1
+{
+    background-color: #b6e3ff;
+}
+
+:host([theme="timeline"][facet-value-state="muted"]) .facet-bars-value-bar-1
+{
+    background-color: #D8D9DA;
+}
+
+/* .facet-bars-value-bar-2 */
+:host([theme="timeline"]) .facet-bars-value-bar-2
+{
+    background-color: #D8D9DA;
+}
+
+:host([theme="timeline"]:hover) .facet-bars-value-bar-2
+{
+    background-color: #D8D9DA;
+}
+
+:host([theme="timeline"][facet-value-state="unselected"]) .facet-bars-value-bar-2
+{
+    background-color: #D8D9DA;
+}
+
+:host([theme="timeline"][facet-value-state="unselected"]:hover) .facet-bars-value-bar-2
+{
+    background-color: #D8D9DA;
+}
+
+:host([theme="timeline"][facet-value-state="muted"]) .facet-bars-value-bar-2
 {
     background-color: #D8D9DA;
 }
@@ -65,8 +89,8 @@
     background-color: #F0F1F2;
 }
 
-:host([theme="timeline"][facet-value-state="loading"]) .facet-bars-value-bar-total,
-:host([theme="timeline"][facet-value-state="loading"]) .facet-bars-value-bar
+:host([theme="timeline"][facet-value-state="loading"]) .facet-bars-value-bar-1,
+:host([theme="timeline"][facet-value-state="loading"]) .facet-bars-value-bar-0
 {
     background-color: #ECECEC;
 }

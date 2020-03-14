@@ -73,154 +73,160 @@
 }
 
 
-/* .facet-bars-value-bar-total */
-
-:host(:not([theme])[facet-value-state="normal"]) .facet-bars-value-bar-total,
-:host([theme="default"][facet-value-state="normal"]) .facet-bars-value-bar-total
-{
-    background-color: #C2C3C4;
-}
-
-:host(:not([theme])[contrast=true][facet-value-state="normal"]) .facet-bars-value-bar-total,
-:host([theme="default"][contrast=true][facet-value-state="normal"]) .facet-bars-value-bar-total
-{
-    background-color: #D9DADB;
-}
-
-:host(:not([theme])[contrast=true][facet-value-state="normal"]:hover) .facet-bars-value-bar-total,
-:host([theme="default"][contrast=true][facet-value-state="normal"]:hover) .facet-bars-value-bar-total
-{
-    background-color: #C2C3C4;
-}
-
-:host(:not([theme])[facet-value-state="selected"]) .facet-bars-value-bar-total,
-:host([theme="default"][facet-value-state="selected"]) .facet-bars-value-bar-total
-{
-    background-color: #C2C3C4;
-}
-
-:host(:not([theme])[contrast=true][facet-value-state="selected"]) .facet-bars-value-bar-total,
-:host([theme="default"][contrast=true][facet-value-state="selected"]) .facet-bars-value-bar-total
-{
-    background-color: #D9DADB;
-}
-
-:host(:not([theme])[contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar-total,
-:host([theme="default"][contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar-total
-{
-    background-color: #C2C3C4;
-}
-
-:host(:not([theme])[facet-value-state="unselected"]) .facet-bars-value-bar-total,
-:host([theme="default"][facet-value-state="unselected"]) .facet-bars-value-bar-total
-{
-    background-color: #D9DADB;
-}
-
-:host(:not([theme])[contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar-total,
-:host([theme="default"][contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar-total
-{
-    background-color: #EAEBEC;
-}
-
-:host(:not([theme])[contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar-total,
-:host([theme="default"][contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar-total
-{
-    background-color: #C4D9FC;
-}
-
-:host(:not([theme])[facet-value-state="muted"]) .facet-bars-value-bar-total,
-:host([theme="default"][facet-value-state="muted"]) .facet-bars-value-bar-total
-{
-    background-color: #D9DADB;
-}
-
-:host(:not([theme])[contrast=true][facet-value-state="muted"]) .facet-bars-value-bar-total,
-:host([theme="default"][contrast=true][facet-value-state="muted"]) .facet-bars-value-bar-total
-{
-    background-color: #EAEBEC;
-}
-
-:host(:not([theme])[contrast=true][facet-value-state="muted"]:hover) .facet-bars-value-bar-total,
-:host([theme="default"][contrast=true][facet-value-state="muted"]:hover) .facet-bars-value-bar-total
-{
-    background-color: #C4D9FC;
-}
 
 
-/* .facet-bars-value-bar */
+/* .facet-bars-value-bar-0 */
 
-:host(:not([theme])[facet-value-state="normal"]) .facet-bars-value-bar,
-:host([theme="default"][facet-value-state="normal"]) .facet-bars-value-bar
+:host(:not([theme])[facet-value-state="normal"]) .facet-bars-value-bar-0,
+:host([theme="default"][facet-value-state="normal"]) .facet-bars-value-bar-0
 {
     background-color: #255DCC;
 }
 
-:host(:not([theme])[contrast=true][facet-value-state="normal"]) .facet-bars-value-bar,
-:host([theme="default"][contrast=true][facet-value-state="normal"]) .facet-bars-value-bar
+:host(:not([theme])[contrast=true][facet-value-state="normal"]) .facet-bars-value-bar-0,
+:host([theme="default"][contrast=true][facet-value-state="normal"]) .facet-bars-value-bar-0
 {
     background-color: #A4C2FC;
 }
 
-:host(:not([theme])[contrast=true][facet-value-state="normal"]:hover) .facet-bars-value-bar,
-:host([theme="default"][contrast=true][facet-value-state="normal"]:hover) .facet-bars-value-bar
+:host(:not([theme])[contrast=true][facet-value-state="normal"]:hover) .facet-bars-value-bar-0,
+:host([theme="default"][contrast=true][facet-value-state="normal"]:hover) .facet-bars-value-bar-0
 {
     background-color: #255DCC;
 }
 
-:host(:not([theme])[facet-value-state="selected"]) .facet-bars-value-bar,
-:host([theme="default"][facet-value-state="selected"]) .facet-bars-value-bar
+:host(:not([theme])[facet-value-state="selected"]) .facet-bars-value-bar-0,
+:host([theme="default"][facet-value-state="selected"]) .facet-bars-value-bar-0
 {
     background-color: #255DCC;
 }
 
-:host(:not([theme])[contrast=true][facet-value-state="selected"]) .facet-bars-value-bar,
-:host([theme="default"][contrast=true][facet-value-state="selected"]) .facet-bars-value-bar
+:host(:not([theme])[contrast=true][facet-value-state="selected"]) .facet-bars-value-bar-0,
+:host([theme="default"][contrast=true][facet-value-state="selected"]) .facet-bars-value-bar-0
 {
     background-color: #A4C2FC;
 }
 
-:host(:not([theme])[contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar,
-:host([theme="default"][contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar
+:host(:not([theme])[contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar-0,
+:host([theme="default"][contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar-0
 {
     background-color: #255DCC;
 }
 
-:host(:not([theme])[facet-value-state="unselected"]) .facet-bars-value-bar,
-:host([theme="default"][facet-value-state="unselected"]) .facet-bars-value-bar
+:host(:not([theme])[facet-value-state="unselected"]) .facet-bars-value-bar-0,
+:host([theme="default"][facet-value-state="unselected"]) .facet-bars-value-bar-0
 {
     background-color: #C2C3C4;
 }
 
-:host(:not([theme])[contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar,
-:host([theme="default"][contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar
+:host(:not([theme])[contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar-0,
+:host([theme="default"][contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar-0
 {
     background-color: #D9DADB;
 }
 
-:host(:not([theme])[contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar,
-:host([theme="default"][contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar
+:host(:not([theme])[contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar-0,
+:host([theme="default"][contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar-0
 {
     background-color: #255DCC;
 }
 
-:host(:not([theme])[facet-value-state="muted"]) .facet-bars-value-bar,
-:host([theme="default"][facet-value-state="muted"]) .facet-bars-value-bar
+:host(:not([theme])[facet-value-state="muted"]) .facet-bars-value-bar-0,
+:host([theme="default"][facet-value-state="muted"]) .facet-bars-value-bar-0
 {
     background-color: #C2C3C4;
 }
 
-:host(:not([theme])[contrast=true][facet-value-state="muted"]) .facet-bars-value-bar,
-:host([theme="default"][contrast=true][facet-value-state="muted"]) .facet-bars-value-bar
+:host(:not([theme])[contrast=true][facet-value-state="muted"]) .facet-bars-value-bar-0,
+:host([theme="default"][contrast=true][facet-value-state="muted"]) .facet-bars-value-bar-0
 {
     background-color: #D9DADB;
 }
 
-:host(:not([theme])[contrast=true][facet-value-state="muted"]:hover) .facet-bars-value-bar,
-:host([theme="default"][contrast=true][facet-value-state="muted"]:hover) .facet-bars-value-bar
+:host(:not([theme])[contrast=true][facet-value-state="muted"]:hover) .facet-bars-value-bar-0,
+:host([theme="default"][contrast=true][facet-value-state="muted"]:hover) .facet-bars-value-bar-0
 {
     background-color: #255DCC;
 }
+
+
+
+
+/* .facet-bars-value-bar-1 */
+
+:host(:not([theme])[facet-value-state="normal"]) .facet-bars-value-bar-1,
+:host([theme="default"][facet-value-state="normal"]) .facet-bars-value-bar-1
+{
+    background-color: #C2C3C4;
+}
+
+:host(:not([theme])[contrast=true][facet-value-state="normal"]) .facet-bars-value-bar-1,
+:host([theme="default"][contrast=true][facet-value-state="normal"]) .facet-bars-value-bar-1
+{
+    background-color: #D9DADB;
+}
+
+:host(:not([theme])[contrast=true][facet-value-state="normal"]:hover) .facet-bars-value-bar-1,
+:host([theme="default"][contrast=true][facet-value-state="normal"]:hover) .facet-bars-value-bar-1
+{
+    background-color: #C2C3C4;
+}
+
+:host(:not([theme])[facet-value-state="selected"]) .facet-bars-value-bar-1,
+:host([theme="default"][facet-value-state="selected"]) .facet-bars-value-bar-1
+{
+    background-color: #C2C3C4;
+}
+
+:host(:not([theme])[contrast=true][facet-value-state="selected"]) .facet-bars-value-bar-1,
+:host([theme="default"][contrast=true][facet-value-state="selected"]) .facet-bars-value-bar-1
+{
+    background-color: #D9DADB;
+}
+
+:host(:not([theme])[contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar-1,
+:host([theme="default"][contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar-1
+{
+    background-color: #C2C3C4;
+}
+
+:host(:not([theme])[facet-value-state="unselected"]) .facet-bars-value-bar-1,
+:host([theme="default"][facet-value-state="unselected"]) .facet-bars-value-bar-1
+{
+    background-color: #D9DADB;
+}
+
+:host(:not([theme])[contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar-1,
+:host([theme="default"][contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar-1
+{
+    background-color: #EAEBEC;
+}
+
+:host(:not([theme])[contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar-1,
+:host([theme="default"][contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar-1
+{
+    background-color: #C4D9FC;
+}
+
+:host(:not([theme])[facet-value-state="muted"]) .facet-bars-value-bar-1,
+:host([theme="default"][facet-value-state="muted"]) .facet-bars-value-bar-1
+{
+    background-color: #D9DADB;
+}
+
+:host(:not([theme])[contrast=true][facet-value-state="muted"]) .facet-bars-value-bar-1,
+:host([theme="default"][contrast=true][facet-value-state="muted"]) .facet-bars-value-bar-1
+{
+    background-color: #EAEBEC;
+}
+
+:host(:not([theme])[contrast=true][facet-value-state="muted"]:hover) .facet-bars-value-bar-1,
+:host([theme="default"][contrast=true][facet-value-state="muted"]:hover) .facet-bars-value-bar-1
+{
+    background-color: #C4D9FC;
+}
+
+
 
 
 /* facet-value-state="loading" */
@@ -231,10 +237,10 @@
     background-color: #F7F7F7;
 }
 
-:host(:not([theme])[facet-value-state="loading"]) .facet-bars-value-bar-total,
-:host(:not([theme])[facet-value-state="loading"]) .facet-bars-value-bar,
-:host([theme="default"][facet-value-state="loading"]) .facet-bars-value-bar-total,
-:host([theme="default"][facet-value-state="loading"]) .facet-bars-value-bar
+:host(:not([theme])[facet-value-state="loading"]) .facet-bars-value-bar-1,
+:host(:not([theme])[facet-value-state="loading"]) .facet-bars-value-bar-0,
+:host([theme="default"][facet-value-state="loading"]) .facet-bars-value-bar-1,
+:host([theme="default"][facet-value-state="loading"]) .facet-bars-value-bar-0
 {
     background-color: #ECECEC;
 }

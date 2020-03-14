@@ -44,7 +44,7 @@
     transition: margin-left 200ms ease-out, background-color 128ms ease-out;
 }
 
-.facet-bars-value-bar-total {
+.facet-bars-value-background > div {
     position: absolute;
     left: 0;
     right: 0;
@@ -52,13 +52,21 @@
     transition: height 200ms ease-out, background-color 128ms ease-out;
 }
 
-.facet-bars-value-bar {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    transition: height 200ms ease-out, background-color 128ms ease-out;
-}
+/*.facet-bars-value-bar-1 {*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    bottom: 0;*/
+/*    transition: height 200ms ease-out, background-color 128ms ease-out;*/
+/*}*/
+
+/*.facet-bars-value-bar-0 {*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    bottom: 0;*/
+/*    transition: height 200ms ease-out, background-color 128ms ease-out;*/
+/*}*/
 
 @keyframes facet-bars-value-loading-background {
     0% {
@@ -147,8 +155,8 @@
     animation-delay: 1792ms;
 }
 
-:host([facet-value-state="loading"]) .facet-bars-value-bar-total,
-:host([facet-value-state="loading"]) .facet-bars-value-bar
+:host([facet-value-state="loading"]) .facet-bars-value-bar-1,
+:host([facet-value-state="loading"]) .facet-bars-value-bar-0
 {
     height: 0;
     animation-name: facet-bars-value-loading-foreground;
@@ -158,50 +166,50 @@
     transition: unset;
 }
 
-:host([facet-value-state="loading"]:nth-of-type(8n+2)) .facet-bars-value-bar-total,
-:host([facet-value-state="loading"]:nth-of-type(8n+2)) .facet-bars-value-bar
+:host([facet-value-state="loading"]:nth-of-type(8n+2)) .facet-bars-value-bar-1,
+:host([facet-value-state="loading"]:nth-of-type(8n+2)) .facet-bars-value-bar-0
 {
     animation-delay: 1909ms;
     animation-duration: 3891ms;
 }
 
-:host([facet-value-state="loading"]:nth-of-type(8n+3)) .facet-bars-value-bar-total,
-:host([facet-value-state="loading"]:nth-of-type(8n+3)) .facet-bars-value-bar
+:host([facet-value-state="loading"]:nth-of-type(8n+3)) .facet-bars-value-bar-1,
+:host([facet-value-state="loading"]:nth-of-type(8n+3)) .facet-bars-value-bar-0
 {
     animation-delay: 1390ms;
     animation-duration: 3770ms;
 }
 
-:host([facet-value-state="loading"]:nth-of-type(8n+4)) .facet-bars-value-bar-total,
-:host([facet-value-state="loading"]:nth-of-type(8n+4)) .facet-bars-value-bar
+:host([facet-value-state="loading"]:nth-of-type(8n+4)) .facet-bars-value-bar-1,
+:host([facet-value-state="loading"]:nth-of-type(8n+4)) .facet-bars-value-bar-0
 {
     animation-delay: 547ms;
     animation-duration: 3275ms;
 }
 
-:host([facet-value-state="loading"]:nth-of-type(8n+5)) .facet-bars-value-bar-total,
-:host([facet-value-state="loading"]:nth-of-type(8n+5)) .facet-bars-value-bar
+:host([facet-value-state="loading"]:nth-of-type(8n+5)) .facet-bars-value-bar-1,
+:host([facet-value-state="loading"]:nth-of-type(8n+5)) .facet-bars-value-bar-0
 {
     animation-delay: 1182ms;
     animation-duration: 3805ms;
 }
 
-:host([facet-value-state="loading"]:nth-of-type(8n+6)) .facet-bars-value-bar-total,
-:host([facet-value-state="loading"]:nth-of-type(8n+6)) .facet-bars-value-bar
+:host([facet-value-state="loading"]:nth-of-type(8n+6)) .facet-bars-value-bar-1,
+:host([facet-value-state="loading"]:nth-of-type(8n+6)) .facet-bars-value-bar-0
 {
     animation-delay: 262ms;
     animation-duration: 3867ms;
 }
 
-:host([facet-value-state="loading"]:nth-of-type(8n+7)) .facet-bars-value-bar-total,
-:host([facet-value-state="loading"]:nth-of-type(8n+7)) .facet-bars-value-bar
+:host([facet-value-state="loading"]:nth-of-type(8n+7)) .facet-bars-value-bar-1,
+:host([facet-value-state="loading"]:nth-of-type(8n+7)) .facet-bars-value-bar-0
 {
     animation-delay: 741ms;
     animation-duration: 3799ms;
 }
 
-:host([facet-value-state="loading"]:nth-of-type(8n+8)) .facet-bars-value-bar-total,
-:host([facet-value-state="loading"]:nth-of-type(8n+8)) .facet-bars-value-bar
+:host([facet-value-state="loading"]:nth-of-type(8n+8)) .facet-bars-value-bar-1,
+:host([facet-value-state="loading"]:nth-of-type(8n+8)) .facet-bars-value-bar-0
 {
     animation-delay: 1182ms;
     animation-duration: 4067ms;

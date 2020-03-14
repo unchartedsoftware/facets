@@ -14,7 +14,7 @@ export interface FacetBarsValueDataTyped extends FacetBarsValueData {
     type?: string;
 }
 export interface FacetBarsBaseData { [key: number]: FacetBarsValueDataTyped | null }
-export interface FacetBarsBaseSubselection { [key: number]: number }
+export interface FacetBarsBaseSubselection { [key: number]: number|number[] }
 
 export interface FacetBarsFilterValue {
     value: number;
@@ -262,10 +262,12 @@ export class FacetBarsBase extends FacetContainer {
         const keyFunction = (): number => (id++) + offset;
         const htmlFunction = (value: FacetBarsValueDataTyped|null, i: number): TemplateResult => {
             const computedState = this.computeValueState(i + offset);
-            const subselection = this.subselection ? `${this.subselection[i + offset]}` : 'false';
+            const subselection = this.subselection ? this.subselection[i + offset] : null;
             const overrideState = value === null || value.ratio === null ? 'loading' : null;
             const type = value && value.type || 'facet-bars-value';
             const template = this.templates.get(type);
+            const valuesArray = this.computeValuesArray(value || kFacetVarsValueNullData, subselection);
+
             if (template) {
                 return template.getHTML(value || kFacetVarsValueNullData, {
                     'id': i + offset,
@@ -273,7 +275,7 @@ export class FacetBarsBase extends FacetContainer {
                     'facet-value-state': overrideState !== null ? overrideState : computedState,
                     'action-buttons': actionButtons,
                     'contrast': contrast,
-                    '.subselection': subselection,
+                    '.values': valuesArray,
                 });
             } else if (type === 'facet-bars-value') {
                 return html`
@@ -283,7 +285,7 @@ export class FacetBarsBase extends FacetContainer {
                     facet-value-state="${overrideState !== null ? overrideState : computedState}"
                     action-buttons="${actionButtons}"
                     contrast="${contrast}"
-                    .subselection="${subselection}"
+                    .values="${valuesArray}"
                     .data="${value || kFacetVarsValueNullData}">
                 </facet-bars-value>`;
             }
@@ -294,7 +296,7 @@ export class FacetBarsBase extends FacetContainer {
                 facet-value-state="${overrideState !== null ? overrideState : computedState}"
                 action-buttons="${actionButtons}"
                 contrast="${contrast}"
-                .subselection="${subselection}"
+                .values="${valuesArray}"
                 .data="${value || kFacetVarsValueNullData}"">
             </${type}>`;
         };
@@ -327,6 +329,21 @@ export class FacetBarsBase extends FacetContainer {
         if ((event.type === 'mouseenter' || event.type === 'mouseleave') && event.target instanceof Element) {
             this.hover = polyMatches(event.target, ':hover');
         }
+    }
+
+    private computeValuesArray(value: FacetBarsValueDataTyped|null, subselection: number|number[]|null): (number|null)[] {
+        const result: (number|null)[] = [];
+
+        if (value) {
+            result.push(value.ratio);
+
+            if (subselection !== null) {
+                const sub = Array.isArray(subselection) ? subselection : [subselection];
+                result.push(...sub);
+            }
+        }
+
+        return result;
     }
 
     private _getViewValues(values: FacetBarsBaseData, view: [number, number]): (FacetBarsValueData|null)[] {
