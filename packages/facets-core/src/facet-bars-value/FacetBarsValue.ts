@@ -11,24 +11,39 @@ import FacetBarsValueDefaultTheme from './FacetBarsValue.default.css';
 // @ts-ignore
 import FacetBarsValueTimelineTheme from './FacetBarsValue.timeline.css';
 
-function getBarColorStyle(theme: string, state: string, index: number, value: string): string {
-    return `:host(${theme}[facet-value-state="${state}"]) .facet-bars-value-background .facet-bars-value-bar-${index} { background-color:${value} }`;
+function getBarColorHostSelector(theme: string, state: string, index: number, contrast: boolean, hover: boolean): string {
+    return `:host(${theme}${contrast ? '[contrast=true]' : ''}[facet-value-state="${state}"]${hover ? ':hover' : ''}) .facet-bars-value-background .facet-bars-value-bar-${index}`;
 }
 
 const kBarStylePrefix = 'facet-bars-';
 const kBarStyleGenerators: {[key: string]: any} = {
-    '-normal': (theme: string, index: number, value: string): string => getBarColorStyle(theme, 'normal', index, value),
-    '-normal-contrast': (value: string): TemplateResult => html`${value}`,
-    '-normal-contrast-hover': (value: string): TemplateResult => html`${value}`,
-    '-selected': (value: string): TemplateResult => html`${value}`,
-    '-selected-contrast': (value: string): TemplateResult => html`${value}`,
-    '-selected-contrast-hover': (value: string): TemplateResult => html`${value}`,
-    '-unselected': (value: string): TemplateResult => html`${value}`,
-    '-unselected-contrast': (value: string): TemplateResult => html`${value}`,
-    '-unselected-contrast-hover': (value: string): TemplateResult => html`${value}`,
-    '-muted': (value: string): TemplateResult => html`${value}`,
-    '-muted-contrast': (value: string): TemplateResult => html`${value}`,
-    '-muted-contrast-hover': (value: string): TemplateResult => html`${value}`,
+    '-normal': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'normal', index, false, false)} { background-color:${value} }`,
+    '-normal-contrast': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'normal', index, true, false)} { background-color:${value} }`,
+    '-normal-contrast-hover': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'normal', index, true, true)} { background-color:${value} }`,
+
+    '-selected': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'selected', index, false, false)} { background-color:${value} }`,
+    '-selected-contrast': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'selected', index, true, false)} { background-color:${value} }`,
+    '-selected-contrast-hover': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'selected', index, true, true)} { background-color:${value} }`,
+
+    '-unselected': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'unselected', index, false, false)} { background-color:${value} }`,
+    '-unselected-contrast': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'unselected', index, true, false)} { background-color:${value} }`,
+    '-unselected-contrast-hover': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'unselected', index, true, true)} { background-color:${value} }`,
+
+    '-muted': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'muted', index, false, false)} { background-color:${value} }`,
+    '-muted-contrast': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'muted', index, true, false)} { background-color:${value} }`,
+    '-muted-contrast-hover': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'muted', index, true, true)} { background-color:${value} }`,
 };
 const kBarStyleSuffixes = Object.keys(kBarStyleGenerators);
 
