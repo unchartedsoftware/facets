@@ -13,6 +13,34 @@ export interface FacetTermsValueData {
 }
 
 const kDefaultData: FacetTermsValueData = { ratio: 0 };
+function getBarColorHostSelector(theme: string, state: string, index: number, contrast: boolean, hover: boolean): string {
+    return `:host(${theme}${contrast ? '[contrast=true]' : ''}[state="${state}"]${hover ? ':hover' : ''}) .facet-term-bar-background .facet-terms-value-bar-${index}`;
+}
+
+const kBarStylePrefix = 'facet-terms-bar-';
+const kBarStyleGenerators: {[key: string]: any} = {
+    '-normal': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'normal', index, false, false)} { background-color:${value} }`,
+    '-normal-contrast': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'normal', index, true, false)} { background-color:${value} }`,
+    '-normal-contrast-hover': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'normal', index, true, true)} { background-color:${value} }`,
+
+    '-selected': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'selected', index, false, false)} { background-color:${value} }`,
+    '-selected-contrast': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'selected', index, true, false)} { background-color:${value} }`,
+    '-selected-contrast-hover': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'selected', index, true, true)} { background-color:${value} }`,
+
+    '-muted': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'muted', index, false, false)} { background-color:${value} }`,
+    '-muted-contrast': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'muted', index, true, false)} { background-color:${value} }`,
+    '-muted-contrast-hover': (theme: string, index: number, value: string): string =>
+        `${getBarColorHostSelector(theme, 'muted', index, true, true)} { background-color:${value} }`,
+};
+const kBarStyleSuffixes = Object.keys(kBarStyleGenerators);
 
 @customElement('facet-terms-value')
 export class FacetTermsValue extends FacetHoverable {
@@ -27,15 +55,24 @@ export class FacetTermsValue extends FacetHoverable {
     public static get properties(): any {
         return {
             data: { type: Object },
-            state: { type: String, reflect: true },
-            contrast: { type: Object, reflect: true },
-            subselection: { type: Number },
+            values: {
+                type: Array,
+                converter: {
+                    fromAttribute: (value: string): number[] => {
+                        if (!value) {
+                            return [];
+                        }
+                        const arr = JSON.parse(value);
+                        for (let i = 0, n = arr.length; i < n; ++i) {
+                            arr[i] = parseFloat(arr[i]);
+                        }
+                        return arr;
+                    },
+                    toAttribute: (value: number): string => `[${value.toString()}]`,
+                },
+            },
         };
     }
-
-    public state: string | null = null;
-    public contrast: boolean = false;
-    public subselection: number | null = null;
 
     private _data: FacetTermsValueData = kDefaultData;
     public set data(newData: FacetTermsValueData) {
@@ -47,10 +84,17 @@ export class FacetTermsValue extends FacetHoverable {
         return this._data;
     }
 
+    public values: number[] = [];
+    private computedStyle: TemplateResult|void|null = null;
+
     protected renderContent(): TemplateResult | void {
         return html`
         <div class="facet-term-container">
-            <div class="facet-term-bar"><slot name="bar">${this.renderBar()}</slot></div>
+            <div class="facet-term-bar">
+                <slot name="bar">
+                    <div class="facet-term-bar-background">${this.renderBar()}</div>
+                </slot>
+            </div>
             <div class="facet-term-details">
                 <div class="facet-term-label"><slot name="label">${this.renderLabel()}</slot></div>
                 <div class="facet-term-annotation"><slot name="annotation">${this.renderAnnotation()}</slot></div>
@@ -60,15 +104,18 @@ export class FacetTermsValue extends FacetHoverable {
         `;
     }
 
-    protected renderBar(): TemplateResult | void {
-        const ratio = (Math.max(Math.min(this.data.ratio, 1), 0) * 100).toFixed(2);
-        const selected = this.subselection ? (Math.max(Math.min(this.subselection, 1), 0) * 100).toFixed(2) : ratio;
-        return html`
-        <div class="facet-term-bar-background">
-            <div class="facet-term-bar-ratio" style="width:${ratio}%"></div>
-            <div class="facet-term-bar-selected" style="width:${selected}%"></div>
-        </div>
-        `;
+    protected renderBar(): TemplateResult[] {
+        const result = [];
+        for (let i = 0, n = this.values.length; i < n; ++i) {
+            const value = this.values[i];
+            if (!isNaN(value)) {
+                const width = (Math.max(Math.min(value, 1), 0) * 100).toFixed(2);
+                result.push(html`
+                <div class="facet-terms-value-bar-${n - i - 1}" style="width: ${width}%"></div>
+                `);
+            }
+        }
+        return result;
     }
 
     protected renderLabel(): TemplateResult {
@@ -81,5 +128,41 @@ export class FacetTermsValue extends FacetHoverable {
 
     protected renderValue(): TemplateResult {
         return html`<span>${this.data.value}</span>`;
+    }
+
+    protected computeStyle(): TemplateResult | void {
+        if (this.computedStyle === null) {
+            const theme = this.getAttribute('theme');
+            const hostTheme = theme ? `[theme="${theme}"]` : ':not([theme])';
+
+            const cssOptions = this.cssOptions;
+            const styles = [];
+            for (let i = 0, n = this.values.length; i < n; ++i) {
+                for (let ii = 0, nn = kBarStyleSuffixes.length; ii < nn; ++ii) {
+                    const option = `${kBarStylePrefix}${i}${kBarStyleSuffixes[ii]}`;
+                    const optionValue = cssOptions.read(option);
+                    if (optionValue !== undefined) {
+                        styles.push(kBarStyleGenerators[kBarStyleSuffixes[ii]](hostTheme, i, optionValue));
+                    }
+                }
+            }
+
+            const tickValue = cssOptions.read('facet-terms-tick-color');
+            if (tickValue !== undefined) {
+                styles.push(`:host(${hostTheme}:hover) .facet-blueprint .facet-blueprint-left { border-left: 4px solid ${tickValue}; }`);
+            }
+
+            const selectedBackground = cssOptions.read('facet-terms-selected-background');
+            if (selectedBackground !== undefined) {
+                styles.push(`:host(${hostTheme}[state="selected"]) .facet-blueprint:first-of-type { background-color:${selectedBackground}; }`);
+            }
+
+            if (styles.length) {
+                this.computedStyle = html`<style>${styles}</style>`;
+            } else {
+                this.computedStyle = undefined;
+            }
+        }
+        return this.computedStyle;
     }
 }

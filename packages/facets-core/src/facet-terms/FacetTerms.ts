@@ -120,8 +120,9 @@ export class FacetTerms extends FacetContainer {
             const value = this._data.values[key];
             if (value) {
                 const type = value.type || 'facet-terms-value';
-                const state = this.selection ? this.selection[key] && 'highlighted' || 'muted' : 'normal';
+                const state = this.selection ? this.selection[key] && 'selected' || 'muted' : 'normal';
                 const subselection = this.subselection && this.subselection.hasOwnProperty(key) ? this.subselection[key] : null;
+                const values = this.computeValuesArray(value, subselection);
                 const template = this.templates.get(type);
                 if (template) {
                     return template.getHTML(value, {
@@ -129,7 +130,7 @@ export class FacetTerms extends FacetContainer {
                         'action-buttons': this.actionButtons,
                         'state': state,
                         'contrast': contrast,
-                        '.subselection': subselection,
+                        '.values': values,
                         '@click': this.handleMouseClickEvent,
                     });
                 } else if (type === 'facet-terms-value') {
@@ -139,7 +140,7 @@ export class FacetTerms extends FacetContainer {
                         action-buttons="${this.actionButtons}"
                         state="${state}"
                         contrast="${contrast}"
-                        .subselection="${subselection}"
+                        .values="${values}"
                         .data="${value}"
                         @click="${this.handleMouseClickEvent}">
                     </facet-terms-value>`;
@@ -150,7 +151,7 @@ export class FacetTerms extends FacetContainer {
                     action-buttons="${this.actionButtons}"
                     state="${state}"
                     contrast="${contrast}"
-                    .subselection="${subselection}"
+                    .values="${values}"
                     .data="${value}"
                     @click="${this.handleMouseClickEvent}">
                 </${type}>`;
@@ -162,6 +163,18 @@ export class FacetTerms extends FacetContainer {
             ${repeat(this.valueKeys, keyFunction, htmlFunction)}
         </div>
         `;
+    }
+
+    private computeValuesArray(value: FacetTermsValueDataTyped, subselection: number|number[]|null): (number|null)[] {
+        const result: (number|null)[] = [];
+        if (value) {
+            result.push(value.ratio);
+            if (subselection !== null) {
+                const sub = Array.isArray(subselection) ? subselection : [subselection];
+                result.push(...sub);
+            }
+        }
+        return result;
     }
 
     private handleMouseHoverEvent(event: MouseEvent): void {
