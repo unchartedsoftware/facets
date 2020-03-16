@@ -121,7 +121,7 @@ export class FacetBarsValue extends FacetBlueprint {
         for (let i = 0, n = this.values.length; i < n; ++i) {
             const value = this.values[i];
             if (!isNaN(value)) {
-                const height = Math.round(Math.max(Math.min(value, 1), 0) * 100);
+                const height = (Math.max(Math.min(value, 1), 0) * 100).toFixed(2);
                 result.push(html`
                 <div class="facet-bars-value-bar-${n - i - 1}" style="height: ${height}%"></div>
                 `);
