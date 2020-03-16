@@ -1,6 +1,6 @@
 {
     "name": "@uncharted/facets-builder",
-    "version": "0.0.10",
+    "version": "0.0.11",
     "license": "MIT",
     "entry": "src/client/index.ts",
     "entry:server": "src/server/index.ts",
@@ -28,8 +28,8 @@
         "prepack": "npm-run-all clean build"
     },
     "dependencies": {
-        "@uncharted/facets-core": "^0.0.10",
-        "@uncharted/facets-plugins": "^0.0.10",
+        "@uncharted/facets-core": "^0.0.11",
+        "@uncharted/facets-plugins": "^0.0.11",
         "express": "^4.17.1",
         "nick-generator": "^1.0.1"
     },
