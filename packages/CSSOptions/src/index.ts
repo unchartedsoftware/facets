@@ -49,8 +49,8 @@ class CSSReaderLegacy extends CSSReader {
     }
 
     private _readOptionRecursive(element: HTMLElement, name: string, value: string | void): string | void {
-        if ((element as any).currentStyle.hasOwnProperty(`-ie11-${name}`)) {
-            return (element as any).currentStyle[`-ie11-${name}`];
+        if ((element as any).currentStyle.hasOwnProperty(`-lgcy-${name}`)) {
+            return (element as any).currentStyle[`-lgcy-${name}`];
         }
 
         if (element === document.body) {
