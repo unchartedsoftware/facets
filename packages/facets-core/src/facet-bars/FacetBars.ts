@@ -44,6 +44,8 @@ export class FacetBars extends FacetBarsBase {
         this.requestUpdate('data', oldValue);
     }
 
+    private computedStyle: TemplateResult|void|null = null;
+
     public connectedCallback(): void {
         super.connectedCallback();
 
@@ -67,5 +69,27 @@ export class FacetBars extends FacetBarsBase {
         ${super.renderContent()}
         <slot name="labels"></slot>
         `;
+    }
+
+    protected computeStyle(): TemplateResult | void {
+        if (this.computedStyle === null) {
+            const theme = this.getAttribute('theme');
+            const hostTheme = theme ? `[theme="${theme}"]` : ':not([theme])';
+
+            const cssOptions = this.cssOptions;
+            const styles = [];
+
+            const tickValue = cssOptions.read('facet-bars-tick-color');
+            if (tickValue !== undefined) {
+                styles.push(`:host(${hostTheme}:hover) .facet-blueprint .facet-blueprint-left { border-left: 4px solid ${tickValue}; }`);
+            }
+
+            if (styles.length) {
+                this.computedStyle = html`<style>${styles}</style>`;
+            } else {
+                this.computedStyle = undefined;
+            }
+        }
+        return this.computedStyle;
     }
 }
