@@ -103,7 +103,7 @@ export class FacetBarsValue extends FacetBlueprint {
 
     public values: number[] = [];
     public actionButtons: number = 2;
-    private barStyles: TemplateResult|void|null = null;
+    private computedStyle: TemplateResult|void|null = null;
 
     protected renderContent(): TemplateResult | void {
         return html`
@@ -131,7 +131,7 @@ export class FacetBarsValue extends FacetBlueprint {
     }
 
     protected computeStyle(): TemplateResult | void {
-        if (this.barStyles === null) {
+        if (this.computedStyle === null) {
             const theme = this.getAttribute('theme');
             const hostTheme = theme ? `[theme="${theme}"]` : ':not([theme])';
 
@@ -148,11 +148,11 @@ export class FacetBarsValue extends FacetBlueprint {
             }
 
             if (styles.length) {
-                this.barStyles = html`<style>${styles}</style>`;
+                this.computedStyle = html`<style>${styles}</style>`;
             } else {
-                this.barStyles = undefined;
+                this.computedStyle = undefined;
             }
         }
-        return this.barStyles;
+        return this.computedStyle;
     }
 }
