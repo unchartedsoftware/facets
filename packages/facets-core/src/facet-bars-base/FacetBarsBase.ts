@@ -220,7 +220,7 @@ export class FacetBarsBase extends FacetContainer {
         template.addCustomAttribute('facet-value-state');
         template.addCustomAttribute('action-buttons');
         template.addCustomAttribute('contrast');
-        template.addCustomAttribute('.subselection');
+        template.addCustomAttribute('.values');
     }
 
     protected renderContent(): TemplateResult {
@@ -333,16 +333,13 @@ export class FacetBarsBase extends FacetContainer {
 
     private computeValuesArray(value: FacetBarsValueDataTyped|null, subselection: number|number[]|null): (number|null)[] {
         const result: (number|null)[] = [];
-
         if (value) {
             result.push(value.ratio);
-
             if (subselection !== null) {
                 const sub = Array.isArray(subselection) ? subselection : [subselection];
                 result.push(...sub);
             }
         }
-
         return result;
     }
 
