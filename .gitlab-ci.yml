@@ -22,8 +22,11 @@ stages:
 
 Lint:
   stage: lint
+  before_script:
+    - yarn config set cache-folder .yarn
+    - yarn global add lerna
   script:
-      - yarn lint
+    - yarn lint
 
 Build:
   stage: build
