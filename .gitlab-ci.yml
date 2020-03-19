@@ -16,8 +16,14 @@ before_script:
 # Specify the stages. Those are the steps that GitLab will go through
 # Order matters.
 stages:
+  - lint
   - build
-  - test
+  # - test
+
+Lint:
+  stage: lint
+  script:
+      - yarn lint
 
 Build:
   stage: build
@@ -28,7 +34,6 @@ Build:
   script:
     - lerna bootstrap
     - lerna run build
-    - yarn lint
 
 Test:
   stage: test
@@ -42,4 +47,4 @@ Test:
     - apt-get update
     - apt-get install google-chrome-stable -y
   # Runs the tests.
-    # - yarn test
+    - yarn test
