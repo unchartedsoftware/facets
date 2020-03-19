@@ -41,7 +41,7 @@ Build:
 
 Test:
   stage: test
-  when: never
+  when: manual
   before_script:
     - yarn config set cache-folder .yarn
     - yarn install --frozen-lockfile
