@@ -18,12 +18,13 @@ before_script:
 stages:
   - lint
   - build
-  # - test
+  - test
 
 Lint:
   stage: lint
   before_script:
     - yarn config set cache-folder .yarn
+    - yarn install
     - yarn global add lerna
   script:
     - yarn lint
@@ -45,9 +46,9 @@ Test:
     - yarn install --frozen-lockfile
   script:
   # Installs Chrome
-    - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub |  apt-key add -
-    - echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' |  tee /etc/apt/sources.list.d/google-chrome.list
-    - apt-get update
-    - apt-get install google-chrome-stable -y
-  # Runs the tests.
-    - yarn test
+#    - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub |  apt-key add -
+#    - echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' |  tee /etc/apt/sources.list.d/google-chrome.list
+#    - apt-get update
+#    - apt-get install google-chrome-stable -y
+#  # Runs the tests.
+#    - yarn test
