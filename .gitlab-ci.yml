@@ -1,5 +1,5 @@
-# Uses NodeJS V 9.4.0
-image: node:9.4.0
+# Uses NodeJS V 11.13.0
+image: node:11.13.0
 
 # And to cache them as well.
 cache:
@@ -10,20 +10,18 @@ cache:
 # We tell GitLab to install all the packages
 # before running anything.
 # Docker images come with yarn preinstalled
-before_script:  
+before_script:
   - apt-get update -qq && apt-get install
-  
-# Specify the stages. Those are the steps that GitLab will go through 
-# Order matters. 
+
+# Specify the stages. Those are the steps that GitLab will go through
+# Order matters.
 stages:
   - build
   - test
 
 Build:
   stage: build
-  tags:
-    - node
-  before_script: 
+  before_script:
     - yarn config set cache-folder .yarn
     - yarn install
     - yarn global add lerna
@@ -34,16 +32,14 @@ Build:
 
 Test:
   stage: test
-  tags:
-  - node
-  before_script: 
+  before_script:
     - yarn config set cache-folder .yarn
     - yarn install --frozen-lockfile
   script:
   # Installs Chrome
     - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub |  apt-key add -
     - echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' |  tee /etc/apt/sources.list.d/google-chrome.list
-    - apt-get update 
+    - apt-get update
     - apt-get install google-chrome-stable -y
   # Runs the tests.
     # - yarn test
