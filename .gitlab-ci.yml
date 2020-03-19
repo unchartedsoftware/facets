@@ -5,7 +5,7 @@ image: node:11.13.0
 cache:
   paths:
     - node_modules/
-    - ~/.yarn
+    - .yarn
 
 # We tell GitLab to install all the packages
 # before running anything.
@@ -23,7 +23,6 @@ stages:
 Lint:
   stage: lint
   before_script:
-    - yarn config set cache-folder ~/.yarn
     - yarn install
     - yarn global add lerna
   script:
@@ -32,7 +31,6 @@ Lint:
 Build:
   stage: build
   before_script:
-    - yarn config set cache-folder ~/.yarn
     - yarn install
     - yarn global add lerna
   script:
@@ -43,7 +41,6 @@ Test:
   stage: test
   when: manual
   before_script:
-    - yarn config set cache-folder ~/.yarn
     - yarn install --frozen-lockfile
   script:
   # Installs Chrome
