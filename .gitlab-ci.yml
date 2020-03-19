@@ -5,7 +5,7 @@ image: node:11.13.0
 cache:
   paths:
     - node_modules/
-    - .yarn
+    - .yarn/
 
 # We tell GitLab to install all the packages
 # before running anything.
