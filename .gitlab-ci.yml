@@ -41,15 +41,15 @@ Build:
 
 Test:
   stage: test
+  when: never
   before_script:
     - yarn config set cache-folder .yarn
     - yarn install --frozen-lockfile
   script:
-    - echo "NO TESTS YET"
-#  # Installs Chrome
-#    - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub |  apt-key add -
-#    - echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' |  tee /etc/apt/sources.list.d/google-chrome.list
-#    - apt-get update
-#    - apt-get install google-chrome-stable -y
-#  # Runs the tests.
-#    - yarn test
+  # Installs Chrome
+    - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub |  apt-key add -
+    - echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' |  tee /etc/apt/sources.list.d/google-chrome.list
+    - apt-get update
+    - apt-get install google-chrome-stable -y
+  # Runs the tests.
+    - yarn test
