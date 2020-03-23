@@ -89,7 +89,7 @@ export class FacetTerms extends FacetContainer {
         template.addCustomAttribute('action-buttons');
         template.addCustomAttribute('state');
         template.addCustomAttribute('contrast');
-        template.addCustomAttribute('.subselection');
+        template.addCustomAttribute('.values');
         template.addCustomAttribute('@click');
     }
 
