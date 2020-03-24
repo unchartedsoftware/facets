@@ -10,21 +10,21 @@
 The Facets library is split in five packages:
 1. `CSSOptions` is a small library used to read CSS variables in modern and legacy browsers
 2. `facets-core` contains all the components necessary to start using facets in your project
-3. `facets-plugins` are a collection of components that extend facets' look and behavior
+3. `facets-plugins` is a collection of components that extend facets' behavior, look and feel
 4. `facets-examples` documentation and examples live here
-5. `facets-builder` tool to allow designers to create and customize facets (under construction, Facets 4 feature)
+5. `facets-builder` tool to create and customize facets (under construction, Facets 4 feature)
 
-TThe only packages published to the registry are `CSSOptions`, `facets-core` and `facet-plugins` 
+The only packages published to the registry are `CSSOptions`, `facets-core` and `facet-plugins` 
 
 
 ## Installation
 
-Use `yarn` or `npm` to install the desired package:
+Use `yarn` to install the desired packages:
 ```shell script
 $ yarn add @uncharted/facets-core
 $ yarn add @uncharted/facets-plugins
 ```
-or
+or `npm`:
 ```shell script
 $ npm install @uncharted/facets-core
 $ npm install @uncharted/facets-plugins
@@ -34,7 +34,7 @@ $ npm install @uncharted/facets-plugins
 ## Usage
 
 The documentation is not hosted anywhere at the moment but can be accessed by building the project and running the
-documentation.
+examples.
 
 It is recommended to install `lerna` globally:
 ```shell script
@@ -80,7 +80,7 @@ $ yarn start
 On your browser navigate to http://localhost:8090/  
 Changes to the code will refresh the browser automatically.
   
-To develop in your own app, link ALL the packages in your app, from the root of the Facets repo run: 
+To develop in your own app, link ALL the published facets packages to your app, from the root of the Facets repo run: 
 ```shell script
 $ cd packages/CSSOptions
 $ yarn link
@@ -95,7 +95,7 @@ Then, from the root of your project run:
 $ yarn link @uncharted/css-options @uncharted/facets-core @uncharted/facets-plugins
 ```
 
-Start (or re-start) your project and continue development.
+Start (or re-start) your project and continue with development.
 
 
 ---
