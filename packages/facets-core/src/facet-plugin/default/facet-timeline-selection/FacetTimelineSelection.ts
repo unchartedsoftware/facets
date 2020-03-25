@@ -320,12 +320,16 @@ export class FacetTimelineSelection extends FacetPlugin {
         }
 
         if (leftIndex !== rightIndex) {
+            const leftBar = facet.data[view[0] + leftIndex];
+            const rightBar = facet.data[view[0] + rightIndex - 1];
+            const domain = facet.domain;
+            leftIndex = Math.max(leftIndex, domain[0]);
+            rightIndex = Math.min(rightIndex, domain[1]);
+
             const leftPercentage = (barStepPercentage * leftIndex);
             const rightPercentage = (100 - barStepPercentage * rightIndex);
             const displayLeft = Math.min(Math.max(0, leftPercentage), 100).toFixed(2);
             const displayRight = Math.min(Math.max(0, rightPercentage), 100).toFixed(2);
-            const leftBar = facet.data[view[0] + leftIndex];
-            const rightBar = facet.data[view[0] + rightIndex - 1];
 
             filterInfo.style = {
                 display: 'block',
@@ -636,7 +640,11 @@ export class FacetTimelineSelection extends FacetPlugin {
             }
 
             if (leftIndex !== rightIndex) {
+                const domain = host.domain;
+                leftIndex = Math.max(leftIndex, domain[0]);
+                rightIndex = Math.min(rightIndex, domain[1]);
                 host.filter = [leftIndex, rightIndex];
+
                 const selection = host.selection;
                 if (selection) {
                     if (selection[1] <= leftIndex || selection[0] >= rightIndex) {
