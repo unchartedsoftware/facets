@@ -144,7 +144,7 @@ ${this.editorCSS.getValue()}
 </head>
 <body>
 <script>
-if (!window.facetsexamples) {
+if (!window.facetsdocs) {
     const script = document.createElement('script');
     script.setAttribute('type', 'text/javascript');
     script.setAttribute('src', 'dist/iife/index.js');
