@@ -2,19 +2,22 @@
 
 ![Uncharted Facets](assets/logo_320.png)  
   
-![Pipeline](https://gitlab.uncharted.software/Widgets/Facets/badges/master/pipeline.svg?style=flat-square) ![Coverage](https://gitlab.uncharted.software/Widgets/Facets/badges/master/coverage.svg?style=flat-square)
+![Pipeline](https://gitlab.uncharted.software/Widgets/Facets/badges/master/pipeline.svg?style=flat-square)
+![Tests](https://img.shields.io/badge/tests-0-critical.svg?style=flat-square)
+![Coverage](https://img.shields.io/badge/coverage_is-useless-informational.svg?style=flat-square)
+![Badges](https://img.shields.io/badge/badges-%F0%9F%92%AF-e0e0e0?style=flat-square)
 
 </div>
 
 ---  
 The Facets library is split in five packages:
-1. `CSSOptions` is a small library used to read CSS variables in modern and legacy browsers
+1. `css-options` is a small library used to read CSS variables in modern and legacy browsers
 2. `facets-core` contains all the components necessary to start using facets in your project
 3. `facets-plugins` is a collection of components that extend facets' behavior, look and feel
-4. `facets-examples` documentation and examples live here
+4. `facets-docs` documentation and examples live here
 5. `facets-builder` tool to create and customize facets (under construction, Facets 4 feature)
 
-The only packages published to the registry are `CSSOptions`, `facets-core` and `facet-plugins` 
+The only packages published to the registry are `css-options`, `facets-core` and `facet-plugins` 
 
 
 ## Installation
@@ -34,7 +37,7 @@ $ npm install @uncharted/facets-plugins
 ## Usage
 
 The documentation is not hosted anywhere at the moment but can be accessed by building the project and running the
-examples.
+`facets-docs` package.
 
 It is recommended to install `lerna` globally:
 ```shell script
@@ -45,12 +48,12 @@ Check out or download this repo, then, from the repo's root folder run the follo
 ```shell script
 $ yarn install
 $ lerna bootstrap
-$ lern run build
+$ lerna run build
 ```
 
-You can now run the examples:
+You can now run the documentation:
 ```shell script
-$ cd packages/facets-examples
+$ cd packages/facets-docs
 $ yarn start
 ```
 
@@ -72,9 +75,9 @@ $ cd packages/facets-core
 $ yarn watch
 ```
 
-To develop locally, run the `facets-examples` package and use it as a testbed:
+To develop locally, run the `facets-docs` package and use it as a testbed:
 ```shell script
-$ cd packages/facets-examples
+$ cd packages/facets-docs
 $ yarn start
 ```
 On your browser navigate to http://localhost:8090/  
@@ -82,7 +85,7 @@ Changes to the code will refresh the browser automatically.
   
 To develop in your own app, link ALL the published facets packages to your app, from the root of the Facets repo run: 
 ```shell script
-$ cd packages/CSSOptions
+$ cd packages/css-options
 $ yarn link
 $ cd ../facets-core
 $ yarn link
