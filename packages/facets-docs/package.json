@@ -1,5 +1,5 @@
 {
-    "name": "@uncharted/facets-examples",
+    "name": "@uncharted/facets-docs",
     "version": "0.0.11",
     "license": "MIT",
     "entry": "src/index.ts",
