@@ -48,7 +48,7 @@ Check out or download this repo, then, from the repo's root folder run the follo
 ```shell script
 $ yarn install
 $ lerna bootstrap
-$ lern run build
+$ lerna run build
 ```
 
 You can now run the documentation:
