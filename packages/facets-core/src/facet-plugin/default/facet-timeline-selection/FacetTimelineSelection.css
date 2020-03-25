@@ -132,3 +132,19 @@
     -ms-user-select: none;
     z-index: 1;
 }
+
+:host([filter-handle-track=false]) .facet-timeline-filter-handle-track {
+    height: 2px;
+}
+:host([filter-handle-track=false]) .facet-timeline-date-label {
+    text-shadow:
+        -.5px -.5px 0 white,
+        .5px -.5px 0 white,
+        -.5px .5px 0 white,
+        .5px .5px 0 white;
+}
+:host([filter-labels-interactive=false]) .facet-timeline-date-label {
+    color: black;
+    pointer-events: none;
+    font-size: 10px;
+}
