@@ -121,8 +121,8 @@ export class FacetBarsBase extends FacetContainer {
     public get view(): [number, number] {
         if (this._view === kFacetBarsBaseNullView || this._view === this.nullView) {
             const domain = this.domain;
-            this.nullView[0] = domain[0];
-            this.nullView[1] = domain[1];
+            this.nullView[0] = Math.floor(domain[0]);
+            this.nullView[1] = Math.ceil(domain[1]);
             this._view = this.nullView;
         }
         return this._view;
@@ -144,7 +144,8 @@ export class FacetBarsBase extends FacetContainer {
             if (this._activeView !== this._view) {
                 return this.view;
             } else if (this.valueKeys.length) {
-                return this.domain;
+                const domain = this.domain;
+                return [Math.floor(domain[0]), Math.ceil(domain[1])];
             }
             return [0, 0];
         }
