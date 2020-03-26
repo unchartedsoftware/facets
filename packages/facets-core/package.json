@@ -1,6 +1,6 @@
 {
     "name": "@uncharted/facets-core",
-    "version": "0.0.11",
+    "version": "0.0.12",
     "license": "MIT",
     "entry": "src/index.ts",
     "main": "dist/es5/index.js",
@@ -30,7 +30,7 @@
     "dependencies": {
         "@fortawesome/free-regular-svg-icons": "^5.10.2",
         "@fortawesome/free-solid-svg-icons": "^5.10.2",
-        "@uncharted/css-options": "^0.0.11",
+        "@uncharted/css-options": "^0.0.12",
         "lit-element": "^2.2.1",
         "lit-html": "^1.1.2"
     }
