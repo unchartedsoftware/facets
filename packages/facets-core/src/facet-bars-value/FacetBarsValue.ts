@@ -1,5 +1,5 @@
 import {css, CSSResult, customElement, html, TemplateResult, unsafeCSS} from 'lit-element';
-import { styleMap } from 'lit-html/directives/style-map';
+import {styleMap} from 'lit-html/directives/style-map';
 import {FacetBlueprint} from '../facet-blueprint/FacetBlueprint';
 import {renderButtons} from '../tools/buttons';
 // @ts-ignore
