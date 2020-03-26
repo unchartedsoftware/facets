@@ -1,4 +1,5 @@
 import {css, CSSResult, customElement, html, TemplateResult, unsafeCSS} from 'lit-element';
+import { styleMap } from 'lit-html/directives/style-map';
 import {FacetBlueprint} from '../facet-blueprint/FacetBlueprint';
 import {renderButtons} from '../tools/buttons';
 // @ts-ignore
@@ -88,6 +89,8 @@ export class FacetBarsValue extends FacetBlueprint {
                 },
             },
             actionButtons: { type: Number, attribute: 'action-buttons' },
+            clipLeft: { type: Number },
+            clipRight: { type: Number },
         };
     }
 
@@ -103,9 +106,25 @@ export class FacetBarsValue extends FacetBlueprint {
 
     public values: number[] = [];
     public actionButtons: number = 2;
+    public clipLeft: number = 0;
+    public clipRight: number = 0;
     private computedStyle: TemplateResult|void|null = null;
 
     protected renderContent(): TemplateResult | void {
+        if (this.clipLeft > 0 || this.clipRight > 0) {
+            const clipStyle = {
+                'margin-left': `${(this.clipLeft * 100).toFixed(2)}%`,
+                'margin-right': `${(this.clipRight * 100).toFixed(2)}%`,
+            };
+            return html`
+            <div class="facet-bars-value-background" style="${styleMap(clipStyle)}">
+                ${this.renderBars()}
+            </div>
+            <div class="facet-hoverable-buttons"><slot name="buttons">
+                ${renderButtons(this)}
+            </slot></div>
+            `;
+        }
         return html`
         <div class="facet-bars-value-background">
             ${this.renderBars()}
