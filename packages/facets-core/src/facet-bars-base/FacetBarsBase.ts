@@ -222,6 +222,8 @@ export class FacetBarsBase extends FacetContainer {
         template.addCustomAttribute('action-buttons');
         template.addCustomAttribute('contrast');
         template.addCustomAttribute('.values');
+        template.addCustomAttribute('.clipLeft');
+        template.addCustomAttribute('.clipRight');
     }
 
     protected renderContent(): TemplateResult {
@@ -268,6 +270,9 @@ export class FacetBarsBase extends FacetContainer {
             const type = value && value.type || 'facet-bars-value';
             const template = this.templates.get(type);
             const valuesArray = this.computeValuesArray(value || kFacetVarsValueNullData, subselection);
+            const domain = this.domain;
+            const clipLeft = i < domain[0] ? domain[0] - Math.floor(domain[0]) : 0;
+            const clipRight = i + 1 > domain[1] ? (i + 1) - domain[1] : 0;
 
             if (template) {
                 return template.getHTML(value || kFacetVarsValueNullData, {
@@ -277,6 +282,8 @@ export class FacetBarsBase extends FacetContainer {
                     'action-buttons': actionButtons,
                     'contrast': contrast,
                     '.values': valuesArray,
+                    '.clipLeft': clipLeft,
+                    '.clipRight': clipRight,
                 });
             } else if (type === 'facet-bars-value') {
                 return html`
@@ -287,7 +294,9 @@ export class FacetBarsBase extends FacetContainer {
                     action-buttons="${actionButtons}"
                     contrast="${contrast}"
                     .values="${valuesArray}"
-                    .data="${value || kFacetVarsValueNullData}">
+                    .data="${value || kFacetVarsValueNullData}"
+                    .clipLeft="${clipLeft}"
+                    .clipRight="${clipRight}">
                 </facet-bars-value>`;
             }
             return preHTML`
@@ -298,7 +307,9 @@ export class FacetBarsBase extends FacetContainer {
                 action-buttons="${actionButtons}"
                 contrast="${contrast}"
                 .values="${valuesArray}"
-                .data="${value || kFacetVarsValueNullData}"">
+                .data="${value || kFacetVarsValueNullData}"
+                .clipLeft="${clipLeft}"
+                .clipRight="${clipRight}">
             </${type}>`;
         };
 
