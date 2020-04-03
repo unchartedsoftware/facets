@@ -1,5 +1,6 @@
 import {css, CSSResult, customElement, html, TemplateResult, unsafeCSS} from 'lit-element';
 import { styleMap } from 'lit-html/directives/style-map';
+import { classMap } from 'lit-html/directives/class-map';
 import {FacetPlugin, FacetBarsBase} from '@uncharted/facets-core';
 
 // @ts-ignore
@@ -22,10 +23,14 @@ export class Scrollbar extends FacetPlugin {
     public static get properties(): any {
         return {
             minBarWidth: { type: Number, attribute: 'min-bar-width' },
+            autoHide: { type: Object, attribute: 'auto-hide' },
+            roundCaps: { type: Object, attribute: 'round-caps' },
         };
     }
 
     public minBarWidth: number = 8;
+    public autoHide: boolean = false;
+    public roundCaps: boolean = false;
 
     private facet: FacetBarsBase | null = null;
     private mouseTarget: string | null = null;
@@ -85,7 +90,8 @@ export class Scrollbar extends FacetPlugin {
         if (this.facet) {
             const domain = this.facet.domain;
             const view = this.facet.view;
-            {
+
+            if (!this.autoHide || view[0] > domain[0] || view[1] < domain[1]) {
                 const domainLength = domain[1] - domain[0];
                 const thumbLeft = (((view[0] - domain[0]) / domainLength) * 100).toFixed(2);
                 const thumbRight = ((1.0 - (view[1] - domain[0]) / domainLength) * 100).toFixed(2);
@@ -95,9 +101,15 @@ export class Scrollbar extends FacetPlugin {
                     right: `${thumbRight}%`,
                     visibility: thumbVisibility,
                 };
+
+                const backgroundClasses = {
+                    'scrollbar-background': true,
+                    'scrollbar-background-round': this.roundCaps,
+                };
+
                 return html`
                 <div class="scrollbar-container">
-                    <div class="scrollbar-background">
+                    <div class=${classMap(backgroundClasses)}>
                         <div class="scrollbar-area" @mousedown="${this.handleMouseEvent}">
                             <div class="scrollbar-thumb"
                             @mousedown="${this.handleMouseEvent}"
@@ -108,8 +120,11 @@ export class Scrollbar extends FacetPlugin {
                 </div>
                 `;
             }
+
+            return undefined;
         }
-        return html`<div class="scrollbar-container"></div>`;
+
+        return this.autoHide ? undefined : html`<div class="scrollbar-container"></div>`;
     }
 
     private handleMouseEvent(event: Event): void {

@@ -20,6 +20,14 @@
     box-sizing: border-box;
 }
 
+.scrollbar-background-round {
+    /*margin: 0 18px;*/
+    padding: 0 3px;
+    border-radius: 6px;
+    border: none;
+    background-color: rgb(244,244,244);
+}
+
 .scrollbar-area {
     height: 100%;
     flex-grow: 1;
