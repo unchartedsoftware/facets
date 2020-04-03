@@ -66,7 +66,7 @@ export class FacetContainer extends FacetBlueprint {
             return html`
             <div class="facet-container-footer">
                 <slot name="footer-label">
-                    ${this.renderFooterLabel()}
+                    ${label}
                 </slot>
             </div>
             `;
