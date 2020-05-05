@@ -46,6 +46,10 @@
     border-left: none;
 }
 
+.facet-timeline-filter-computed[display-border*="no-border"]:after {
+    border: none;
+}
+
 .facet-timeline-filter-handle {
     position: absolute;
     top: 0;

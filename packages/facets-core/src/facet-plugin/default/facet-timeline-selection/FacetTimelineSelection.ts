@@ -91,10 +91,6 @@ export class FacetTimelineSelection extends FacetPlugin {
             }
 
             this.monkeyPatchRenderer(this.facet);
-
-            if (!this.facet.filter) {
-                this.facet.filter = this.facet.domain;
-            }
         } else {
             this.facet = null;
         }
@@ -107,10 +103,6 @@ export class FacetTimelineSelection extends FacetPlugin {
     protected renderPlugin(renderedValues: TemplateResult | void): TemplateResult | void {
         const facet = this.facet;
         if (facet) {
-            if (!facet.filter) {
-                facet.filter = facet.domain;
-            }
-
             const barArea = facet.barAreaElement;
             const filterInfo = this.computeFilterRenderInfo(facet, barArea);
             const selectionInfo = this.computeSelectionRenderInfo(facet, barArea);
@@ -289,6 +281,15 @@ export class FacetTimelineSelection extends FacetPlugin {
                 this.computeFilterRenderInfoResize(result, facet, barArea);
             } else if (facet.filter) {
                 this.computeFilterRenderInfoFilter(result, facet, barArea);
+            } else {
+                result.style = {
+                    display: 'block',
+                    left: '0',
+                    right: '0',
+                };
+                result.displayBorder = 'no-border';
+                result.minHandleStyle = { display: 'none' };
+                result.maxHandleStyle = { display: 'none' };
             }
 
             this.computeFilterLabelsRenderInfo(result);
