@@ -1,11 +1,6 @@
 <div align="center">
 
-![Uncharted Facets](assets/logo_320.png)  
-  
-![Pipeline](https://gitlab.uncharted.software/Widgets/Facets/badges/master/pipeline.svg?style=flat-square)
-![Tests](https://img.shields.io/badge/tests-0-critical.svg?style=flat-square)
-![Coverage](https://img.shields.io/badge/coverage_is-useless-informational.svg?style=flat-square)
-![Badges](https://img.shields.io/badge/badges-%F0%9F%92%AF-e0e0e0?style=flat-square)
+![Uncharted Facets](assets/logo_320.png)
 
 </div>
 
