@@ -1,5 +1,5 @@
-import {customElement, TemplateResult, html, CSSResult, css, unsafeCSS} from 'lit-element';
-import {FacetBarsBase, FacetBarsBaseData, kFacetBarsBaseDefaultValues} from '../facet-bars-base/FacetBarsBase';
+import { customElement, TemplateResult, html, CSSResult, css, unsafeCSS } from 'lit-element';
+import { FacetBarsBase, FacetBarsBaseData, kFacetBarsBaseDefaultValues } from '../facet-bars-base/FacetBarsBase';
 
 // @ts-ignore
 import facetBarsStyle from './FacetBars.css';
@@ -25,8 +25,11 @@ export class FacetBars extends FacetBarsBase {
     public static get properties(): any {
         return {
             data: { type: Object },
+            disabled: { type: Boolean },
         };
     }
+
+    public disabled: boolean = false;
 
     private _data: FacetBarsData = kDefaultData;
     public get data(): FacetBarsData {
@@ -44,7 +47,7 @@ export class FacetBars extends FacetBarsBase {
         this.requestUpdate('data', oldValue);
     }
 
-    private computedStyle: TemplateResult|void|null = null;
+    private computedStyle: TemplateResult | void | null = null;
 
     public connectedCallback(): void {
         super.connectedCallback();
@@ -54,9 +57,11 @@ export class FacetBars extends FacetBarsBase {
             labels.setAttribute('id', 'facet-bars-labels');
         }
 
-        const selection = this.createSlottedElement('selection', 'facet-bars-selection');
-        if (selection) {
-            selection.setAttribute('id', 'facet-bars-selection');
+        if (!this.disabled) {
+            const selection = this.createSlottedElement('selection', 'facet-bars-selection');
+            if (selection) {
+                selection.setAttribute('id', 'facet-bars-selection');
+            }
         }
     }
 

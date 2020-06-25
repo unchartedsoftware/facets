@@ -1,10 +1,10 @@
-import {FacetContainer} from '../facet-container/FacetContainer';
-import {FacetTemplate} from '../facet-template/FacetTemplate';
-import {FacetTermsValueData} from '../facet-terms-value/FacetTermsValue';
-import {css, CSSResult, customElement, html, TemplateResult, unsafeCSS} from 'lit-element';
-import {repeat} from 'lit-html/directives/repeat';
-import {preHTML} from '../tools/preHTML';
-import {polyMatches} from '../tools/PolyMatches';
+import { FacetContainer } from '../facet-container/FacetContainer';
+import { FacetTemplate } from '../facet-template/FacetTemplate';
+import { FacetTermsValueData } from '../facet-terms-value/FacetTermsValue';
+import { css, CSSResult, customElement, html, TemplateResult, unsafeCSS } from 'lit-element';
+import { repeat } from 'lit-html/directives/repeat';
+import { preHTML } from '../tools/preHTML';
+import { polyMatches } from '../tools/PolyMatches';
 
 // @ts-ignore
 import facetTermsStyle from './FacetTerms.css';
@@ -27,7 +27,7 @@ export interface FacetTermsData {
     metadata?: any;
 }
 
-const kDefaultData = {values: []};
+const kDefaultData = { values: [] };
 
 @customElement('facet-terms')
 export class FacetTerms extends FacetContainer {
@@ -41,17 +41,19 @@ export class FacetTerms extends FacetContainer {
 
     public static get properties(): any {
         return {
-            data: {type: Object},
-            selection: {type: Object},
-            subselection: {type: Object},
-            multiselect: {type: Object},
-            actionButtons: {type: Number, attribute: 'action-buttons'},
+            data: { type: Object },
+            selection: { type: Object },
+            subselection: { type: Object },
+            multiselect: { type: Object },
+            actionButtons: { type: Number, attribute: "action-buttons" },
+            disabled: { type: Boolean },
         };
     }
 
     public selection: FacetTermsSelection | null = null;
     public subselection: FacetTermsSubselection | null = null;
     public multiselect: boolean = true;
+    public disabled: boolean = false;
     public actionButtons: number = 2;
 
     private _data: FacetTermsData = kDefaultData;
@@ -165,8 +167,8 @@ export class FacetTerms extends FacetContainer {
         `;
     }
 
-    private computeValuesArray(value: FacetTermsValueDataTyped, subselection: number|number[]|null): (number|null)[] {
-        const result: (number|null)[] = [];
+    private computeValuesArray(value: FacetTermsValueDataTyped, subselection: number | number[] | null): (number | null)[] {
+        const result: (number | null)[] = [];
         if (value) {
             result.push(value.ratio);
             if (subselection !== null) {
@@ -184,7 +186,7 @@ export class FacetTerms extends FacetContainer {
     }
 
     private handleMouseClickEvent(event: MouseEvent): void {
-        if (event.currentTarget instanceof Element) {
+        if (event.currentTarget instanceof Element && !this.disabled) {
             const id = parseInt(event.currentTarget.getAttribute('id') || '', 10);
             if (!isNaN(id)) {
                 let selection = Object.assign({}, this.selection);
@@ -198,7 +200,7 @@ export class FacetTerms extends FacetContainer {
                     if (this.multiselect) {
                         selection[id] = true;
                     } else {
-                        selection = {[id]: true};
+                        selection = { [id]: true };
                     }
                 }
                 this.selection = Object.keys(selection).length === 0 ? null : selection;

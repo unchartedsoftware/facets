@@ -1,4 +1,4 @@
-import {customElement, TemplateResult, html, CSSResult, css, unsafeCSS} from 'lit-element';
+import { customElement, TemplateResult, html, CSSResult, css, unsafeCSS } from 'lit-element';
 import {
     FacetBarsBase,
     FacetBarsValueDataTyped,
@@ -28,8 +28,11 @@ export class FacetTimeline extends FacetBarsBase {
     public static get properties(): any {
         return {
             data: { type: Object },
+            disabled: { type: Boolean },
         };
     }
+
+    public disabled: boolean = false;
 
     private _data: FacetTimelineData = kFacetBarsBaseDefaultValues as FacetTimelineData;
     public get data(): FacetTimelineData {
@@ -59,9 +62,11 @@ export class FacetTimeline extends FacetBarsBase {
             labels.setAttribute('id', 'facet-timeline-labels');
         }
 
-        const selection = this.createSlottedElement('selection', 'facet-timeline-selection');
-        if (selection) {
-            selection.setAttribute('id', 'facet-timeline-selection');
+        if (!this.disabled) {
+            const selection = this.createSlottedElement('selection', 'facet-timeline-selection');
+            if (selection) {
+                selection.setAttribute('id', 'facet-timeline-selection');
+            }
         }
     }
 
