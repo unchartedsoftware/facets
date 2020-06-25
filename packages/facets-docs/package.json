@@ -1,6 +1,6 @@
 {
     "name": "@uncharted/facets-docs",
-    "version": "0.2.0",
+    "version": "3.0.0",
     "license": "MIT",
     "entry": "src/index.ts",
     "main": "dist/es5/index.js",
@@ -28,8 +28,8 @@
         "prepack": "npm-run-all clean build"
     },
     "dependencies": {
-        "@uncharted/facets-core": "^0.2.0",
-        "@uncharted/facets-plugins": "^0.2.0",
+        "@uncharted/facets-core": "^3.0.0",
+        "@uncharted/facets-plugins": "^3.0.0",
         "codemirror": "^5.49.0",
         "lit-element": "^2.2.1",
         "lit-html": "^1.1.2",

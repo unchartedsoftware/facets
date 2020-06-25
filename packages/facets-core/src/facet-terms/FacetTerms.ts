@@ -69,7 +69,7 @@ export class FacetTerms extends FacetContainer {
             selection: { type: Object },
             subselection: { type: Object },
             multiselect: { type: Object },
-            actionButtons: { type: Number, attribute: "action-buttons" },
+            actionButtons: { type: Number, attribute: 'action-buttons' },
             disabled: { type: Boolean },
         };
     }
