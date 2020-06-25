@@ -1,5 +1,5 @@
 {
-    "name": "@uncharted/css-options",
+    "name": "@uncharted.software/css-options",
     "version": "3.0.0",
     "license": "MIT",
     "entry": "src/index.ts",
