@@ -19,13 +19,13 @@ The only packages published to the registry are `css-options`, `facets-core` and
 
 Use `yarn` to install the desired packages:
 ```shell script
-$ yarn add @uncharted/facets-core
-$ yarn add @uncharted/facets-plugins
+$ yarn add @uncharted.software/facets-core
+$ yarn add @uncharted.software/facets-plugins
 ```
 or `npm`:
 ```shell script
-$ npm install @uncharted/facets-core
-$ npm install @uncharted/facets-plugins
+$ npm install @uncharted.software/facets-core
+$ npm install @uncharted.software/facets-plugins
 ```
 
 
@@ -90,7 +90,7 @@ $ yarn link
 
 Then, from the root of your project run:
 ```shell script
-$ yarn link @uncharted/css-options @uncharted/facets-core @uncharted/facets-plugins
+$ yarn link @uncharted.software/css-options @uncharted.software/facets-core @uncharted.software/facets-plugins
 ```
 
 Start (or re-start) your project and continue with development.
