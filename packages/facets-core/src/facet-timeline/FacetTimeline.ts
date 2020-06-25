@@ -59,6 +59,7 @@ export class FacetTimeline extends FacetBarsBase {
     public disabled: boolean = false;
 
     private _data: FacetTimelineData = kFacetBarsBaseDefaultValues as FacetTimelineData;
+    // @ts-ignore
     public get data(): FacetTimelineData {
         return this._data;
     }

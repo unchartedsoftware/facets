@@ -81,6 +81,7 @@ export class FacetTerms extends FacetContainer {
     public actionButtons: number = 2;
 
     private _data: FacetTermsData = kDefaultData;
+    // @ts-ignore
     public get data(): FacetTermsData {
         return this._data;
     }

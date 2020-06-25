@@ -56,6 +56,7 @@ export class FacetBars extends FacetBarsBase {
     public disabled: boolean = false;
 
     private _data: FacetBarsData = kDefaultData;
+    // @ts-ignore
     public get data(): FacetBarsData {
         return this._data;
     }

@@ -71,7 +71,7 @@ export class FacetTemplate extends LitElement {
     private customAttributesKeys: Map<symbol, string>;
     private tagComponents: TemplateComponents;
     private mutationObserver: MutationWrapper;
-    private xlinkDirective: (...args: any[]) => object;
+    private xlinkDirective: (...args: any[]) => any;
 
     public constructor() {
         super();

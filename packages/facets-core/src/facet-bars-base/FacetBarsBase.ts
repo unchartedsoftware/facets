@@ -117,6 +117,7 @@ export class FacetBarsBase extends FacetContainer {
     }
 
     private _domain: [number, number] = kFacetBarsBaseNullDomain;
+    // @ts-ignore
     public get domain(): [number, number] {
         if (this._domain === kFacetBarsBaseNullDomain || this._domain === this.nullDomain) {
             if (this.valueKeys.length) {
@@ -142,6 +143,7 @@ export class FacetBarsBase extends FacetContainer {
     }
 
     private _view: [number, number] = kFacetBarsBaseNullView;
+    // @ts-ignore
     public get view(): [number, number] {
         if (this._view === kFacetBarsBaseNullView || this._view === this.nullView) {
             const domain = this.domain;
