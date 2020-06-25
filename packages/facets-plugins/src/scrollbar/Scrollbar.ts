@@ -25,7 +25,7 @@
 import {css, CSSResult, customElement, html, TemplateResult, unsafeCSS} from 'lit-element';
 import { styleMap } from 'lit-html/directives/style-map';
 import { classMap } from 'lit-html/directives/class-map';
-import {FacetPlugin, FacetBarsBase} from '@uncharted/facets-core';
+import {FacetPlugin, FacetBarsBase} from '@uncharted.software/facets-core';
 
 // @ts-ignore
 import ScrollbarStyle from './Scrollbar.css';

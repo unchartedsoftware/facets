@@ -23,8 +23,8 @@
  */
 
 import {css, CSSResult, customElement, unsafeCSS, html, TemplateResult} from 'lit-element';
-import {FacetPlugin} from '@uncharted/facets-core';
-import {FacetBarsBase} from '@uncharted/facets-core';
+import {FacetPlugin} from '@uncharted.software/facets-core';
+import {FacetBarsBase} from '@uncharted.software/facets-core';
 
 // @ts-ignore
 import ZoomBarStyle from './ZoomBar.css';

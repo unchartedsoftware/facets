@@ -23,7 +23,7 @@
  */
 
 import {css, CSSResult, customElement, unsafeCSS, TemplateResult, html} from 'lit-element';
-import {FacetPlugin, FacetBarsBase, makeIconSVG} from '@uncharted/facets-core';
+import {FacetPlugin, FacetBarsBase, makeIconSVG} from '@uncharted.software/facets-core';
 import {faPlus} from '@fortawesome/free-solid-svg-icons/faPlus';
 import {faMinus} from '@fortawesome/free-solid-svg-icons/faMinus';
 import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';

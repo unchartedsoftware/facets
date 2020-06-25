@@ -1,19 +1,41 @@
 'use strict';
 
 const path = require('path');
-const liveServer = require('rollup-plugin-live-server');
-const resolve = require('rollup-plugin-node-resolve');
-const commonjs = require('rollup-plugin-commonjs');
-const babel = require('rollup-plugin-babel');
+const resolve = require('@rollup/plugin-node-resolve').nodeResolve;
+const commonjs = require('@rollup/plugin-commonjs');
+const babel = require('@rollup/plugin-babel').babel;
 const typescript = require('rollup-plugin-typescript2');
 const polyfill = require('rollup-plugin-polyfill');
 const string = require('rollup-plugin-string').string;
 const sourcemaps = require('rollup-plugin-sourcemaps');
 const globby = require('globby');
+const server = require('live-server');
 
 const extensions = [
     '.js', '.jsx', '.ts', '.tsx',
 ];
+
+function liveServer(options = {}) {
+    const defaultParams = {
+        file: 'index.html',
+        host: '0.0.0.0',
+        logLevel: 2,
+        open: false,
+        port: 8080,
+        root: '.',
+        wait: 200,
+    };
+
+    const params = Object.assign({}, defaultParams, options);
+
+    server.start(params);
+    return {
+        name: 'liveServer',
+        generateBundle() {
+            console.log(`live-server running on ${params.port}`);
+        }
+    };
+}
 
 function generateSingleConfig(target, input, output, dependencies = null, moduleName = null, sourcemap = true, addLiveServer = false, mount = []) {
     let format;
@@ -112,7 +134,6 @@ function generateSingleConfig(target, input, output, dependencies = null, module
         config.plugins.push(typescript({
             typescript: require('typescript'),
             cacheRoot: path.resolve(__dirname, '.rts2_cache'),
-            objectHashIgnoreUnknownHack: true,
             tsconfigOverride: {
                 compilerOptions: {
                     target: target === 'next' || target === 'server' || target === 'client' ? 'esnext' : target === 'iife' ? 'es5' : target,

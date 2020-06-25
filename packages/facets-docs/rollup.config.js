@@ -26,8 +26,8 @@
 
 const generator = require('../../rollup.config.generator');
 const pkg = require('./package.json');
-const resolve = require('rollup-plugin-node-resolve');
-const commonjs = require('rollup-plugin-commonjs');
+// const resolve = require('@rollup/plugin-node-resolve').nodeResolve;
+// const commonjs = require('@rollup/plugin-commonjs');
 
 const config = generator(pkg, __dirname);
 
