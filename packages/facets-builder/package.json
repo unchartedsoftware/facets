@@ -8,9 +8,6 @@
     "client": "dist/client/index.js",
     "server": "dist/server/index.js",
     "types": "dist/types/index.d.ts",
-    "publishConfig": {
-        "registry": "https://npm.uncharted.software/repository/uncharted/"
-    },
     "files": [
         "dist"
     ],

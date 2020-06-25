@@ -8,9 +8,6 @@
     "iife": "dist/iife/index.js",
     "jsnext:main": "dist/next/index.js",
     "types": "dist/types/index.d.ts",
-    "publishConfig": {
-        "registry": "https://npm.uncharted.software/repository/uncharted/"
-    },
     "files": [
         "dist"
     ],
