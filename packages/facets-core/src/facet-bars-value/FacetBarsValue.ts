@@ -180,15 +180,20 @@ export class FacetBarsValue extends FacetBlueprint {
 
             const cssOptions = this.cssOptions;
             const styles = [];
-            for (let i = 0, n = this.values.length; i < n; ++i) {
+            const n = this.values.length;
+            let i = 0;
+            let hasOption;
+            do {
+                hasOption = false;
                 for (let ii = 0, nn = kBarStyleSuffixes.length; ii < nn; ++ii) {
                     const option = `${kBarStylePrefix}${i}${kBarStyleSuffixes[ii]}`;
                     const optionValue = cssOptions.read(option);
                     if (optionValue !== undefined) {
+                        hasOption = true;
                         styles.push(kBarStyleGenerators[kBarStyleSuffixes[ii]](hostTheme, i, optionValue));
                     }
                 }
-            }
+            } while (++i < n || hasOption);
 
             if (styles.length) {
                 this.computedStyle = html`<style>${styles}</style>`;
