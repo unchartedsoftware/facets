@@ -55,17 +55,22 @@ export class FacetPlugin extends LitElement {
 
     public connectedCallback(): void {
         super.connectedCallback();
-        // stupid IE11...
         const parent = this.parentElement;
         if (parent) {
-            requestAnimationFrame((): void => {
+            // stupid IE11...
+            const dispatchEvent = (): void => {
                 parent.dispatchEvent(new CustomEvent(FacetPlugin.connectedEvent, {
                     bubbles: true,
                     detail: {
                         plugin: this,
                     },
                 }));
-            });
+            };
+            if ((window as any).ShadyDOM && (window as any).ShadyDOM.inUse) {
+                requestAnimationFrame(dispatchEvent);
+            } else {
+                dispatchEvent();
+            }
         }
     }
 

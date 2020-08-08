@@ -129,17 +129,22 @@ export class FacetTemplate extends LitElement {
         this.mutationObserver.start();
         this._processAddedNodes(this.childNodes);
 
-        // stupid IE11...
         const parent = this.parentElement;
         if (parent) {
-            requestAnimationFrame((): void => {
+            // stupid IE11...
+            const dispatchEvent = (): void => {
                 parent.dispatchEvent(new CustomEvent(FacetTemplate.connectedEvent, {
                     bubbles: true,
                     detail: {
                         template: this,
                     },
                 }));
-            });
+            };
+            if ((window as any).ShadyDOM && (window as any).ShadyDOM.inUse) {
+                requestAnimationFrame(dispatchEvent);
+            } else {
+                dispatchEvent();
+            }
         }
     }
 
