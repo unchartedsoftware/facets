@@ -35,5 +35,5 @@
 }
 
 :host(:hover) .facet-blueprint-left {
-    border-left: 4px solid #255DCC;
+    border-left: 4px solid var(--facet-bars-tick-color, #255DCC);
 }

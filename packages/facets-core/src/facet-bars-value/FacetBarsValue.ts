@@ -24,6 +24,7 @@
 
 import {css, CSSResult, customElement, html, TemplateResult, unsafeCSS} from 'lit-element';
 import {styleMap} from 'lit-html/directives/style-map';
+import {CSSOptions} from '@uncharted.software/css-options';
 import {FacetBlueprint} from '../facet-blueprint/FacetBlueprint';
 import {renderButtons} from '../tools/buttons';
 // @ts-ignore
@@ -90,6 +91,75 @@ export class FacetBarsValue extends FacetBlueprint {
             ${unsafeCSS(FacetBarsValueDefaultTheme)}
             ${unsafeCSS(FacetBarsValueTimelineTheme)}
         `);
+
+        if (CSSOptions.supportsCSSVars) {
+            // add the style for 20 sub-bars, sorry future Dario, you'll probably have to make this number dynamic
+            // start at bar 2 since the css already has the proper style for the first two
+            for (let i = 2; i < 20; ++i) {
+                styles.push(css`
+                    :host([facet-value-state="normal"]) .facet-bars-value-bar-${i}
+                    {
+                        background-color: var(--facet-bars-${i}-normal);
+                    }
+
+                    :host([contrast=true][facet-value-state="normal"]) .facet-bars-value-bar-${i}
+                    {
+                        background-color: var(--facet-bars-${i}-normal-contrast);
+                    }
+
+                    :host([contrast=true][facet-value-state="normal"]:hover) .facet-bars-value-bar-${i}
+                    {
+                        background-color: var(--facet-bars-${i}-normal-contrast-hover);
+                    }
+
+                    :host([facet-value-state="selected"]) .facet-bars-value-bar-${i}
+                    {
+                        background-color: var(--facet-bars-${i}-selected);
+                    }
+
+                    :host([contrast=true][facet-value-state="selected"]) .facet-bars-value-bar-${i}
+                    {
+                        background-color: var(--facet-bars-${i}-selected-contrast);
+                    }
+
+                    :host([contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar-${i}
+                    {
+                        background-color: var(--facet-bars-${i}-selected-contrast-hover);
+                    }
+
+                    :host([facet-value-state="unselected"]) .facet-bars-value-bar-${i}
+                    {
+                        background-color: var(--facet-bars-${i}-unselected);
+                    }
+
+                    :host([contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar-${i}
+                    {
+                        background-color: var(--facet-bars-${i}-unselected-contrast);
+                    }
+
+                    :host([contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar-${i}
+                    {
+                        background-color: var(--facet-bars-${i}-unselected-contrast-hover);
+                    }
+
+                    :host([facet-value-state="muted"]) .facet-bars-value-bar-${i}
+                    {
+                        background-color: var(--facet-bars-${i}-muted);
+                    }
+
+                    :host([contrast=true][facet-value-state="muted"]) .facet-bars-value-bar-${i}
+                    {
+                        background-color: var(--facet-bars-${i}-muted-contrast);
+                    }
+
+                    :host([contrast=true][facet-value-state="muted"]:hover) .facet-bars-value-bar-${i}
+                    {
+                        background-color: var(--facet-bars-${i}-muted-contrast-hover);
+                    }
+                `);
+            }
+        }
+
         return styles;
     }
 

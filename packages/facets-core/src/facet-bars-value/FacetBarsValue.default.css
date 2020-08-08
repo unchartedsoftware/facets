@@ -104,73 +104,73 @@
 :host(:not([theme])[facet-value-state="normal"]) .facet-bars-value-bar-0,
 :host([theme="default"][facet-value-state="normal"]) .facet-bars-value-bar-0
 {
-    background-color: #255DCC;
+    background-color: var(--facet-bars-0-normal, #255DCC);
 }
 
 :host(:not([theme])[contrast=true][facet-value-state="normal"]) .facet-bars-value-bar-0,
 :host([theme="default"][contrast=true][facet-value-state="normal"]) .facet-bars-value-bar-0
 {
-    background-color: #A4C2FC;
+    background-color: var(--facet-bars-0-normal-contrast, #A4C2FC);
 }
 
 :host(:not([theme])[contrast=true][facet-value-state="normal"]:hover) .facet-bars-value-bar-0,
 :host([theme="default"][contrast=true][facet-value-state="normal"]:hover) .facet-bars-value-bar-0
 {
-    background-color: #255DCC;
+    background-color: var(--facet-bars-0-normal-contrast-hover, #255DCC);
 }
 
 :host(:not([theme])[facet-value-state="selected"]) .facet-bars-value-bar-0,
 :host([theme="default"][facet-value-state="selected"]) .facet-bars-value-bar-0
 {
-    background-color: #255DCC;
+    background-color: var(--facet-bars-0-selected, #255DCC);
 }
 
 :host(:not([theme])[contrast=true][facet-value-state="selected"]) .facet-bars-value-bar-0,
 :host([theme="default"][contrast=true][facet-value-state="selected"]) .facet-bars-value-bar-0
 {
-    background-color: #A4C2FC;
+    background-color: var(--facet-bars-0-selected-contrast, #A4C2FC);
 }
 
 :host(:not([theme])[contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar-0,
 :host([theme="default"][contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar-0
 {
-    background-color: #255DCC;
+    background-color: var(--facet-bars-0-selected-contrast-hover, #255DCC);
 }
 
 :host(:not([theme])[facet-value-state="unselected"]) .facet-bars-value-bar-0,
 :host([theme="default"][facet-value-state="unselected"]) .facet-bars-value-bar-0
 {
-    background-color: #C2C3C4;
+    background-color: var(--facet-bars-0-unselected, #C2C3C4);
 }
 
 :host(:not([theme])[contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar-0,
 :host([theme="default"][contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar-0
 {
-    background-color: #D9DADB;
+    background-color: var(--facet-bars-0-unselected-contrast, #D9DADB);
 }
 
 :host(:not([theme])[contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar-0,
 :host([theme="default"][contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar-0
 {
-    background-color: #255DCC;
+    background-color: var(--facet-bars-0-unselected-contrast-hover, #255DCC);
 }
 
 :host(:not([theme])[facet-value-state="muted"]) .facet-bars-value-bar-0,
 :host([theme="default"][facet-value-state="muted"]) .facet-bars-value-bar-0
 {
-    background-color: #C2C3C4;
+    background-color: var(--facet-bars-0-muted, #C2C3C4);
 }
 
 :host(:not([theme])[contrast=true][facet-value-state="muted"]) .facet-bars-value-bar-0,
 :host([theme="default"][contrast=true][facet-value-state="muted"]) .facet-bars-value-bar-0
 {
-    background-color: #D9DADB;
+    background-color: var(--facet-bars-0-muted-contrast, #D9DADB);
 }
 
 :host(:not([theme])[contrast=true][facet-value-state="muted"]:hover) .facet-bars-value-bar-0,
 :host([theme="default"][contrast=true][facet-value-state="muted"]:hover) .facet-bars-value-bar-0
 {
-    background-color: #255DCC;
+    background-color: var(--facet-bars-0-muted-contrast-hover, #255DCC);
 }
 
 
@@ -181,73 +181,73 @@
 :host(:not([theme])[facet-value-state="normal"]) .facet-bars-value-bar-1,
 :host([theme="default"][facet-value-state="normal"]) .facet-bars-value-bar-1
 {
-    background-color: #C2C3C4;
+    background-color: var(--facet-bars-1-normal, #C2C3C4);
 }
 
 :host(:not([theme])[contrast=true][facet-value-state="normal"]) .facet-bars-value-bar-1,
 :host([theme="default"][contrast=true][facet-value-state="normal"]) .facet-bars-value-bar-1
 {
-    background-color: #D9DADB;
+    background-color: var(--facet-bars-1-normal-contrast, #D9DADB);
 }
 
 :host(:not([theme])[contrast=true][facet-value-state="normal"]:hover) .facet-bars-value-bar-1,
 :host([theme="default"][contrast=true][facet-value-state="normal"]:hover) .facet-bars-value-bar-1
 {
-    background-color: #C2C3C4;
+    background-color: var(--facet-bars-1-normal-contrast-hover, #C2C3C4);
 }
 
 :host(:not([theme])[facet-value-state="selected"]) .facet-bars-value-bar-1,
 :host([theme="default"][facet-value-state="selected"]) .facet-bars-value-bar-1
 {
-    background-color: #C2C3C4;
+    background-color: var(--facet-bars-1-selected, #C2C3C4);
 }
 
 :host(:not([theme])[contrast=true][facet-value-state="selected"]) .facet-bars-value-bar-1,
 :host([theme="default"][contrast=true][facet-value-state="selected"]) .facet-bars-value-bar-1
 {
-    background-color: #D9DADB;
+    background-color: var(--facet-bars-1-selected-contrast, #D9DADB);
 }
 
 :host(:not([theme])[contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar-1,
 :host([theme="default"][contrast=true][facet-value-state="selected"]:hover) .facet-bars-value-bar-1
 {
-    background-color: #C2C3C4;
+    background-color: var(--facet-bars-1-selected-contrast-hover, #C2C3C4);
 }
 
 :host(:not([theme])[facet-value-state="unselected"]) .facet-bars-value-bar-1,
 :host([theme="default"][facet-value-state="unselected"]) .facet-bars-value-bar-1
 {
-    background-color: #D9DADB;
+    background-color: var(--facet-bars-1-unselected, #D9DADB);
 }
 
 :host(:not([theme])[contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar-1,
 :host([theme="default"][contrast=true][facet-value-state="unselected"]) .facet-bars-value-bar-1
 {
-    background-color: #EAEBEC;
+    background-color: var(--facet-bars-1-unselected-contrast, #EAEBEC);
 }
 
 :host(:not([theme])[contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar-1,
 :host([theme="default"][contrast=true][facet-value-state="unselected"]:hover) .facet-bars-value-bar-1
 {
-    background-color: #C4D9FC;
+    background-color: var(--facet-bars-1-unselected-contrast-hover, #C4D9FC);
 }
 
 :host(:not([theme])[facet-value-state="muted"]) .facet-bars-value-bar-1,
 :host([theme="default"][facet-value-state="muted"]) .facet-bars-value-bar-1
 {
-    background-color: #D9DADB;
+    background-color: var(--facet-bars-1-muted, #D9DADB);
 }
 
 :host(:not([theme])[contrast=true][facet-value-state="muted"]) .facet-bars-value-bar-1,
 :host([theme="default"][contrast=true][facet-value-state="muted"]) .facet-bars-value-bar-1
 {
-    background-color: #EAEBEC;
+    background-color: var(--facet-bars-1-muted-contrast, #EAEBEC);
 }
 
 :host(:not([theme])[contrast=true][facet-value-state="muted"]:hover) .facet-bars-value-bar-1,
 :host([theme="default"][contrast=true][facet-value-state="muted"]:hover) .facet-bars-value-bar-1
 {
-    background-color: #C4D9FC;
+    background-color: var(--facet-bars-1-muted-contrast-hover, #C4D9FC);
 }
 
 
