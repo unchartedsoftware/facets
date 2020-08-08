@@ -47,7 +47,7 @@ export class FacetBlueprint extends FacetElement {
         }
 
         return html`
-            ${this.computeStyle()}
+            ${this.cssOptions.supportsCSSVars ? undefined : this.computeStyle()}
             <div class="facet-blueprint">
                 <div class="facet-blueprint-header">
                     ${slots.has('header') ? html`<slot name="header"></slot>` : this.renderHeader()}
