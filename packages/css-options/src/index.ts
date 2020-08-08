@@ -91,10 +91,19 @@ class CSSReaderLegacy extends CSSReader {
 }
 
 export class CSSOptions {
+    public static _supportsCSSVars: boolean = supportsCSSVariables();
+    public static get supportsCSSVars(): boolean {
+        return this._supportsCSSVars;
+    }
+
+    public get supportsCSSVars(): boolean {
+        return CSSOptions._supportsCSSVars;
+    }
+
     private mReader: CSSReader;
 
     public constructor(element: HTMLElement) {
-        this.mReader = supportsCSSVariables() ? new CSSReaderModern(element) : new CSSReaderLegacy(element);
+        this.mReader = CSSOptions._supportsCSSVars ? new CSSReaderModern(element) : new CSSReaderLegacy(element);
     }
 
     public read(name: string, value: string | void): string | void {
