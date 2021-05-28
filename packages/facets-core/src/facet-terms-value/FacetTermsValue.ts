@@ -180,8 +180,9 @@ export class FacetTermsValue extends FacetHoverable {
             const value = this.values[i];
             if (!isNaN(value)) {
                 const width = (Math.max(Math.min(value, 1), 0) * 100).toFixed(2);
+                const barClass = `facet-terms-value-bar-${n - i - 1}`;
                 result.push(html`
-                <div class="facet-terms-value-bar-${n - i - 1}" style="width: ${width}%"></div>
+                <div class=${barClass} style="width: ${width}%" part=${barClass}></div>
                 `);
             }
         }
