@@ -716,7 +716,13 @@ export class FacetTimelineSelection extends FacetPlugin {
                 --rightIndex;
             }
 
-            if (leftIndex !== rightIndex) {
+            if (
+                host.selection &&
+                host.selection[0] === leftIndex &&
+                host.selection[1] === rightIndex
+            ) {
+                host.selection = null;
+            } else if (leftIndex !== rightIndex) {
                 host.selection = [leftIndex, rightIndex];
             } else {
                 host.selection = null;
