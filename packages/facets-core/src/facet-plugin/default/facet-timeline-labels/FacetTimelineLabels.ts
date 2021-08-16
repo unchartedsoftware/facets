@@ -31,6 +31,13 @@ import FacetTimelineLabelsStyle from './FacetTimelineLabels.css';
 
 @customElement('facet-timeline-labels')
 export class FacetTimelineLabels extends FacetPlugin {
+    private ro: ResizeObserver = new ResizeObserver(entries => {
+        entries.forEach(e => {
+            const label = e.target as FacetTimelineLabels;
+            label.resizeCallback(e.contentRect);
+        });
+    });
+
     public static get styles(): CSSResult[] {
         return [
             css`${unsafeCSS(FacetTimelineLabelsStyle)}`,
@@ -41,6 +48,7 @@ export class FacetTimelineLabels extends FacetPlugin {
     private labelCanvas: HTMLCanvasElement = document.createElement('canvas');
     private labelContext: CanvasRenderingContext2D = this.labelCanvas.getContext('2d') as CanvasRenderingContext2D;
 
+    private renderedWidth: number | null = null;
     protected hostUpdated(changedProperties: Map<PropertyKey, unknown>): void {
         super.hostUpdated(changedProperties);
         if (changedProperties.has('view') || changedProperties.has('domain') || changedProperties.has('data')) {
@@ -53,6 +61,22 @@ export class FacetTimelineLabels extends FacetPlugin {
             this.facet = host;
         } else {
             this.facet = null;
+        }
+    }
+
+    connectedCallback(): void {
+        super.connectedCallback();
+        this.ro.observe(this);
+    }
+
+    disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this.ro.unobserve(this);
+    }
+
+    resizeCallback(domRect: DOMRectReadOnly): void {
+        if (this.renderedWidth && domRect.width !== this.renderedWidth) {
+            this.requestUpdate();
         }
     }
 
@@ -147,6 +171,7 @@ export class FacetTimelineLabels extends FacetPlugin {
                         ticks.push(html`<div class="facet-timeline-labels-tick" style="height:${tickHeight}px;left:${(barStepPercentage * i).toFixed(2)}%"></div>`);
                     }
                 }
+                this.renderedWidth = renderedWidth;
             }
             return html`
             <div class="facet-timeline-labels-container">
