@@ -31,7 +31,7 @@ import FacetTimelineLabelsStyle from './FacetTimelineLabels.css';
 
 @customElement('facet-timeline-labels')
 export class FacetTimelineLabels extends FacetPlugin {
-    private ro: ResizeObserver = new ResizeObserver(entries => {
+    private resizeObserver: ResizeObserver = new ResizeObserver(entries => {
         entries.forEach(e => {
             const label = e.target as FacetTimelineLabels;
             label.resizeCallback(e.contentRect);
@@ -66,12 +66,12 @@ export class FacetTimelineLabels extends FacetPlugin {
 
     connectedCallback(): void {
         super.connectedCallback();
-        this.ro.observe(this);
+        this.resizeObserver.observe(this);
     }
 
     disconnectedCallback(): void {
         super.disconnectedCallback();
-        this.ro.unobserve(this);
+        this.resizeObserver.unobserve(this);
     }
 
     resizeCallback(domRect: DOMRectReadOnly): void {
