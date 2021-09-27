@@ -26,14 +26,15 @@ jobs:
               run: yarn
 
             - name: clean
-              working-directory: ./packages/facets-docs
-              run: yarn clean
+              run: yarn lerna run clean
 
             - name: lint
-              working-directory: ./packages/facets-docs
-              run: yarn lint
+              run: yarn lerna run lint
 
             - name: build
+              run: yarn lerna run build
+
+            - name: pages
               working-directory: ./packages/facets-docs
               run: yarn pages
 
