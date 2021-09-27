@@ -18,7 +18,14 @@
         "build:es6": "cross-env TARGET='es6' rollup --config",
         "build:next": "cross-env TARGET='next' rollup --config",
         "build:types": "tsc --declaration --declarationMap --emitDeclarationOnly --skipLibCheck --outDir ./dist/types",
-        "clean": "rm -rf ./dist",
+        "clean": "run-p clean:*",
+        "clean:code": "rm -rf ./dist",
+        "clean:pages": "rm -rf ./pages",
+        "pages": "run-s pages:*",
+        "pages:build": "yarn build",
+        "pages:copy": "run-p pages:copy:*",
+        "pages:copy:code": "copyfiles dist/iife/* pages",
+        "pages:copy:www": "copyfiles -u 1 www/**/* www/* pages",
         "start": "cross-env TARGET='debug' rollup --config --watch",
         "watch": "cross-env TARGET='all' rollup --config --watch",
         "lint": "eslint . --ext .js,.ts,.jsx,.tsx --ignore-path ../../.eslintignore",
@@ -31,5 +38,8 @@
         "lit-element": "^2.2.1",
         "lit-html": "^1.1.2",
         "nick-generator": "^1.0.1"
+    },
+    "devDependencies": {
+        "copyfiles": "^2.4.1"
     }
 }

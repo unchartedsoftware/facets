@@ -1,0 +1,45 @@
+name: pages
+on:
+    push:
+        branches:
+            - master
+jobs:
+    clean-lint-build-test:
+
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [14.x]
+
+        steps:
+            - name: checkout
+              uses: actions/checkout@v2
+
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - run: npm install -g yarn
+
+            - name: install
+              run: yarn
+
+            - name: clean
+              working-directory: ./packages/facets-docs
+              run: yarn clean
+
+            - name: lint
+              working-directory: ./packages/facets-docs
+              run: yarn lint
+
+            - name: build
+              working-directory: ./packages/facets-docs
+              run: yarn pages
+
+            - name: Deploy
+              uses: JamesIves/github-pages-deploy-action@3.6.2
+              with:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                BRANCH: gh-pages
+                FOLDER: packages/facets-docs/pages

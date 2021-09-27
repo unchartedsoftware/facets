@@ -2,5 +2,6 @@ node_modules
 .rts2_cache/
 .idea/
 packages/*/dist/
+packages/facets-docs/pages/
 *.log
 .DS_Store
