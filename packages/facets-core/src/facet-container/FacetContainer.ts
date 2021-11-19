@@ -70,7 +70,7 @@ export class FacetContainer extends FacetBlueprint {
         const label = this.renderHeaderLabel();
         if (label) {
             return html`
-            <div class="facet-container-header">
+            <div class="facet-container-header" part="facet-container-header">
                 <slot name="header-label">
                     ${label}
                 </slot>
