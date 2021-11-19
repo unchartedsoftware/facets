@@ -17889,7 +17889,7 @@ var facetsdocs = (function (exports) {
 	}
 
 	function _templateObject$4() {
-	  var data = _taggedTemplateLiteral(["\n            <div class=\"facet-container-header\">\n                <slot name=\"header-label\">\n                    ", "\n                </slot>\n            </div>\n            "]);
+	  var data = _taggedTemplateLiteral(["\n            <div class=\"facet-container-header\" part=\"facet-container-header\">\n                <slot name=\"header-label\">\n                    ", "\n                </slot>\n            </div>\n            "]);
 
 	  _templateObject$4 = function _templateObject() {
 	    return data;
