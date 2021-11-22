@@ -104,6 +104,11 @@ Start (or re-start) your project and continue with development.
 $ yarn bump
 ```
 - One <strong>must</strong> have an npm account that belongs to the uncharted organization and be logged into the npm scope
+- Run npm whoami to confirm npm is logged in (if not follow the prompts)
+```shell script
+$ npm whoami
+```
+- Log into the uncharted npm scope
 ```shell script
 $ npm login --registry https://npm.uncharted.software --scope @uncharted
 ```
@@ -114,4 +119,5 @@ $ yarn publish
 $ cd ../facets-core
 $ yarn publish
 $ cd ../facets-plugins
+$ yarn publish
 ```
