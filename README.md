@@ -97,3 +97,21 @@ Start (or re-start) your project and continue with development.
 
 
 ---
+
+## Publish
+- Bump the packages using yarn bump or npm run bump
+```shell script
+$ yarn bump
+```
+- One <strong>must</strong> have an npm account that belongs to the uncharted organization and be logged into the npm scope
+```shell script
+$ npm login --registry https://npm.uncharted.software --scope @uncharted
+```
+- Individually publish the following packages: css-tools, facets-core, and facets-plugins
+ ```shell script
+$ cd css-tools
+$ yarn publish
+$ cd ../facets-core
+$ yarn publish
+$ cd ../facets-plugins
+```
