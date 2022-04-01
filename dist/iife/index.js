@@ -22034,7 +22034,6 @@ var facetsdocs = (function (exports) {
 	              }
 
 	              mouseEvent.stopPropagation();
-	              mouseEvent.preventDefault();
 	              this.mouse.tracking = null;
 	              break;
 	          }
