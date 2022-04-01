@@ -572,7 +572,6 @@ export class FacetTimelineSelection extends FacetPlugin {
                             host.requestUpdate();
                         }
                         mouseEvent.stopPropagation();
-                        mouseEvent.preventDefault();
                         this.mouse.tracking = null;
                         break;
 
