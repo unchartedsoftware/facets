@@ -18968,7 +18968,7 @@ var facetsdocs = (function (exports) {
 	}
 
 	function _templateObject5$2() {
-	  var data = _taggedTemplateLiteral(["<span>", "</span>"]);
+	  var data = _taggedTemplateLiteral(["<span part=\"facet-term-value-part\">", "</span>"]);
 
 	  _templateObject5$2 = function _templateObject5() {
 	    return data;
@@ -18978,7 +18978,7 @@ var facetsdocs = (function (exports) {
 	}
 
 	function _templateObject4$2() {
-	  var data = _taggedTemplateLiteral(["<span>", "</span>"]);
+	  var data = _taggedTemplateLiteral(["<span part=\"facet-term-annotation-part\">", "</span>"]);
 
 	  _templateObject4$2 = function _templateObject4() {
 	    return data;
@@ -18988,7 +18988,7 @@ var facetsdocs = (function (exports) {
 	}
 
 	function _templateObject3$3() {
-	  var data = _taggedTemplateLiteral(["<span>", "</span>"]);
+	  var data = _taggedTemplateLiteral(["<span part=\"facet-term-label-part\">", "</span>"]);
 
 	  _templateObject3$3 = function _templateObject3() {
 	    return data;
