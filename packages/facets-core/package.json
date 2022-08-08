@@ -1,6 +1,6 @@
 {
     "name": "@uncharted.software/facets-core",
-    "version": "3.2.5",
+    "version": "3.2.6",
     "license": "MIT",
     "entry": "src/index.ts",
     "main": "dist/es5/index.js",

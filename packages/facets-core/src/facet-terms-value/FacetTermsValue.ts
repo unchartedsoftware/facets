@@ -190,15 +190,15 @@ export class FacetTermsValue extends FacetHoverable {
     }
 
     protected renderLabel(): TemplateResult {
-        return html`<span>${this.data.label}</span>`;
+        return html`<span part="facet-term-label-part">${this.data.label}</span>`;
     }
 
     protected renderAnnotation(): TemplateResult {
-        return html`<span>${this.data.annotation}</span>`;
+        return html`<span part="facet-term-annotation-part">${this.data.annotation}</span>`;
     }
 
     protected renderValue(): TemplateResult {
-        return html`<span>${this.data.value}</span>`;
+        return html`<span part="facet-term-value-part">${this.data.value}</span>`;
     }
 
     protected computeStyle(): TemplateResult | void {
