@@ -1,6 +1,6 @@
 {
     "name": "@uncharted.software/facets-docs",
-    "version": "4.0.4",
+    "version": "4.0.5",
     "license": "MIT",
     "type": "module",
     "main": "",
@@ -21,8 +21,8 @@
         "@codemirror/lang-css": "6.3.1",
         "@codemirror/lang-html": "6.4.9",
         "@codemirror/lang-javascript": "6.2.2",
-        "@uncharted.software/facets-core": "workspace:^4.0.4",
-        "@uncharted.software/facets-plugins": "workspace:^4.0.4",
+        "@uncharted.software/facets-core": "workspace:^4.0.5",
+        "@uncharted.software/facets-plugins": "workspace:^4.0.5",
         "codemirror": "6.0.1",
         "lit": "3.2.1",
         "nick-generator": "1.0.1"

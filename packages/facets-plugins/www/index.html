@@ -1,0 +1,87 @@
+<!--
+  ~  Copyright (c) 2020 Uncharted Software Inc.
+  ~  http://www.uncharted.software/
+  ~
+  ~   Permission is hereby granted, free of charge, to any person obtaining a copy of
+  ~  this software and associated documentation files (the "Software"), to deal in
+  ~  the Software without restriction, including without limitation the rights to
+  ~  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+  ~  of the Software, and to permit persons to whom the Software is furnished to do
+  ~  so, subject to the following conditions:
+  ~
+  ~  The above copyright notice and this permission notice shall be included in all
+  ~  copies or substantial portions of the Software.
+  ~
+  ~  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
+  ~  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~  SOFTWARE.
+  ~
+  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Facets Plugins</title>
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <script type='module' src='../../facets-core/dist/index.js'></script>
+    <script type='module' src='../dist/index.js'></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #dfdfdf;
+        }
+
+        .facets-group-container {
+            width: 300px;
+            height: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+
+<body>
+<div class="facets-group-container">
+    <facet-bars id="facet01" data='{
+        "label": "With Zoom Bar",
+        "values": [
+            { "ratio": 0.1 },
+            { "ratio": 0.2 },
+            { "ratio": 0.3 },
+            { "ratio": 0.4 },
+            { "ratio": 0.5 },
+            { "ratio": 0.6 },
+            { "ratio": 0.7 },
+            { "ratio": 0.8 },
+            { "ratio": 0.9 },
+            { "ratio": 1.0 }
+        ]
+    }'>
+        <facet-template target="facet-bars-value" perro="gato">
+
+        </facet-template>
+        <div slot="footer">
+            <facet-plugin-zoom-bar>
+                min-bar-width="8"
+                auto-hide="true"
+                round-caps="true"
+            </facet-plugin-zoom-bar>
+        </div>
+
+    </facet-bars>
+
+</div>
+<script type="module">
+
+</script>
+</body>
+</html>

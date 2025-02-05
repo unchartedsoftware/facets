@@ -1,6 +1,6 @@
 {
     "name": "@uncharted.software/facets-core",
-    "version": "4.0.4",
+    "version": "4.0.5",
     "license": "MIT",
     "type": "module",
     "main": "./dist/index.cjs",
