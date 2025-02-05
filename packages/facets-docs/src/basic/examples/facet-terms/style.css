@@ -49,7 +49,7 @@
     white-space: nowrap;
 }
 
-.geotime-header {
+.company-header {
     height: 100px;
     background-image: url("img/company-logo.webp");
     background-size: contain;

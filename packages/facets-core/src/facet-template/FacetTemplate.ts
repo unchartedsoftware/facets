@@ -25,6 +25,7 @@
 import {LitElement, TemplateResult, html} from 'lit';
 import {directive, Directive} from 'lit/directive.js';
 import {MutationWrapper} from '../tools/MutationWrapper';
+import { createTemplateStringsArray } from '../tools/utilities';
 
 declare global {
     interface HTMLElementTagNameMap {
@@ -132,8 +133,10 @@ export class FacetTemplate extends LitElement {
         }
     }
 
-    public connectedCallback(): void {
+    public async connectedCallback(): Promise<void> {
         super.connectedCallback();
+
+        await new Promise(requestAnimationFrame);
 
         this._initializeTemplateTag();
 
@@ -316,7 +319,7 @@ export class FacetTemplate extends LitElement {
                 values.push(this._getEscapedValue(data, components.values[i]));
             }
         }
-        return html(components.strings as any, ...values);
+        return html(createTemplateStringsArray(components.strings), ...values);
     }
 
     private _getSlotsHTML(data: any): TemplateResult[] {

@@ -53,9 +53,9 @@
     margin-right: 5px;
 }
 
-.geotime-header {
+.company-header {
     height: 100px;
-    background-image: url("img/geotime.png");
+    background-image: url("img/company.png");
     background-size: contain;
     margin: 5px;
 }

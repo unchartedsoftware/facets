@@ -279,8 +279,9 @@ export class FacetList extends FacetContainer {
             const selection = this._selection ? this._selection[id as string] || [] : null;
             this.facetIDs.add(id as string);
             if (this.templates.has(facet.type)) {
+                const template = this.templates.get(facet.type);
                 // @ts-ignore
-                result.push(this.templates.get(facet.type).getHTML(facet.data, {
+                result.push(template.generateTemplate(facet.data, {
                     id,
                     '.selection': selection,
                     '@facet-element-updated': this.handleElementUpdated

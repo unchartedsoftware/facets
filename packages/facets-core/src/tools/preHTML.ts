@@ -23,6 +23,7 @@
  */
 
 import {html, TemplateResult} from 'lit';
+import { createTemplateStringsArray } from './utilities';
 
 interface CachedNeedlessValue {
     value: any;
@@ -52,7 +53,7 @@ function dropIndices(arr: any[], needlessValues: CachedNeedlessValue[]): any[] {
 const templateStringsCache = new WeakMap<TemplateStringsArray, CachedTemplateStrings[]>();
 
 // Convert dynamic tags to template strings
-// example: <${'div'}>${'this is example'}</${'div'}> => <div>${'this is example'}</div>
+// example: <${'div'}>${'this is an example'}</${'div'}> => <div>${'this is an example'}</div>
 export function preHTML(strings: TemplateStringsArray, ...values: any[]): TemplateResult {
     // check cache !important return equal link at first argument
     let cachedStrings = templateStringsCache.get(strings) as CachedTemplateStrings[];
@@ -69,7 +70,7 @@ export function preHTML(strings: TemplateStringsArray, ...values: any[]): Templa
 
             if (isSame) {
                 return html(
-                    cachedStrings[i].strings as any,
+                    createTemplateStringsArray(cachedStrings[i].strings),
                     ...dropIndices(values, needlessValues)
                 );
             }
@@ -107,5 +108,5 @@ export function preHTML(strings: TemplateStringsArray, ...values: any[]): Templa
         needlessValues
     });
 
-    return html(newStrings as any, ...dropIndices(values, needlessValues));
+    return html(createTemplateStringsArray(newStrings), ...dropIndices(values, needlessValues));
 }
