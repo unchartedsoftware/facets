@@ -21,15 +21,20 @@ npm install @uncharted.software/facets-plugins
 ```
 
 ## Instantiating Facets
+
 First, import the libraries as usual.
 ```javascript
-import * as Facets from '@uncharted.software/facets-core';
+// It is important to import facets-plugins first if using them, and early in your application startup (e.g. main.ts)
+// before any components / templates are used.
 import * as Plugins from '@uncharted.software/facets-plugins';
+import * as Facets from '@uncharted.software/facets-core';
 ```
-Then instantiate facets as you would any web component.
+
+Then instantiate facets as you would any web component, or for example, just use them in your Vue.js templates as custom elements.
 ```javascript
 const termsFacet = document.createElement('facet-terms');
 ```
+
 Next assign data to the facet's `data` property. (See the [HTML examples](https://unchartedsoftware.github.io/facets/basic.html) for details of the data structures and requirements.)
 ```javascript
 termsFacet.data = {
