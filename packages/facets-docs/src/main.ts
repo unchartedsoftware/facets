@@ -22,11 +22,12 @@
  *
  */
 
-import * as Facets from '@uncharted.software/facets-core';
-export {Facets};
-
+// Ensure we have these tags available before facets that use them as children.
 import * as Plugins from '@uncharted.software/facets-plugins';
 export {Plugins};
+
+import * as Facets from '@uncharted.software/facets-core';
+export {Facets};
 
 import {bootstrap} from './basic/ExampleBootstrap';
 
