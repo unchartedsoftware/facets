@@ -52,8 +52,12 @@ export class FacetPlugin extends LitElement {
         }
     }
 
-    public connectedCallback(): void {
+    // @ts-ignore
+    public async connectedCallback(): void {
         super.connectedCallback();
+
+        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
         const parent = this.parentElement;
         if (parent) {
             // stupid IE11...
