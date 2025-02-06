@@ -18,7 +18,8 @@
         "dist"
     ],
     "scripts": {
-        "build": "vite build",
+        "build": "vite build && yarn build:theme",
+        "build:theme": "node ../../build-theme.mjs",
         "clean": "rm -rf ./dist",
         "start": "vite",
         "lint": "eslint .",
