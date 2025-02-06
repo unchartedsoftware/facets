@@ -155,7 +155,7 @@ export class FacetExample extends LitElement {
                     if (!window.facetsdocs) {
                         const script = document.createElement('script');
                         script.setAttribute('type', 'text/javascript');
-                        script.setAttribute('src', 'iife/index.js');
+                        script.setAttribute('src', 'dist/iife/index.js');
 
                         document.body.style.visibility = 'hidden';
                         script.addEventListener('load', function() {
