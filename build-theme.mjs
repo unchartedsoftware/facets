@@ -10,7 +10,7 @@ const cssVariables = {};
 
 // Regular expression to capture CSS variable usage with default values.
 // Matches patterns like: var(--my-color, #000000)
-const varRegex = /var\(\s*(--[\w-]+)\s*,\s*((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))+)\s*\)/g;
+const varRegex = /var\(\s*(--[\w-]+)\s*,\s*((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\)){1,200})\s*\)/g;
 
 async function buildTheme() {
     console.log('Generating theme.css...');
