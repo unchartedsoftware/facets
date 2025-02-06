@@ -6,7 +6,8 @@
 
 # CSS Variables
 ---  
-This is the complete list of the CSS variables that you can set to customize facets. If there's a customization you would like to make this is not in this table, unfortunately you cannot apply it. If you are unsure how any of these variables appear in a final facet set them to a bold color such as red or green (avoid blue and greys as the defaults tend towards blue and grey) and see the result.
+This is the complete list of the CSS variables from facets-core at time of writing. These can be overridden to customize facets. If there's a customization you would like to make this is not in this table, unfortunately you cannot apply it. If you are unsure how any of these variables appear in a final facet set them to a bold color such as red or green (avoid blue and greys as the defaults tend towards blue and grey) and see the result.
+A `theme.css` file is also in the distribution of facets-core, and another in facets-plugins. (This table doesn't include facets-plugins variables.)
 
 | Variable Name | Description | Default |
 |---------------|-------------|:-------:|
