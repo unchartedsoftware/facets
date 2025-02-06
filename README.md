@@ -14,7 +14,7 @@ Facets provides a set of Web Components (framework-agnostic) for 'faceting' your
 
 ## Examples
 
-Examples are hosted at https://unchartedsoftware.github.io/facets/basic.html but can also be built [locally](./DEVELOPMENT.md).
+Examples are hosted at https://unchartedsoftware.github.io/facets but can also be built [locally](./DEVELOPMENT.md).
 
 ## Note on Browser Support
 
