@@ -30,7 +30,7 @@ Then instantiate facets as you would any web component.
 ```javascript
 const termsFacet = document.createElement('facet-terms');
 ```
-Next assign data to the facet's `data` property. (See the [HTML examples](https://unchartedsoftware.github.io/facets/basic.html) for details of the data structures and requirements.)
+Next assign data to the facet's `data` property. (See the [HTML examples](https://unchartedsoftware.github.io/facets) for details of the data structures and requirements.)
 ```javascript
 termsFacet.data = {
     label: "Simple Facets",
