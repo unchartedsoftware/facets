@@ -72,7 +72,6 @@ export class FacetExample extends LitElement {
                         <select id="facet-example-select" class="facet-example-select" @change=${this._handleSelectChange}>
                             <option disabled value> -- example -- </option>
                             ${Object.keys(examples).map(example => html`<option>${example}</option>`)}
-                            <option>empty</option>
                         </select>
                     </div>
                     <iframe id="preview-iframe" class="facet-example-preview-iframe"></iframe>
