@@ -71,13 +71,6 @@ import pluginCSS from './facet-plugin/style.css?raw';
 // @ts-ignore
 import pluginJS from './facet-plugin/source.example?raw';
 
-// @ts-ignore
-import buildHTML from './build-a-facet/example.html?raw';
-// @ts-ignore
-import buildCSS from './build-a-facet/style.css?raw';
-// @ts-ignore
-import buildJS from './build-a-facet/source.example?raw';
-
 export const examples: Record<string, any> = {
     'facet-blueprint': {
         html: blueprintHTML,
@@ -113,10 +106,5 @@ export const examples: Record<string, any> = {
         html: pluginHTML,
         css: pluginCSS,
         js: pluginJS
-    },
-    'build-a-facet': {
-        html: buildHTML,
-        css: buildCSS,
-        js: buildJS
     }
 };

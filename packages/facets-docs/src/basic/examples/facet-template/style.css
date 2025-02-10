@@ -35,7 +35,7 @@
     color: #454545;
 }
 
-.histogram-header {
+.example-header {
     font-family: var(--facet-font-family, "IBM Plex Sans") sans-serif;
     font-size: 14px;
     line-height: 16px;
