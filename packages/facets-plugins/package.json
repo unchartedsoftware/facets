@@ -1,6 +1,6 @@
 {
     "name": "@uncharted.software/facets-plugins",
-    "version": "4.0.5",
+    "version": "4.0.6",
     "license": "MIT",
     "type": "module",
     "main": "./dist/index.cjs",
@@ -30,7 +30,7 @@
     "dependencies": {
         "@fortawesome/free-regular-svg-icons": "5.15.4",
         "@fortawesome/free-solid-svg-icons": "5.15.4",
-        "@uncharted.software/facets-core": "workspace:^4.0.5",
+        "@uncharted.software/facets-core": "workspace:^4.0.6",
         "lit": "3.2.1"
     },
     "devDependencies": {

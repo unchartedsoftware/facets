@@ -1272,7 +1272,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uncharted.software/facets-core@workspace:^4.0.5, @uncharted.software/facets-core@workspace:packages/facets-core":
+"@uncharted.software/facets-core@workspace:^4.0.6, @uncharted.software/facets-core@workspace:packages/facets-core":
   version: 0.0.0-use.local
   resolution: "@uncharted.software/facets-core@workspace:packages/facets-core"
   dependencies:
@@ -1297,8 +1297,8 @@ __metadata:
     "@codemirror/lang-html": "npm:6.4.9"
     "@codemirror/lang-javascript": "npm:6.2.2"
     "@eslint/js": "npm:9.19.0"
-    "@uncharted.software/facets-core": "workspace:^4.0.5"
-    "@uncharted.software/facets-plugins": "workspace:^4.0.5"
+    "@uncharted.software/facets-core": "workspace:^4.0.6"
+    "@uncharted.software/facets-plugins": "workspace:^4.0.6"
     codemirror: "npm:6.0.1"
     copyfiles: "npm:2.4.1"
     eslint: "npm:9.19.0"
@@ -1310,14 +1310,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@uncharted.software/facets-plugins@workspace:^4.0.5, @uncharted.software/facets-plugins@workspace:packages/facets-plugins":
+"@uncharted.software/facets-plugins@workspace:^4.0.6, @uncharted.software/facets-plugins@workspace:packages/facets-plugins":
   version: 0.0.0-use.local
   resolution: "@uncharted.software/facets-plugins@workspace:packages/facets-plugins"
   dependencies:
     "@eslint/js": "npm:9.19.0"
     "@fortawesome/free-regular-svg-icons": "npm:5.15.4"
     "@fortawesome/free-solid-svg-icons": "npm:5.15.4"
-    "@uncharted.software/facets-core": "workspace:^4.0.5"
+    "@uncharted.software/facets-core": "workspace:^4.0.6"
     eslint: "npm:9.19.0"
     lit: "npm:3.2.1"
     typescript: "npm:5.7.3"
