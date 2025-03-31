@@ -1283,7 +1283,7 @@ __metadata:
     lit: "npm:3.2.1"
     typescript: "npm:5.7.3"
     typescript-eslint: "npm:8.22.0"
-    vite: "npm:6.0.10"
+    vite: "npm:6.0.13"
     vite-plugin-dts: "npm:4.5.0"
     vite-plugin-lit-css: "npm:2.0.0"
   languageName: unknown
@@ -1306,7 +1306,7 @@ __metadata:
     nick-generator: "npm:1.0.1"
     typescript: "npm:5.7.3"
     typescript-eslint: "npm:8.22.0"
-    vite: "npm:6.0.10"
+    vite: "npm:6.0.13"
   languageName: unknown
   linkType: soft
 
@@ -1322,7 +1322,7 @@ __metadata:
     lit: "npm:3.2.1"
     typescript: "npm:5.7.3"
     typescript-eslint: "npm:8.22.0"
-    vite: "npm:6.0.10"
+    vite: "npm:6.0.13"
     vite-plugin-dts: "npm:4.5.0"
   languageName: unknown
   linkType: soft
@@ -4047,7 +4047,7 @@ __metadata:
     husky: "npm:4.3.8"
     npm-run-all: "npm:4.1.5"
     typescript: "npm:5.7.3"
-    vite: "npm:6.0.10"
+    vite: "npm:6.0.13"
   languageName: unknown
   linkType: soft
 
@@ -4654,9 +4654,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:6.0.10":
-  version: 6.0.10
-  resolution: "vite@npm:6.0.10"
+"vite@npm:6.0.13":
+  version: 6.0.13
+  resolution: "vite@npm:6.0.13"
   dependencies:
     esbuild: "npm:^0.24.2"
     fsevents: "npm:~2.3.3"
@@ -4702,7 +4702,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10/dbe6fc180115fdac0013cd6245b41d2f83f67644ebddb99bd0eb6ec7c64c651ed6df168467a287272545fe2e7f803ba417ab5ddf39d87c77a2a23823dcd66cfb
+  checksum: 10/6347c0f0408eaa20feebd705e8c720432556824c3720ad737601c2b0635ea05e07caca95a27bef05507ab331a2e6b44aeb1d3fd2bf361be054f1fa2eca42ce5b
   languageName: node
   linkType: hard
 
